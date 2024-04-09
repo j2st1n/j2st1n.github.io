@@ -1,14 +1,10 @@
 name: GitHub Pages Astro CI
 
 on:
-  # 每次推送到 `main` 分支时触发这个“工作流程”
-  # 如果你使用了别的分支名，请按需将 `main` 替换成你的分支名
   push:
     branches: [ main ]
-  # 允许你在 GitHub 上的 Actions 标签中手动触发此“工作流程”
   workflow_dispatch:
-  
-# 允许 job 克隆 repo 并创建一个 page deployment
+
 permissions:
   contents: read
   pages: write
@@ -20,6 +16,18 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'node' # 使用最新的 Node.js 版本
+          cache: 'pnpm'
+
+      - name: Install dependencies with pnpm
+        run: |
+          npm install -g pnpm
+          pnpm install --no-frozen-lockfile
+
       - name: Install, build, and upload your site
         uses: withastro/action@v0
 
