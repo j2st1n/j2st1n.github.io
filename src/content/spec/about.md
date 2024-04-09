@@ -1,7 +1,7 @@
 # About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+简单记录日常  
+保持学习惯性  
+保持思维活跃
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+本站采用Astro建设，使用的模板为[Fuwari](https://github.com/saicaca/fuwari)。  
+This site is built with Astro, using the [Fuwari](https://github.com/saicaca/fuwari) template.
