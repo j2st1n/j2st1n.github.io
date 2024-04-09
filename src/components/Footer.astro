@@ -1,13 +1,36 @@
 ---
-
-import {profileConfig} from "../config";
-
+import { profileConfig } from '../config'
 ---
 
-<div class="card-base max-w-[var(--page-width)] min-h-[4.5rem] rounded-b-none mx-auto flex items-center px-6">
-    <div class="transition text-50 text-sm">
-        © 2023 {profileConfig.name}. All Rights Reserved.
-        <br>
-        Powered by <a class="link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
+<style>
+  .card-base {
+    display: flex; /* 启用 flex 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    max-width: var(--page-width);
+    min-height: 4.5rem;
+    border-radius: 0; /* 根据需要调整，这里移除了圆角 */
+    margin: auto; /* 水平居中整个卡片 */
+    flex-direction: column; /* 使内容垂直排列 */
+    padding: 6px; /* 根据需要调整 */
+  }
+
+  .text-50 {
+    text-align: center; /* 确保文本内容也是居中的 */
+    font-size: small; /* 调整文本大小，这里使用了一个简单的示例值 */
+  }
+
+  .link {
+    color: var(--primary); /* 使用变量设置链接颜色 */
+    font-weight: medium; /* 调整字重 */
+  }
+</style>
+
+<div class="card-base">
+    <div class="transition text-50">
+        2024 ©️  {profileConfig.name}. <br> All Rights Reserved.
+        
+    <!-- 由于 Astro 中的 HTML 注释语法，这里的注释将被保留。如果需要在生产中移除，可以考虑其他方法 -->
+    <!-- Powered by <a class="link" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a> -->
     </div>
 </div>
