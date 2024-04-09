@@ -7,8 +7,8 @@ import type {
 import { LinkPreset } from './types/config'
 
 export const siteConfig: SiteConfig = {
-  title: 'Fuwari',
-  subtitle: 'Demo Site',
+  title: 'j2\'s blog',
+  subtitle: 'keep on reading&thinking',
   lang: 'en',
   themeHue: 250,
   banner: {
@@ -22,34 +22,34 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.Home,
     LinkPreset.Archive,
     LinkPreset.About,
-    {
+  /*  {
       name: 'GitHub',
       url: 'https://github.com/saicaca/fuwari',
       external: true,
-    },
+    },*/
   ],
 }
 
 export const profileConfig: ProfileConfig = {
-  avatar: 'assets/images/demo-avatar.png',
-  name: 'Lorem Ipsum',
-  bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  avatar: 'assets/images/1.jpg',
+  name: 'j2\'s reading...',
+  bio: '以书为镜·以思为砺',
   links: [
     {
-      name: 'Twitter',
-      icon: 'fa6-brands:twitter',
-      url: 'https://twitter.com',
+      name: 'Telegram',
+      icon: 'fa6-brands:telegram',
+      url: 'https://t.me/j2st1n2',
     },
     {
-      name: 'Steam',
-      icon: 'fa6-brands:steam',
-      url: 'https://store.steampowered.com',
+      name: 'Mail',
+      icon: 'material-symbols:mail',
+      url: 'mailto:info@3313107.xyz',
     },
-    {
+  /*  {
       name: 'GitHub',
       icon: 'fa6-brands:github',
       url: 'https://github.com/saicaca/fuwari',
-    },
+    }, */
   ],
 }
 
