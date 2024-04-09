@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 'node20.12.1' # 使用最新的 Node.js 版本
+          node-version: '20.12.1' # 使用最新的 Node.js 版本
           cache: 'pnpm'
 
       - name: Install dependencies with pnpm
