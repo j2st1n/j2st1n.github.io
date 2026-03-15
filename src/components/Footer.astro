@@ -20,9 +20,9 @@ const { noMarginTop = false } = Astro.props;
   }
 
   <div class="text-center text-sm text-foreground/70">
-    <div>© {new Date().getFullYear()} {SITE.author}</div>
-
-    <div class="mt-1">
+    <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+      <span>© {new Date().getFullYear()} {SITE.author}</span>
+      <span aria-hidden="true">·</span>
       <a
         class="underline decoration-dashed underline-offset-4 hover:text-accent"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
@@ -31,7 +31,7 @@ const { noMarginTop = false } = Astro.props;
       >
         CC BY-NC-SA 4.0
       </a>
-      <span> · 除非另有说明，本站内容采用上述协议授权</span>
+      <span>（除非另有说明）</span>
     </div>
   </div>
 </footer>
