@@ -1,32 +1,39 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import Socials from "./Socials.astro";
+import Socials from "@/components/Socials.astro";
+import { SITE, RIGHT_COLUMN } from "@/config";
+import { SOCIALS } from "@/constants";
 
-const currentYear = new Date().getFullYear();
-
-type Props = {
+interface Props {
   noMarginTop?: boolean;
-} & HTMLAttributes<"footer">;
+}
 
-const { noMarginTop = false, class: className, ...attrs } = Astro.props;
+const { noMarginTop = false } = Astro.props;
 ---
 
-<footer
-  class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
-  {...attrs}
->
-  <div
-    class:list={[
-      "py-6 sm:py-4",
-      "border-t border-border",
-      "flex flex-col items-center justify-between sm:flex-row-reverse",
-    ]}
-  >
-    <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+<footer class:list={["app-layout", { "mt-16": !noMarginTop }]}
+  style="padding-bottom: 2rem;">
+  {
+    SOCIALS.length > 0 && (
+      <div class="mb-6 flex flex-wrap items-center justify-center gap-3">
+        <Socials />
+      </div>
+    )
+  }
+
+  <div class="text-center text-sm text-foreground/70">
+    <div>
+      © {new Date().getFullYear()} {SITE.author}
+    </div>
+    <div class="mt-1">
+      <a
+        class="underline decoration-dashed underline-offset-4 hover:text-accent"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        CC BY-NC-SA 4.0
+      </a>
+      <span> · 除非另有说明，本站内容采用上述协议授权</span>
     </div>
   </div>
 </footer>
