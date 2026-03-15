@@ -7,9 +7,9 @@ const URL = Astro.url;
 
 {
   SHARE_LINKS.length > 0 && (
-    <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start">
-      <span class="italic">分享到：</span>
-      <div class="text-center">
+    <div class="flex flex-none items-center justify-center gap-2 md:justify-start">
+      <span class="shrink-0 italic">分享到：</span>
+      <div class="flex items-center gap-1">
         {SHARE_LINKS.map(social => (
           <LinkButton
             href={`${social.href + URL}`}
