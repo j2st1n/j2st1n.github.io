@@ -1,6 +1,6 @@
 ---
 import Socials from "@/components/Socials.astro";
-import { SITE, RIGHT_COLUMN } from "@/config";
+import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
 interface Props {
@@ -10,8 +10,7 @@ interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class:list={["app-layout", { "mt-16": !noMarginTop }]}
-  style="padding-bottom: 2rem;">
+<footer class:list={["app-layout", { "mt-16": !noMarginTop }]} style="padding-bottom: 2rem;">
   {
     SOCIALS.length > 0 && (
       <div class="mb-6 flex flex-wrap items-center justify-center gap-3">
@@ -21,9 +20,8 @@ const { noMarginTop = false } = Astro.props;
   }
 
   <div class="text-center text-sm text-foreground/70">
-    <div>
-      © {new Date().getFullYear()} {SITE.author}
-    </div>
+    <div>© {new Date().getFullYear()} {SITE.author}</div>
+
     <div class="mt-1">
       <a
         class="underline decoration-dashed underline-offset-4 hover:text-accent"
