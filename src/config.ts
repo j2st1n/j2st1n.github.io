@@ -3,7 +3,7 @@ export const SITE = {
   author: "J2",
   profile: "https://github.com/j2st1n",
   desc: "J2的摸鱼小博客｜随便写写，认真存档",
-  title: "J2's Blog",
+  title: "摸鱼时刻",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 6,
