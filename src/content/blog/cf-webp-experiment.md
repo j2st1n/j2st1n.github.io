@@ -8,7 +8,7 @@ tags:
   - 图床
   - 实验
 featured: false
-draft: true
+draft: false
 ---
 
 这篇文章只做一件事：验证 `img.bins.blog`（Cloudflare Worker → R2）是否会 **自动把 JPG/PNG 转成 WebP**。
