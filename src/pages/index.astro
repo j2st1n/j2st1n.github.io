@@ -41,18 +41,6 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         <span class="sr-only">RSS Feed</span>
       </a>
 
-      <p>{SITE.desc}</p>
-      <p class="mt-2">
-        想了解更多？去
-        <LinkButton
-          class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="/about/"
-        >
-          关于
-        </LinkButton>
-        看看。
-      </p>
-
       {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
