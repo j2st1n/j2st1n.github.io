@@ -34,16 +34,18 @@ async function loadGoogleFonts(
 ): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
 > {
+  // NOTE: OG 图里经常包含中文；IBM Plex Mono 不含中文字符，会导致预览图出现“方块字”。
+  // 所以这里用 Noto Sans SC 作为主字体（覆盖中文/英文），保证社交分享卡片可读。
   const fontsConfig = [
     {
-      name: "IBM Plex Mono",
-      font: "IBM+Plex+Mono",
+      name: "Noto Sans SC",
+      font: "Noto+Sans+SC",
       weight: 400,
       style: "normal",
     },
     {
-      name: "IBM Plex Mono",
-      font: "IBM+Plex+Mono",
+      name: "Noto Sans SC",
+      font: "Noto+Sans+SC",
       weight: 700,
       style: "bold",
     },
