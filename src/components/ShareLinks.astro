@@ -10,17 +10,52 @@ const URL = Astro.url;
     <div class="flex flex-none items-center justify-center gap-2 md:justify-start">
       <span class="shrink-0 italic">分享到：</span>
       <div class="flex items-center gap-1">
-        {SHARE_LINKS.map(social => (
-          <LinkButton
-            href={`${social.href + URL}`}
-            class="scale-90 p-2 hover:rotate-6 sm:p-1"
-            title={social.linkTitle}
-          >
-            <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
-            <span class="sr-only">{social.linkTitle}</span>
-          </LinkButton>
-        ))}
+        {SHARE_LINKS.map(social => {
+          if (social.href === "#wechat-share") {
+            return (
+              <button
+                type="button"
+                class="group inline-flex items-center gap-1 scale-90 p-2 hover:rotate-6 hover:text-accent sm:p-1"
+                title={social.linkTitle}
+                data-wechat-share
+                data-url={URL.href}
+              >
+                <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+                <span class="sr-only">{social.linkTitle}</span>
+              </button>
+            );
+          }
+
+          return (
+            <LinkButton
+              href={`${social.href + URL}`}
+              class="scale-90 p-2 hover:rotate-6 sm:p-1"
+              title={social.linkTitle}
+            >
+              <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+              <span class="sr-only">{social.linkTitle}</span>
+            </LinkButton>
+          );
+        })}
       </div>
+
+      <script is:inline>
+        (() => {
+          const btns = document.querySelectorAll("[data-wechat-share]");
+          btns.forEach(btn => {
+            btn.addEventListener("click", async () => {
+              const url = btn.getAttribute("data-url") || location.href;
+              try {
+                await navigator.clipboard.writeText(url);
+                alert("链接已复制，去微信/朋友圈粘贴发送即可。");
+              } catch {
+                prompt("复制链接分享到微信/朋友圈：", url);
+              }
+            });
+          });
+        })();
+      </script>
     </div>
   )
 }
+

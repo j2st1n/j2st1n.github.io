@@ -7,6 +7,8 @@ import IconWhatsapp from "@/assets/icons/IconWhatsapp.svg";
 import IconFacebook from "@/assets/icons/IconFacebook.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
 import IconPinterest from "@/assets/icons/IconPinterest.svg";
+import IconWeChat from "@/assets/icons/IconWeChat.svg";
+import IconWeibo from "@/assets/icons/IconWeibo.svg";
 import { SITE } from "@/config";
 
 interface Social {
@@ -28,6 +30,22 @@ export const SOCIALS: Social[] = [
 
 // Share buttons on post page
 export const SHARE_LINKS: Social[] = [
+  // 国内平台：因为微信/朋友圈没有官方 Web 分享 URL，这里提供“复制链接”式的分享提示。
+  // 微博可用标准 share 链接。
+  {
+    name: "Weibo",
+    href: "https://service.weibo.com/share/share.php?url=",
+    linkTitle: `分享到微博`,
+    icon: IconWeibo,
+  },
+  {
+    name: "WeChat",
+    href: "#wechat-share",
+    linkTitle: `分享到微信/朋友圈（复制链接）`,
+    icon: IconWeChat,
+  },
+
+  // 国际平台
   {
     name: "WhatsApp",
     href: "https://wa.me/?text=",
