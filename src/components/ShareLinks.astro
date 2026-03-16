@@ -11,13 +11,13 @@ const URL = Astro.url;
       <span class="shrink-0 italic">分享到：</span>
       <div class="flex items-center gap-1">
         {SHARE_LINKS.map(social => {
-          if (social.href === "#wechat-share") {
+          if (social.href === "#native-share") {
             return (
               <button
                 type="button"
                 class="group inline-flex items-center gap-1 scale-90 p-2 hover:rotate-6 hover:text-accent sm:p-1"
                 title={social.linkTitle}
-                data-wechat-share
+                data-native-share
                 data-url={URL.href}
               >
                 <social.icon class="inline-block size-6 scale-125 fill-current stroke-none opacity-90 sm:scale-110" />
@@ -43,12 +43,12 @@ const URL = Astro.url;
 
       <script is:inline>
         (() => {
-          const btns = document.querySelectorAll("[data-wechat-share]");
+          const btns = document.querySelectorAll("[data-native-share]");
           btns.forEach(btn => {
             btn.addEventListener("click", async () => {
               const url = btn.getAttribute("data-url") || location.href;
               const title = document.title;
-              // Prefer native share sheet (mobile browsers). WeChat may appear there.
+              // Prefer native share sheet (mobile browsers).
               if (navigator.share) {
                 try {
                   await navigator.share({ title, url });
@@ -59,9 +59,9 @@ const URL = Astro.url;
               }
               try {
                 await navigator.clipboard.writeText(url);
-                alert("链接已复制，去微信/朋友圈粘贴发送即可。");
+                alert("链接已复制，选择任意 App 粘贴分享即可。");
               } catch {
-                prompt("复制链接分享到微信/朋友圈：", url);
+                prompt("复制链接分享：", url);
               }
             });
           });

@@ -5,8 +5,7 @@ import IconBrandX from "@/assets/icons/IconBrandX.svg";
 import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
 import IconFacebook from "@/assets/icons/IconFacebook.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
-import IconWeChat from "@/assets/icons/IconWeChat.svg";
-import IconWeibo from "@/assets/icons/IconWeibo.svg";
+import IconShare from "@/assets/icons/IconShare.svg";
 import { SITE } from "@/config";
 
 interface Social {
@@ -28,22 +27,15 @@ export const SOCIALS: Social[] = [
 
 // Share buttons on post page
 export const SHARE_LINKS: Social[] = [
-  // 国内平台：因为微信/朋友圈没有官方 Web 分享 URL，这里提供“复制链接”式的分享提示。
-  // 微博可用标准 share 链接。
+  // 通用分享：优先走系统分享面板（navigator.share），不支持则复制链接
   {
-    name: "Weibo",
-    href: "https://service.weibo.com/share/share.php?url=",
-    linkTitle: `分享到微博（直达）`,
-    icon: IconWeibo,
-  },
-  {
-    name: "WeChat",
-    href: "#wechat-share",
-    linkTitle: `分享到微信/朋友圈（复制链接）`,
-    icon: IconWeChat,
+    name: "Share",
+    href: "#native-share",
+    linkTitle: `分享（系统面板/复制链接）`,
+    icon: IconShare,
   },
 
-  // 国际平台（保留常用）
+  // 其它平台按钮
   {
     name: "Facebook",
     href: "https://www.facebook.com/sharer.php?u=",
