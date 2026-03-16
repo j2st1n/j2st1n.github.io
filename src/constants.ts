@@ -33,7 +33,7 @@ export const SHARE_LINKS: Social[] = [
   {
     name: "Weibo",
     href: "https://service.weibo.com/share/share.php?url=",
-    linkTitle: `分享到微博`,
+    linkTitle: `分享到微博（直达）`,
     icon: IconWeibo,
   },
   {

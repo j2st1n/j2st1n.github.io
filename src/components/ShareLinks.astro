@@ -20,7 +20,7 @@ const URL = Astro.url;
                 data-wechat-share
                 data-url={URL.href}
               >
-                <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+                <social.icon class="inline-block size-6 scale-125 fill-current stroke-none opacity-90 sm:scale-110" />
                 <span class="sr-only">{social.linkTitle}</span>
               </button>
             );
@@ -28,11 +28,13 @@ const URL = Astro.url;
 
           return (
             <LinkButton
-              href={`${social.href + URL}`}
+              href={`${social.href + encodeURIComponent(URL.href)}`}
               class="scale-90 p-2 hover:rotate-6 sm:p-1"
               title={social.linkTitle}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+              <social.icon class="inline-block size-6 scale-125 fill-current stroke-none opacity-90 sm:scale-110" />
               <span class="sr-only">{social.linkTitle}</span>
             </LinkButton>
           );
@@ -45,6 +47,16 @@ const URL = Astro.url;
           btns.forEach(btn => {
             btn.addEventListener("click", async () => {
               const url = btn.getAttribute("data-url") || location.href;
+              const title = document.title;
+              // Prefer native share sheet (mobile browsers). WeChat may appear there.
+              if (navigator.share) {
+                try {
+                  await navigator.share({ title, url });
+                  return;
+                } catch {
+                  // user cancelled / not supported -> fallback to clipboard
+                }
+              }
               try {
                 await navigator.clipboard.writeText(url);
                 alert("链接已复制，去微信/朋友圈粘贴发送即可。");
