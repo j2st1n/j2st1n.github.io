@@ -3,10 +3,8 @@ import IconMail from "@/assets/icons/IconMail.svg";
 import IconGitHub from "@/assets/icons/IconGitHub.svg";
 import IconBrandX from "@/assets/icons/IconBrandX.svg";
 import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
-import IconWhatsapp from "@/assets/icons/IconWhatsapp.svg";
 import IconFacebook from "@/assets/icons/IconFacebook.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
-import IconPinterest from "@/assets/icons/IconPinterest.svg";
 import IconWeChat from "@/assets/icons/IconWeChat.svg";
 import IconWeibo from "@/assets/icons/IconWeibo.svg";
 import { SITE } from "@/config";
@@ -45,13 +43,7 @@ export const SHARE_LINKS: Social[] = [
     icon: IconWeChat,
   },
 
-  // 国际平台
-  {
-    name: "WhatsApp",
-    href: "https://wa.me/?text=",
-    linkTitle: `通过 WhatsApp 分享本文`,
-    icon: IconWhatsapp,
-  },
+  // 国际平台（保留常用）
   {
     name: "Facebook",
     href: "https://www.facebook.com/sharer.php?u=",
@@ -69,12 +61,6 @@ export const SHARE_LINKS: Social[] = [
     href: "https://t.me/share/url?url=",
     linkTitle: `分享到 Telegram`,
     icon: IconTelegram,
-  },
-  {
-    name: "Pinterest",
-    href: "https://pinterest.com/pin/create/button/?url=",
-    linkTitle: `分享到 Pinterest`,
-    icon: IconPinterest,
   },
   {
     name: "Mail",
