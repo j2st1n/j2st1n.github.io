@@ -20,7 +20,7 @@ const URL = Astro.url;
                 data-native-share
                 data-url={URL.href}
               >
-                <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+                <social.icon class="inline-block size-6 scale-125 opacity-90 sm:scale-110" />
                 <span class="sr-only">{social.linkTitle}</span>
               </button>
             );
@@ -29,12 +29,12 @@ const URL = Astro.url;
           return (
             <LinkButton
               href={`${social.href + encodeURIComponent(URL.href)}`}
-              class="scale-90 p-2 hover:rotate-6 sm:p-1"
+              class="scale-90 p-2 hover:rotate-6 hover:text-accent sm:p-1"
               title={social.linkTitle}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+              <social.icon class="inline-block size-6 scale-125 opacity-90 sm:scale-110" />
               <span class="sr-only">{social.linkTitle}</span>
             </LinkButton>
           );
