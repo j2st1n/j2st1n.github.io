@@ -20,7 +20,7 @@ const URL = Astro.url;
                 data-native-share
                 data-url={URL.href}
               >
-                <social.icon class="inline-block size-6 scale-125 fill-current stroke-none opacity-90 sm:scale-110" />
+                <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
                 <span class="sr-only">{social.linkTitle}</span>
               </button>
             );
@@ -34,7 +34,7 @@ const URL = Astro.url;
               target="_blank"
               rel="noopener noreferrer"
             >
-              <social.icon class="inline-block size-6 scale-125 fill-current stroke-none opacity-90 sm:scale-110" />
+              <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
               <span class="sr-only">{social.linkTitle}</span>
             </LinkButton>
           );
