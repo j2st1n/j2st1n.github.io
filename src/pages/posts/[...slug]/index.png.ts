@@ -9,8 +9,10 @@ export async function getStaticPaths() {
     return [];
   }
 
+  // Generate dynamic OG images for all non-draft posts.
+  // (We still allow per-post `ogImage` to provide a background image for the template.)
   const posts = await getCollection("blog").then(p =>
-    p.filter(({ data }) => !data.draft && !data.ogImage)
+    p.filter(({ data }) => !data.draft)
   );
 
   return posts.map(post => ({
