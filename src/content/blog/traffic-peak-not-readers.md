@@ -44,4 +44,3 @@ ogImage: https://img.bins.blog/2026-03-19/traffic-peak-not-readers/oval-office-d
 - 文件页（Wikimedia Commons）：https://commons.wikimedia.org/wiki/File:20230214_Triangular_Door_Handle.jpg
 - 授权：CC BY 4.0
 - 作者信息（文件页标注）：Flocci Nivis
-- 说明：门把手这个意象更直接，呼应“又来拧门、又来试门”的感觉
