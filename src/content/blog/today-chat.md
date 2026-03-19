@@ -11,10 +11,6 @@ tags:
 draft: false
 ---
 
-![飞机与机场](https://img.bins.blog/2026/03/today-chat/airplane-terminal-cc0.webp)
-
-> 配图来源：Wikimedia Commons / www.Pixel.la Free Stock Photos · CC0
-
 今天和航旅纵横的团队聊了聊，感觉挺有意思。
 
 这个产品背后其实站着一个很大的流量入口，所以真要说，能做的事情不少。围绕整个出行链路，不管是内容、服务，还是一些更往交易靠的环节，都有不少想象空间。
@@ -26,3 +22,7 @@ draft: false
 不过也正因为这样，后面反而更值得看。它未必会变成另一个 OTA，但未来如果沿着某些具体环节一点点往前走，也不是没有机会撬动一些 OTA 的墙角。
 
 先记一笔，后面再看。
+
+![飞机与机场](https://img.bins.blog/2026/03/today-chat/airplane-terminal-cc0.webp)
+
+> 配图来源：Wikimedia Commons / www.Pixel.la Free Stock Photos · CC0
