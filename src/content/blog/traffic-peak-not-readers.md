@@ -12,7 +12,7 @@ tags:
   - 随便写写
 featured: false
 draft: false
-ogImage: https://img.bins.blog/2026-03-19/traffic-peak-not-readers/door-handle.webp
+ogImage: https://img.bins.blog/2026-03-19/traffic-peak-not-readers/oval-office-door-peephole.webp
 ---
 
 嚯，昨天的大哥又来串门啦？
@@ -37,10 +37,11 @@ ogImage: https://img.bins.blog/2026-03-19/traffic-peak-not-readers/door-handle.w
 你看到 requests 涨了，不一定是内容被看见；你看到有个峰值，也不一定是什么值得庆祝的事。
 有时候，只是昨天那位大哥，又回来试了试门。
 
-![](https://img.bins.blog/2026-03-19/traffic-peak-not-readers/door-handle.webp)
+![](https://img.bins.blog/2026-03-19/traffic-peak-not-readers/oval-office-door-peephole.webp)
 
 ## 版权 / 授权说明
 
-- 配图：door handle photo
-- 来源：Unsplash（摄影师页面待补）
-- 说明：本文配图用于“有人又来拧门把手”的生活化隐喻
+- 文件页（Wikimedia Commons）：https://commons.wikimedia.org/wiki/File:Barack_Obama_looking_through_the_Oval_Office_door_peephole.jpg
+- 授权：Public domain
+- 作者信息（文件页标注）：White House / Pete Souza
+- 说明：这张图不是“安全”配图，而是借门镜 / 探看的动作，呼应“又来串门、又来试门”的那个感觉
