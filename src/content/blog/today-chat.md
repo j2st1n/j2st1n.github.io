@@ -8,7 +8,7 @@ tags:
   - 航旅纵横
   - OTA
   - 行业观察
-draft: true
+draft: false
 ---
 
 ![飞机与机场](https://img.bins.blog/2026/03/today-chat/airplane-terminal-cc0.webp)
