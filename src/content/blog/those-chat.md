@@ -9,6 +9,7 @@ tags:
   - 工作
   - 家人
 featured: false
+ogImage: https://img.bins.blog/2026/03/those-chat/those-chat-photo-stripped.webp
 draft: false
 ---
 
