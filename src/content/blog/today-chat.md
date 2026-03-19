@@ -25,4 +25,8 @@ draft: false
 
 ![飞机与机场](https://img.bins.blog/2026/03/today-chat/airplane-terminal-cc0.webp)
 
-> 配图来源：Wikimedia Commons / www.Pixel.la Free Stock Photos · CC0
+## 配图来源
+
+- 文件页（Wikimedia Commons）：<https://commons.wikimedia.org/wiki/File:Airport-airplane-plane-terminal_(24218472022).jpg>
+- 授权：**CC0**
+- 作者信息（文件页标注）：www.Pixel.la Free Stock Photos
