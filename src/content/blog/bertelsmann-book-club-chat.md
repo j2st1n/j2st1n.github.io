@@ -2,7 +2,7 @@
 author: J2
 title: 今日闲聊
 slug: bertelsmann-book-club-chat
-description: 聊到贝塔斯曼书友会，才忽然发现，有些曾经像未来一样的东西，已经 quietly 留在时代里了。
+description: 聊到贝塔斯曼书友会，才忽然发现，有些曾经像未来一样的东西，已经悄悄留在时代里了。
 pubDatetime: 2026-03-20T18:28:48+08:00
 tags:
   - 随笔
