@@ -36,3 +36,5 @@ draft: false
 贝塔斯曼书友会最早是德国贝塔斯曼集团做起来的一套会员制图书直销模式，后来进了中国，一度很风光。90 年代末到 2000 年代初，目录邮购、门店、会员体系这一整套，算是当时很典型的“卖书也卖阅读方式”。到 2008 年，中国业务正式停了；再往后，全球书友会业务也陆续收缩、退场。集团还在，但“贝塔斯曼书友会”这个东西，基本已经留在时代里了。
 
 ![](https://img.bins.blog/2026/03/today-chat-bertelsmann/today-chat-reading-group.jpg)
+
+*配图来源：Wikimedia Foundation Photography Collection 2023 009 / CC BY-SA 4.0*
