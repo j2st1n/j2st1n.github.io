@@ -13,8 +13,6 @@ ogImage: https://img.bins.blog/2026/03/openclaw-static-blog/openclaw-logo-text.p
 draft: false
 ---
 
-# 我用龙虾搭了个静态博客
-
 ## 我用龙虾搭了个静态博客
 
 最近我做了一件放在以前，可能要折腾很久的事：搭了个静态博客。
