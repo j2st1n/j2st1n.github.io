@@ -10,6 +10,7 @@ tags:
   - 贝塔斯曼
   - 时代记忆
 featured: false
+ogImage: https://img.bins.blog/2026/03/today-chat-bertelsmann/today-chat-reading-group.jpg
 draft: false
 ---
 
