@@ -22,9 +22,9 @@ draft: false
 
 **而是热潮终于从“先装上再说”，走到了“到底能不能持续用下去”这一步。**
 
-![平台入口与热潮现实图](https://pic2.pedaily.cn/26/202603/20260307150242774277.png)
+![平台入口与热潮现实图](https://img.bins.blog/2026/03/agent-adoption-dropoff/cover-platform-reality.webp)
 
-> 图源：创业邦转载页（效果验证使用，后续可替换为正式授权图）。
+> 图源线索：创业邦转载页（当前经 R2 托管用于效果验证，后续可继续核实原始出处）。
 
 ## 热潮能证明需求，不能自动证明成熟
 
@@ -101,6 +101,10 @@ draft: false
 Reuters 对腾讯把 OpenClaw 接进微信的报道，说明平台级入口已经开始认真对待这件事：Agent 不再只是极客圈的玩具，而是在往更大的分发场景里走。
 
 与此同时，像微软这样的机构信号也在强调，AI agent 正在从“新奇能力”走向“真实工作技能与组织应用”。
+
+![机构侧长期投入信号图](https://img.bins.blog/2026/03/agent-adoption-dropoff/inline-institutional-signal.webp)
+
+> 图源：Microsoft News（当前经 R2 托管用于效果验证）。
 
 这恰恰说明，问题不是这条路不成立。
 
