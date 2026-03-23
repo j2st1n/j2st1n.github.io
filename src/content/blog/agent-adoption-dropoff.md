@@ -61,6 +61,10 @@ draft: false
 
 而来自这样一种落差：它看起来什么都能做，但还没有稳定进入日常使用的那条路径。
 
+![平台接入与热潮现实图](https://img.bins.blog/2026/03/agent-adoption-dropoff/cover-platform-reality.png)
+
+*图：创业邦转载页配图。*
+
 
 ## 多数人今天拿到的，是入口，不是路径
 
@@ -100,6 +104,10 @@ draft: false
 Reuters 对腾讯把 OpenClaw 接进微信的报道，说明平台级入口已经开始认真对待这件事：Agent 不再只是极客圈的玩具，而是在往更大的分发场景里走。
 
 与此同时，像微软这样的机构信号也在强调，AI agent 正在从“新奇能力”走向“真实工作技能与组织应用”。
+
+![机构侧长期投入信号图](https://img.bins.blog/2026/03/agent-adoption-dropoff/inline-01-unified.png)
+
+*图：Microsoft News 配图。*
 
 
 这恰恰说明，问题不是这条路不成立。
