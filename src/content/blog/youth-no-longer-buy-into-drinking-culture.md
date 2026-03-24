@@ -9,7 +9,7 @@ tags:
   - 代际
   - 职场
 featured: false
-draft: true
+draft: false
 ogImage: https://img.bins.blog/2026-03-24/youth-no-longer-buy-into-drinking-culture/candidate-chinese-drinking-table-zhihu.webp
 ---
 
