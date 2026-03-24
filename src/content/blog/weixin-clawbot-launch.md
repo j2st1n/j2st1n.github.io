@@ -11,13 +11,13 @@ tags:
   - 龙虾
 featured: false
 draft: false
-ogImage: https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_4---215898f1-e278-41f4-aaeb-97cd7d8ca92d.webp
+ogImage: https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_4---215898f1-e278-41f4-aaeb-97cd7d8ca92d.jpg
 ---
 
 微信今天正式放出 **ClawBot 插件**，支持把 OpenClaw（龙虾）接到微信里。
 从公开信息和实测截图看，入口已经很清晰：在微信插件页可直接看到「微信ClawBot」，并提供 OpenClaw 侧安装指令。
 
-![](https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_4---215898f1-e278-41f4-aaeb-97cd7d8ca92d.webp)
+![](https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_4---215898f1-e278-41f4-aaeb-97cd7d8ca92d.jpg)
 
 > 微信插件页已出现微信ClawBot入口
 
@@ -26,7 +26,7 @@ ogImage: https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_4---215898f
 2. 在 OpenClaw 设备侧执行：`npx -y @tencent-weixin/openclaw-weixin-cli@latest install`
 3. 按页面提示扫码绑定，完成后即可在微信里和自己的 OpenClaw 收发消息。
 
-![](https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_5---7099d647-7702-4bf7-b6fc-7e51efa47fd9.webp)
+![](https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_5---7099d647-7702-4bf7-b6fc-7e51efa47fd9.jpg)
 
 > 插件详情页已提供安装指令与扫码绑定流程
 
