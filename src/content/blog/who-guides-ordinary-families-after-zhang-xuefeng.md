@@ -11,10 +11,12 @@ tags:
   - 家庭
 featured: false
 draft: false
-ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg
+ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_bw32d5bw32d5bw32_1---b7a08684-61e9-48a6-bfb2-9cc21dbeaffb.png
 ---
 
-![普通家庭在报志愿时的夜晚桌面场景](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg)
+![普通家庭在报志愿时的夜晚桌面场景](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_bw32d5bw32d5bw32_1---b7a08684-61e9-48a6-bfb2-9cc21dbeaffb.png)
+
+*配图由 AI 生成。*
 
 马上又要到 6 月了。
 
@@ -23,6 +25,10 @@ ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-
 所以这时候再看张雪峰去世这件事，我想到的不是争议，也不是生意。
 
 我想到的是自己当年报志愿的那个晚上。
+
+![普通家庭在报志愿时的夜晚桌面场景（补图）](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_hfxj7uhfxj7uhfxj---a5c93706-3afa-4054-b8b2-6eb1b2bb5b06.png)
+
+*配图由 AI 生成。*
 
 那时候家里没人懂这个，父母也帮不上什么忙。我只能自己抱着一本很厚的志愿书，从头翻到尾，看学校、看专业、看分数线，看那些当时其实也没完全看懂的介绍。看了一整晚，第二天自己把志愿填了。
 
@@ -137,6 +143,10 @@ ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-
 这才是这件事真正让人难受的地方。
 
 ---
+
+## 配图说明
+
+本文配图由 AI 生成，用于表达文章语境，不对应真实人物或真实场景。
 
 ## 来源
 
