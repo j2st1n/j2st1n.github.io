@@ -11,10 +11,10 @@ tags:
   - 家庭
 featured: false
 draft: false
-ogImage: /src/assets/generated/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg
+ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg
 ---
 
-![普通家庭在报志愿时的夜晚桌面场景](/src/assets/generated/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg)
+![普通家庭在报志愿时的夜晚桌面场景](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg)
 
 马上又要到 6 月了。
 
