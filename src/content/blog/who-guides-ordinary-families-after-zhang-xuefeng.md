@@ -11,7 +11,7 @@ tags:
   - AI
   - 家庭
 featured: false
-draft: true
+draft: false
 ogImage: /src/assets/generated/who-guides-ordinary-families-after-zhang-xuefeng-cover.jpg
 ---
 
