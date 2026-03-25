@@ -14,10 +14,6 @@ draft: false
 ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_bw32d5bw32d5bw32_1---b7a08684-61e9-48a6-bfb2-9cc21dbeaffb.png
 ---
 
-![普通家庭在报志愿时的夜晚桌面场景](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_bw32d5bw32d5bw32_1---b7a08684-61e9-48a6-bfb2-9cc21dbeaffb.png)
-
-*配图由 AI 生成。*
-
 马上又要到 6 月了。
 
 每年一到这个时候，高考、分数、志愿、学校、专业这些词，就会重新把很多家庭拖进一种熟悉的紧张里。热搜会换，新闻会过，但这套焦虑几乎年年准时上演。
@@ -25,10 +21,6 @@ ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-
 所以这时候再看张雪峰去世这件事，我想到的不是争议，也不是生意。
 
 我想到的是自己当年报志愿的那个晚上。
-
-![普通家庭在报志愿时的夜晚桌面场景（补图）](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_hfxj7uhfxj7uhfxj---a5c93706-3afa-4054-b8b2-6eb1b2bb5b06.png)
-
-*配图由 AI 生成。*
 
 那时候家里没人懂这个，父母也帮不上什么忙。我只能自己抱着一本很厚的志愿书，从头翻到尾，看学校、看专业、看分数线，看那些当时其实也没完全看懂的介绍。看了一整晚，第二天自己把志愿填了。
 
@@ -74,6 +66,10 @@ ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-
 
 更多时候的现实是，孩子自己上网查，父母在旁边跟着着急，最后能给的往往只有一句话：
 **你自己看看，选个稳一点的。**
+
+![普通家庭在报志愿时的沉默时刻](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_hfxj7uhfxj7uhfxj---a5c93706-3afa-4054-b8b2-6eb1b2bb5b06.png)
+
+*配图由 AI 生成。*
 
 这不是因为他们不关心，恰恰是因为太关心了。只是他们也不懂新的填报规则，不懂专业冷热，不知道哪些差别只是名字不同，哪些差别会真正影响几年后的生活。
 
