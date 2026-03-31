@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 import Socials from "./Socials.astro";
 
 const currentYear = new Date().getFullYear();
+const blogBornAt = "2026-03-15T08:32:01+08:00";
 
 type Props = {
   noMarginTop?: boolean;
@@ -23,16 +24,76 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
     ]}
   >
     <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
+    <div class="my-2 flex flex-col items-center gap-1 text-sm whitespace-nowrap sm:flex-row sm:gap-0">
+      <div class="flex items-center">
+        <span>Copyright &#169; {currentYear}</span>
+        <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+        <a
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          rel="license noopener"
+          target="_blank"
+        >
+          CC BY-NC-SA 4.0
+        </a>
+      </div>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <a
-        href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-        rel="license noopener"
-        target="_blank"
-      >
-        CC BY-NC-SA 4.0
-      </a>
+      <div class="text-muted-foreground" data-blog-uptime data-start={blogBornAt}>
+        已摸鱼计算中…
+      </div>
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  (() => {
+    const pad = (n) => String(n).padStart(2, "0");
+    const el = document.querySelector("[data-blog-uptime]");
+    if (!el) return;
+
+    const start = el.getAttribute("data-start");
+    if (!start) return;
+
+    const startDate = new Date(start);
+    if (Number.isNaN(startDate.getTime())) return;
+
+    const diffParts = (from, to) => {
+      let cursor = new Date(from);
+      let years = 0;
+      while (true) {
+        const next = new Date(cursor);
+        next.setFullYear(next.getFullYear() + 1);
+        if (next <= to) {
+          years += 1;
+          cursor = next;
+        } else break;
+      }
+
+      let months = 0;
+      while (true) {
+        const next = new Date(cursor);
+        next.setMonth(next.getMonth() + 1);
+        if (next <= to) {
+          months += 1;
+          cursor = next;
+        } else break;
+      }
+
+      let rest = Math.max(0, to.getTime() - cursor.getTime());
+      const hours = Math.floor(rest / 3600000);
+      rest -= hours * 3600000;
+      const minutes = Math.floor(rest / 60000);
+      rest -= minutes * 60000;
+      const seconds = Math.floor(rest / 1000);
+      return { years, months, hours, minutes, seconds };
+    };
+
+    const render = () => {
+      const now = new Date();
+      const { years, months, hours, minutes, seconds } = diffParts(startDate, now);
+      el.textContent = `已摸鱼 ${years}年${months}月${pad(hours)}时${pad(minutes)}分${pad(seconds)}秒`;
+    };
+
+    render();
+    setInterval(render, 1000);
+  })();
+</script>
