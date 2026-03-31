@@ -79,18 +79,27 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
       }
 
       let rest = Math.max(0, to.getTime() - cursor.getTime());
+      const days = Math.floor(rest / 86400000);
+      rest -= days * 86400000;
       const hours = Math.floor(rest / 3600000);
       rest -= hours * 3600000;
       const minutes = Math.floor(rest / 60000);
       rest -= minutes * 60000;
       const seconds = Math.floor(rest / 1000);
-      return { years, months, hours, minutes, seconds };
+      return { years, months, days, hours, minutes, seconds };
     };
 
     const render = () => {
       const now = new Date();
-      const { years, months, hours, minutes, seconds } = diffParts(startDate, now);
-      el.textContent = `已摸鱼 ${years}年${months}月${pad(hours)}时${pad(minutes)}分${pad(seconds)}秒`;
+      const { years, months, days, hours, minutes, seconds } = diffParts(startDate, now);
+      const parts = [];
+      if (years > 0) parts.push(`${years}年`);
+      if (months > 0) parts.push(`${months}月`);
+      if (days > 0) parts.push(`${days}日`);
+      if (hours > 0) parts.push(`${pad(hours)}时`);
+      if (minutes > 0) parts.push(`${pad(minutes)}分`);
+      parts.push(`${pad(seconds)}秒`);
+      el.textContent = `已摸鱼 ${parts.join("")}`;
     };
 
     render();
