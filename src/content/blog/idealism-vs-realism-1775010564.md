@@ -1,6 +1,6 @@
 ---
 title: "张雪的理想主义和张雪峰的现实主义"
-pubDate: "2026-04-01"
+pubDatetime: 2026-04-01T10:45:09+08:00
 description: "朋友说：张雪是理想主义，张雪峰是现实主义。是的，而且这个社会，需要这两种人。"
 heroImage: "/placeholder.png"
 category: "思考"
