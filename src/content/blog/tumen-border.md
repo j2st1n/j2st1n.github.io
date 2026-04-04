@@ -3,6 +3,7 @@ title: "图们口岸眺望对岸"
 pubDatetime: 2026-04-04T17:15:00+08:00
 draft: false
 description: "一河之隔，两个世界"
+image: https://img.bins.blog/2026/04/tumen-border/file_26---276c45c2-f02b-47d6-b617-2894cfb6fcb1.jpg
 ---
 
 图们口岸眺望对岸，一河之隔，两个世界。
