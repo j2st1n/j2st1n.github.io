@@ -53,6 +53,27 @@ const normalPosts = sortedPosts.filter(({ data }) => !data.featured);
       )
     }
 
+    <section class="my-10 rounded-2xl border border-border bg-card/40 px-5 py-6 text-center">
+      <div class="mx-auto max-w-2xl space-y-3">
+        <p class="text-sm tracking-wide text-muted-foreground uppercase">摸鱼推荐</p>
+        <h2 class="text-2xl font-semibold">来玩我做的修仙互动小说</h2>
+        <p class="text-muted-foreground">
+          一边摸鱼，一边修仙。点进去，你的每个选择都会改命。
+        </p>
+        <div class="pt-2">
+          <LinkButton
+            href="https://xiuxian.bins.blog"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-accent"
+          >
+            立即开修
+            <IconArrowRight class="inline-block rtl:-rotate-180" />
+          </LinkButton>
+        </div>
+      </div>
+    </section>
+
     <div class="my-8 text-center">
       <LinkButton href="/posts/">
         全部文章
