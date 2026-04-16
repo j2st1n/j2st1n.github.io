@@ -1,12 +1,14 @@
 ---
+author: J2
 title: 你租的 AI 工具，随时可以不让你用
-canonical_slug: ai-tool-rental-fragility
-status: approved
-audience: 正在使用 ChatGPT/Claude/Gemini 的普通用户——开发者、内容创作者、日常办公人群
-tone: 观察型 / 有切身感受 / 克制但有判断
-updated_at: 2026-04-16
-summary: 2026年4月，Claude 开始要求用户上传护照和刷脸才能继续使用。这不是某个平台的任性，而是 AI 工具租赁模式的固有风险：你从来没有真正拥有过它。
-wechat_cover: https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80
+description: 2026年4月，Claude 开始要求用户上传护照和刷脸才能继续使用。这不是某个平台的任性，而是 AI 工具租赁模式的固有风险：你从来没有真正拥有过它。
+pubDatetime: 2026-04-16T16:00:00+08:00
+tags:
+  - AI
+  - 科技观察
+featured: false
+draft: false
+ogImage: https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80
 ---
 
 4 月 14 号，Anthropic 发了个公告，说 Claude 要开始搞身份验证了。
