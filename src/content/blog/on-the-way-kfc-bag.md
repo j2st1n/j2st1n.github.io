@@ -39,6 +39,8 @@ draft: false
 
 如果非要给这样的画面加一句话，我大概会写：
 
+![在路上的纸袋与晚霞](https://img.bins.blog/2026/04/uploads/on-the-way-kfc-bag---a0ff8c2f.jpg)
+
 > 不止目的地，还有路上的每一刻。
 
 人总要往前走，但别只盯着终点。
