@@ -4,6 +4,8 @@ title: 在路上
 slug: on-the-way-kfc-bag
 description: 目的地当然重要，但很多时候，真正被记住的反而是路上的那一刻。
 pubDatetime: 2026-04-30T21:44:00+08:00
+image: https://img.bins.blog/2026/04/uploads/on-the-way-kfc-bag---a0ff8c2f.jpg
+ogImage: https://img.bins.blog/2026/04/uploads/on-the-way-kfc-bag---a0ff8c2f.jpg
 tags:
   - 随笔
   - 旅行
