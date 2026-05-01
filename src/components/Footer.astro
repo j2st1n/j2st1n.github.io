@@ -94,11 +94,11 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
       const { years, months, days, hours, minutes, seconds } = diffParts(startDate, now);
       const parts = [];
       if (years > 0) parts.push(`${years}年`);
-      if (months > 0) parts.push(`${months}月`);
-      if (days > 0) parts.push(`${days}日`);
-      if (hours > 0) parts.push(`${pad(hours)}时`);
-      if (minutes > 0) parts.push(`${pad(minutes)}分`);
-      parts.push(`${pad(seconds)}秒`);
+      if (months > 0) parts.push(`${months}个月`);
+      if (days > 0) parts.push(`${days}天`);
+      if (hours > 0) parts.push(`${hours}小时`);
+      if (minutes > 0) parts.push(`${minutes}分钟`);
+      parts.push(`${seconds}秒`);
       el.textContent = `已摸鱼 ${parts.join("")}`;
     };
 
