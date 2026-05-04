@@ -17,6 +17,19 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_GISCUS_REPO: j2st1n/j2st1n.github.io
+      PUBLIC_GISCUS_REPO_ID: R_kgDORnRgRQ
+      PUBLIC_GISCUS_CATEGORY: Announcements
+      PUBLIC_GISCUS_CATEGORY_ID: DIC_kwDORnRgRc4C8TS8
+      PUBLIC_GISCUS_MAPPING: pathname
+      PUBLIC_GISCUS_STRICT: "0"
+      PUBLIC_GISCUS_REACTIONS_ENABLED: "1"
+      PUBLIC_GISCUS_INPUT_POSITION: bottom
+      PUBLIC_GISCUS_LANG: zh-CN
+      PUBLIC_GISCUS_LOADING: lazy
+      PUBLIC_GISCUS_EMIT_METADATA: "0"
+      PUBLIC_GISCUS_ENABLED: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
