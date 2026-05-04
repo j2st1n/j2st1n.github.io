@@ -53,6 +53,86 @@ export default defineConfig({
         context: "client",
         optional: true,
       }),
+      PUBLIC_GISCUS_REPO: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_REPO_ID: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_CATEGORY: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_CATEGORY_ID: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_MAPPING: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_STRICT: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_REACTIONS_ENABLED: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_INPUT_POSITION: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_LANG: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_LOADING: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_LAZY: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_ORIGIN: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_EMIT_METADATA: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_TERM: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_CATEGORY_STRICT: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_GISCUS_ENABLED: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
     },
   },
   experimental: {

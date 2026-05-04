@@ -1,0 +1,72 @@
+---
+import {
+  PUBLIC_GISCUS_CATEGORY,
+  PUBLIC_GISCUS_CATEGORY_ID,
+  PUBLIC_GISCUS_ENABLED,
+  PUBLIC_GISCUS_EMIT_METADATA,
+  PUBLIC_GISCUS_INPUT_POSITION,
+  PUBLIC_GISCUS_LANG,
+  PUBLIC_GISCUS_LOADING,
+  PUBLIC_GISCUS_MAPPING,
+  PUBLIC_GISCUS_ORIGIN,
+  PUBLIC_GISCUS_REACTIONS_ENABLED,
+  PUBLIC_GISCUS_REPO,
+  PUBLIC_GISCUS_REPO_ID,
+  PUBLIC_GISCUS_STRICT,
+  PUBLIC_GISCUS_TERM,
+} from "astro:env/client";
+
+const giscusEnabled = PUBLIC_GISCUS_ENABLED !== "false";
+const repo = PUBLIC_GISCUS_REPO?.trim();
+const repoId = PUBLIC_GISCUS_REPO_ID?.trim();
+const category = PUBLIC_GISCUS_CATEGORY?.trim();
+const categoryId = PUBLIC_GISCUS_CATEGORY_ID?.trim();
+
+const isConfigured = Boolean(repo && repoId && category && categoryId);
+const mapping = PUBLIC_GISCUS_MAPPING?.trim() || "pathname";
+const strict = PUBLIC_GISCUS_STRICT?.trim() || "0";
+const reactionsEnabled = PUBLIC_GISCUS_REACTIONS_ENABLED?.trim() || "1";
+const inputPosition = PUBLIC_GISCUS_INPUT_POSITION?.trim() || "bottom";
+const lang = PUBLIC_GISCUS_LANG?.trim() || "zh-CN";
+const loading = PUBLIC_GISCUS_LOADING?.trim() || "lazy";
+const emitMetadata = PUBLIC_GISCUS_EMIT_METADATA?.trim() || "0";
+const term = PUBLIC_GISCUS_TERM?.trim() || "";
+const origin = PUBLIC_GISCUS_ORIGIN?.trim() || "https://giscus.app";
+---
+
+{giscusEnabled && (
+  <section class="mt-10" aria-label="评论区">
+    <h2 class="mb-4 text-xl font-bold text-accent">评论</h2>
+
+    {
+      isConfigured ? (
+        <div class="giscus-shell rounded-2xl border border-border/60 bg-background/60 p-3 sm:p-4">
+          <script
+            is:inline
+            src="https://giscus.app/client.js"
+            data-repo={repo}
+            data-repo-id={repoId}
+            data-category={category}
+            data-category-id={categoryId}
+            data-mapping={mapping}
+            data-strict={strict}
+            data-reactions-enabled={reactionsEnabled}
+            data-emit-metadata={emitMetadata}
+            data-input-position={inputPosition}
+            data-theme="preferred_color_scheme"
+            data-lang={lang}
+            data-loading={loading}
+            data-term={term}
+            data-origin={origin}
+            crossorigin="anonymous"
+            async
+          ></script>
+        </div>
+      ) : (
+        <div class="rounded-2xl border border-dashed border-border/70 bg-muted/30 p-4 text-sm text-foreground/75">
+          Giscus 已接入代码，但尚未配置仓库参数。请补充公开环境变量后启用评论区。
+        </div>
+      )
+    }
+  </section>
+)}
