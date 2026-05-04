@@ -46,7 +46,6 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 
 <script is:inline>
   (() => {
-    const pad = (n) => String(n).padStart(2, "0");
     const el = document.querySelector("[data-blog-uptime]");
     if (!el) return;
 
