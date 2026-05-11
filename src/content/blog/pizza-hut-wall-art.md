@@ -13,6 +13,4 @@ draft: false
 ogImage: https://img.bins.blog/2026/05/blog/dogs-and-human-on-couch---0716cada.jpg
 ---
 
-必胜客墙上的插画。
-
 ![必胜客墙上的插画](https://img.bins.blog/2026/05/blog/dogs-and-human-on-couch---0716cada.jpg)
