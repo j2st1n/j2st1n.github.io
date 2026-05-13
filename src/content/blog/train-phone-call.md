@@ -7,6 +7,7 @@ tags:
   - 随笔
   - 火车
   - 生活
+ogImage: https://img.bins.blog/2026/05/blog/train-phone-call---6995baa5.jpg
 draft: false
 ---
 
