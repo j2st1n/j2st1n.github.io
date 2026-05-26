@@ -29,3 +29,9 @@ pnpm-debug.log*
 # pagefind
 
 public/pagefind
+
+# Obsidian (vault config, plugins, workspace — local only)
+src/content/.obsidian/
+
+# Obsidian dashboard (builder-only file, not a blog post)
+src/content/_dashboard.md
