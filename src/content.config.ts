@@ -3,7 +3,6 @@ import { glob } from "astro/loaders";
 import { SITE } from "@/config";
 
 // Where your blog posts live.
-// (We keep upstream docs/examples under src/data/blog.upstream)
 export const BLOG_PATH = "src/content/blog";
 
 const blog = defineCollection({
