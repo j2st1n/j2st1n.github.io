@@ -53,6 +53,8 @@ Obsidian 调整 → Git push
 ### 3. 图片上传自动化
 
 装了个叫「Image Uploader to API」的社区插件，粘贴图片自动 POST 到 Cloudflare Worker → 写入 R2 → 返回 URL → 替换成标准 Markdown 图片语法。
+![](https://img.bins.blog/2026/05/uploads/image---70a86c71.png)
+<center>图为用Dateview建立的Blog看板</center>
 
 ### 4. Git 发布
 
