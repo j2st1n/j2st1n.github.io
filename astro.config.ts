@@ -33,10 +33,6 @@ export default defineConfig({
     },
   },
   vite: {
-    // eslint-disable-next-line
-    // @ts-ignore
-    // This will be fixed in Astro 6 with Vite 7 support
-    // See: https://github.com/withastro/astro/issues/14030
     plugins: [tailwindcss()],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
@@ -103,11 +99,6 @@ export default defineConfig({
         context: "client",
         optional: true,
       }),
-      PUBLIC_GISCUS_LAZY: envField.string({
-        access: "public",
-        context: "client",
-        optional: true,
-      }),
       PUBLIC_GISCUS_ORIGIN: envField.string({
         access: "public",
         context: "client",
@@ -119,11 +110,6 @@ export default defineConfig({
         optional: true,
       }),
       PUBLIC_GISCUS_TERM: envField.string({
-        access: "public",
-        context: "client",
-        optional: true,
-      }),
-      PUBLIC_GISCUS_CATEGORY_STRICT: envField.string({
         access: "public",
         context: "client",
         optional: true,
