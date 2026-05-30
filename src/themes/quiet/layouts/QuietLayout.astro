@@ -1,0 +1,55 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import QuietHeader from "../components/QuietHeader.astro";
+import "../styles/quiet.css";
+
+type Props = {
+  title?: string;
+  description?: string;
+  pubDatetime?: Date;
+  modDatetime?: Date | null;
+  scrollSmooth?: boolean;
+  showHeader?: boolean;
+};
+
+const {
+  title,
+  description,
+  pubDatetime,
+  modDatetime,
+  scrollSmooth = false,
+  showHeader = true,
+} = Astro.props;
+---
+
+<Layout
+  noindex
+  title={title}
+  description={description}
+  pubDatetime={pubDatetime}
+  modDatetime={modDatetime}
+  scrollSmooth={scrollSmooth}
+>
+  {showHeader && <a id="skip-to-content" href="#main-content" class="preview-skip">跳到正文</a>}
+  {showHeader && <QuietHeader />}
+  <slot />
+  <script is:inline>
+    const themeButton = document.querySelector("#theme-btn");
+    const html = document.documentElement;
+
+    function syncThemeLabel() {
+      themeButton?.setAttribute(
+        "aria-label",
+        html.dataset.theme === "dark" ? "切换到浅色主题" : "切换到深色主题"
+      );
+    }
+
+    syncThemeLabel();
+    themeButton?.addEventListener("click", () => {
+      const nextTheme = html.dataset.theme === "dark" ? "light" : "dark";
+      html.dataset.theme = nextTheme;
+      localStorage.setItem("theme", nextTheme);
+      syncThemeLabel();
+    });
+  </script>
+</Layout>

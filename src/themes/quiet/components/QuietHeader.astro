@@ -1,0 +1,31 @@
+---
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSearch from "@/assets/icons/IconSearch.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import SiteLogo from "@/assets/icons/SiteLogo.svg";
+import { SITE } from "@/config";
+---
+
+<header class="preview-header" aria-label="站点导航">
+  <div class="preview-header-inner">
+    <a href="/quiet" class="preview-brand" aria-label={`${SITE.title} 首页预览`}>
+      <SiteLogo class="brand-logo" aria-hidden="true" />
+      <span>{SITE.title}</span>
+    </a>
+    <nav class="preview-tools" aria-label="站点工具">
+      <a href="/quiet/search" class="tool-link" title="搜索" aria-label="搜索">
+        <IconSearch />
+      </a>
+      <button
+        id="theme-btn"
+        class="theme-button"
+        title="切换明暗主题"
+        aria-label="auto"
+        aria-live="polite"
+      >
+        <IconMoon class="theme-icon moon-icon" />
+        <IconSunHigh class="theme-icon sun-icon" />
+      </button>
+    </nav>
+  </div>
+</header>

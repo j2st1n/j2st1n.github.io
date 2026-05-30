@@ -1,0 +1,28 @@
+---
+import { SITE } from "@/config";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-legal">
+    <span>© {currentYear} {SITE.title}</span>
+    <span class="separator">·</span>
+    <a
+      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      rel="license noopener"
+      target="_blank"
+    >
+      CC BY-NC-SA 4.0
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="/quiet/archives">Archive</a>
+    <span class="separator">·</span>
+    <a href="/quiet/tags">Tags</a>
+    <span class="separator">·</span>
+    <a href="/rss.xml" target="_blank">RSS</a>
+    <span class="separator">·</span>
+    <a href={SITE.profile} target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
