@@ -6,15 +6,7 @@ export const SITE = {
   title: "摸鱼时刻",
   ogImage: "",
   lightAndDarkMode: true,
-  postPerIndex: 6,
-  postPerPage: 6,
   showArchives: true,
-  showBackButton: true, // show back button in post detail
-  editPost: {
-    enabled: false,
-    text: "Edit page",
-    url: "https://github.com/j2st1n/j2st1n.github.io/edit/main/",
-  },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
   lang: "zh-CN", // html lang code.
