@@ -38,7 +38,7 @@ Quiet is the experimental next theme for bins.blog. Keep it isolated under `/qui
 
 - [x] Refine `/quiet/tags` for high-frequency tags and all-tags discovery.
 - [x] Refine `/quiet/all-tags` for large tag counts and long tag names.
-- [ ] Refine `/quiet/search` and decide whether it should use Pagefind or remain a lightweight local preview.
+- [x] Refine `/quiet/search` as a lightweight local title, summary, and tag search that stays inside quiet routes.
 - [ ] Refine `/quiet/about` copy and layout.
 - [ ] Refine `/quiet/404` so it works as a real not-found page candidate, not only an animation sketch.
 
