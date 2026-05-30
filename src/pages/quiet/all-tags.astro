@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import QuietFooter from "@/themes/quiet/components/QuietFooter.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
 import getUniqueTags from "@/utils/getUniqueTags";
 import { SITE } from "@/config";
@@ -31,7 +30,6 @@ const latestDate = posts.length
         <a href={`/quiet/tags/${tag}/`} class="tag-pill"><span>{tagName}</span><small>{count} 篇</small></a>
       ))}
     </section>
-    <QuietFooter />
   </main>
 </QuietLayout>
 
@@ -65,10 +63,6 @@ const latestDate = posts.length
   .tag-pill span { color: var(--foreground); font-size: 1rem; font-weight: 560; line-height: 1.6; letter-spacing: -0.025em; transition: color 0.2s ease, transform 0.2s ease; }
   .tag-pill small { color: var(--preview-muted); font-size: 0.8125rem; white-space: nowrap; }
   .tag-pill:hover span { color: var(--accent); transform: translateX(0.125rem); }
-  .site-footer { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--preview-line); display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--preview-muted); font-size: 0.8125rem; line-height: 1.7; }
-  .footer-legal, .footer-links { display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-  .site-footer a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
-  .site-footer a:hover { color: var(--accent); }
   .separator { color: color-mix(in oklch, var(--preview-muted), transparent 42%); }
-  @media (max-width: 640px) { .preview-page { padding-top: 3.75rem; } .tags-grid { grid-template-columns: 1fr; } .tag-pill:nth-child(n) { padding-left: 0; padding-right: 0; } .site-footer { align-items: flex-start; flex-direction: column-reverse; gap: 0.5rem; } }
+  @media (max-width: 640px) { .preview-page { padding-top: 3.75rem; } .tags-grid { grid-template-columns: 1fr; } .tag-pill:nth-child(n) { padding-left: 0; padding-right: 0; } }
 </style>

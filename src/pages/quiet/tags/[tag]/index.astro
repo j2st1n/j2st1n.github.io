@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import QuietFooter from "@/themes/quiet/components/QuietFooter.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
 import getUniqueTags from "@/utils/getUniqueTags";
 import { getQuietPath } from "@/utils/getQuietPath";
@@ -69,7 +68,6 @@ const formatFullDate = (date: string | Date) =>
       </ul>
     </section>
 
-    <QuietFooter />
   </main>
 </QuietLayout>
 

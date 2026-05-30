@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import QuietFooter from "@/themes/quiet/components/QuietFooter.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
 import getUniqueTags from "@/utils/getUniqueTags";
 import { getQuietPath } from "@/utils/getQuietPath";
@@ -65,7 +64,6 @@ const postItems = previewTag?.posts.map(post => ({
       </ul>
     </section>
 
-    <QuietFooter />
   </main>
 </QuietLayout>
 
@@ -105,10 +103,6 @@ const postItems = previewTag?.posts.map(post => ({
   .post-title { color: var(--foreground); font-size: 1.05rem; font-weight: 560; line-height: 1.65; letter-spacing: -0.025em; transition: color 0.2s ease, transform 0.2s ease; }
   .post-desc { color: var(--preview-muted); font-size: 0.875rem; line-height: 1.8; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .post-link:hover .post-title { color: var(--accent); transform: translateX(0.125rem); }
-  .site-footer { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--preview-line); display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--preview-muted); font-size: 0.8125rem; line-height: 1.7; }
-  .footer-legal, .footer-links { display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-  .site-footer a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
-  .site-footer a:hover { color: var(--accent); }
   .separator { color: color-mix(in oklch, var(--preview-muted), transparent 42%); }
-  @media (max-width: 640px) { .preview-page { padding-top: 3.75rem; } .hero-line { align-items: center; } .all-tags-link { position: static; font-size: 0.8125rem; } .post-link { grid-template-columns: 1fr; gap: 0.2rem; padding: 1rem 0; } .post-link time { font-size: 0.75rem; } .site-footer { align-items: flex-start; flex-direction: column-reverse; gap: 0.5rem; } }
+  @media (max-width: 640px) { .preview-page { padding-top: 3.75rem; } .hero-line { align-items: center; } .all-tags-link { position: static; font-size: 0.8125rem; } .post-link { grid-template-columns: 1fr; gap: 0.2rem; padding: 1rem 0; } .post-link time { font-size: 0.75rem; } }
 </style>
