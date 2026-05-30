@@ -1,8 +1,9 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
+import Comments from "@/components/Comments.astro";
 import QuietLayout from "./QuietLayout.astro";
 import { SITE } from "@/config";
-import { getQuietPath } from "@/utils/getQuietPath";
+import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -63,7 +64,7 @@ const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
             <span class="separator">·</span>
             <span class="meta-tags">
               {tags.map(tag => (
-                <a href={`/quiet/tags/${slugifyStr(tag)}/`}>{tag}</a>
+                <a href={`/tags/${slugifyStr(tag)}/`}>{tag}</a>
               ))}
             </span>
           </>
@@ -75,16 +76,20 @@ const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
       <Content />
     </article>
 
+    <div class="article-comments">
+      <Comments />
+    </div>
+
     <footer class="article-end" aria-label="文章页脚">
       <nav class={postNavClass} aria-label="上一篇和下一篇文章">
         {prevPost && (
-          <a href={getQuietPath(prevPost.id, prevPost.filePath)} class="post-nav-link post-nav-prev">
+          <a href={getPath(prevPost.id, prevPost.filePath)} class="post-nav-link post-nav-prev">
             <span>上一篇</span>
             <strong>{prevPost.data.title}</strong>
           </a>
         )}
         {nextPost && (
-          <a href={getQuietPath(nextPost.id, nextPost.filePath)} class="post-nav-link post-nav-next">
+          <a href={getPath(nextPost.id, nextPost.filePath)} class="post-nav-link post-nav-next">
             <span>下一篇</span>
             <strong>{nextPost.data.title}</strong>
           </a>
@@ -178,6 +183,11 @@ const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
   .article-body {
     max-width: var(--article-width);
     margin-top: 3rem;
+  }
+
+  .article-comments {
+    max-width: var(--article-width);
+    margin: 0 auto;
   }
 
   .article-body :global(p),
