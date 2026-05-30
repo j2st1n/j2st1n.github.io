@@ -1,7 +1,6 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
 import QuietLayout from "./QuietLayout.astro";
-import QuietFooter from "../components/QuietFooter.astro";
 import { SITE } from "@/config";
 import { getQuietPath } from "@/utils/getQuietPath";
 import { slugifyStr } from "@/utils/slugify";
@@ -93,7 +92,6 @@ const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
       </nav>
     </footer>
 
-    <QuietFooter />
   </main>
 </QuietLayout>
 

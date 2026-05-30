@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import QuietHeader from "../components/QuietHeader.astro";
+import QuietFooter from "../components/QuietFooter.astro";
 import "../styles/quiet.css";
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
   showHeader?: boolean;
+  footerMode?: "flow" | "balanced" | "none";
 };
 
 const {
@@ -19,6 +21,7 @@ const {
   modDatetime,
   scrollSmooth = false,
   showHeader = true,
+  footerMode = "flow",
 } = Astro.props;
 ---
 
@@ -30,9 +33,14 @@ const {
   modDatetime={modDatetime}
   scrollSmooth={scrollSmooth}
 >
-  {showHeader && <a id="skip-to-content" href="#main-content" class="preview-skip">跳到正文</a>}
-  {showHeader && <QuietHeader />}
-  <slot />
+  <div class="quiet-shell" data-footer-mode={footerMode}>
+    {showHeader && <a id="skip-to-content" href="#main-content" class="preview-skip">跳到正文</a>}
+    {showHeader && <QuietHeader />}
+    <div class="quiet-content">
+      <slot />
+    </div>
+    {footerMode !== "none" && <QuietFooter />}
+  </div>
   <script is:inline>
     const themeButton = document.querySelector("#theme-btn");
     const html = document.documentElement;
