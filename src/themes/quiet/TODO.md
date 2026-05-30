@@ -1,14 +1,14 @@
 # Quiet Theme TODO
 
-Quiet is the experimental next theme for bins.blog. Keep it isolated under `/quiet` until the items below are complete enough to replace the current theme.
+Quiet is the primary production theme for bins.blog. It started as an isolated `/quiet` experiment and has now replaced the previous root theme.
 
 ## Principles
 
-- Keep the current production theme untouched until quiet is explicitly promoted.
+- Keep theme-level primitives reusable across production routes.
 - Prefer reusable quiet components over page-level copy/paste.
 - Optimize for calm reading, clear archives, and low visual noise.
 - Test with real posts, real tags, long Chinese titles, code blocks, images, and mobile widths.
-- Keep `/quiet` excluded from sitemap, search indexing, and external discovery while experimental.
+- Keep production routes crawlable and avoid reintroducing preview-only `/quiet` routes.
 
 ## P0: Theme Foundation
 
@@ -44,16 +44,16 @@ Quiet is the experimental next theme for bins.blog. Keep it isolated under `/qui
 
 ## P4: Isolation And Release Readiness
 
-- [x] Confirm `/quiet` remains excluded from sitemap while experimental.
-- [x] Confirm quiet pages keep `noindex, nofollow` while experimental.
-- [x] Confirm quiet pages are not indexed by Pagefind while experimental.
+- [x] Promote quiet routes to production paths and remove the `/quiet` preview route tree.
+- [x] Remove quiet-only `noindex, nofollow` behavior from production pages.
+- [x] Replace Pagefind with the simpler title, summary, and tag search.
 - [x] Run `pnpm run build` after each structural change.
-- [ ] Before promotion, prepare a route switch plan and rollback plan.
-- [ ] Before promotion, remove preview-only markers and decide whether to delete or archive `/quiet` routes.
+- [x] Prepare a route switch plan and rollback plan before promotion.
+- [x] Remove preview-only markers and delete `/quiet` routes after promotion.
 
 ## Open Questions
 
-- Should quiet become a full replacement theme or remain an alternate reading mode?
-- Should quiet keep current site navigation labels, or use a smaller custom navigation vocabulary?
-- Should article pages include comments, edit links, share links, and back buttons, or intentionally omit them?
-- Should search in quiet use Pagefind results or a simpler title/tag-only search?
+- Quiet is replacing the current theme as the primary production theme.
+- Quiet keeps its smaller navigation vocabulary.
+- Article pages keep Giscus comments and intentionally omit edit/share/back affordances.
+- Search uses the simpler title, summary, and tag search instead of Pagefind.
