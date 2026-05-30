@@ -57,9 +57,9 @@ const yearGroups = Object.entries(groupedPosts).sort(
 );
 ---
 
-<QuietLayout title={`归档预览 | ${SITE.title}`} description="所有已发布文章的时间索引预览。">
+<QuietLayout title={`归档 | ${SITE.title}`} description="所有已发布文章的时间索引。">
 
-  <main id="main-content" class="archive-preview">
+  <main id="main-content" class="archive-page">
     <header class="archive-hero">
       <p class="archive-kicker">Archive</p>
       <h1>认真存档</h1>
@@ -114,15 +114,15 @@ const yearGroups = Object.entries(groupedPosts).sort(
 </QuietLayout>
 
 <style>
-  .archive-preview {
-    max-width: var(--preview-width);
+  .archive-page {
+    max-width: var(--content-width);
     margin: 0 auto;
     padding: 2rem 1rem 4rem;
   }
 
   .archive-hero {
     padding-bottom: 2.75rem;
-    border-bottom: 1px solid var(--preview-line);
+    border-bottom: 1px solid var(--border-color);
   }
 
   .archive-kicker {
@@ -157,7 +157,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
 
   .year-block {
     padding: 2.25rem 0;
-    border-bottom: 1px solid var(--preview-line);
+    border-bottom: 1px solid var(--border-color);
   }
 
   .year-head {
@@ -183,7 +183,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
   }
 
   .month-block {
-    border-top: 1px solid var(--preview-line);
+    border-top: 1px solid var(--border-color);
   }
 
   .month-block:first-child {
@@ -252,7 +252,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
   }
 
   .post-item {
-    border-bottom: 1px solid var(--preview-line);
+    border-bottom: 1px solid var(--border-color);
   }
 
   .post-item:last-child {
@@ -313,7 +313,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
   }
 
   @media (max-width: 640px) {
-    .archive-preview {
+    .archive-page {
       padding: 1.5rem 1rem 3rem;
     }
 

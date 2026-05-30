@@ -37,7 +37,7 @@ const formatFullDate = (date: string | Date) =>
 ---
 
 <QuietLayout title={`${tagName} | ${SITE.title}`} description={`包含标签「${tagName}」的所有文章。`}>
-  <main id="main-content" class="preview-page">
+  <main id="main-content" class="content-page">
     <header class="page-hero">
       <div class="hero-line">
         <p class="page-kicker">Tag</p>
@@ -72,9 +72,9 @@ const formatFullDate = (date: string | Date) =>
 </QuietLayout>
 
 <style>
-  .preview-page {
+  .content-page {
     width: 100%;
-    max-width: var(--preview-width);
+    max-width: var(--content-width);
     margin: 0 auto;
     padding: 5rem 1rem 3rem;
     color: var(--foreground);
@@ -82,7 +82,7 @@ const formatFullDate = (date: string | Date) =>
 
   .page-hero {
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--preview-line);
+    border-bottom: 1px solid var(--border-color);
   }
 
   .hero-line {
@@ -95,7 +95,7 @@ const formatFullDate = (date: string | Date) =>
 
   .page-kicker {
     margin: 0;
-    color: var(--preview-muted);
+    color: var(--text-muted);
     font-size: 0.75rem;
     line-height: 1;
     letter-spacing: 0.12em;
@@ -103,7 +103,7 @@ const formatFullDate = (date: string | Date) =>
   }
 
   .all-tags-link {
-    color: var(--preview-muted);
+    color: var(--text-muted);
     font-size: 0.875rem;
     line-height: 1.7;
     text-decoration: none;
@@ -127,7 +127,7 @@ const formatFullDate = (date: string | Date) =>
 
   .page-hero p {
     margin: 1.25rem 0 0;
-    color: var(--preview-muted);
+    color: var(--text-muted);
     font-size: 0.9375rem;
     line-height: 1.8;
   }
@@ -143,7 +143,7 @@ const formatFullDate = (date: string | Date) =>
   }
 
   .post-item + .post-item {
-    border-top: 1px solid var(--preview-line);
+    border-top: 1px solid var(--border-color);
   }
 
   .post-link {
@@ -156,7 +156,7 @@ const formatFullDate = (date: string | Date) =>
   }
 
   .post-link time {
-    color: var(--preview-muted);
+    color: var(--text-muted);
     font-size: 0.8125rem;
     line-height: 1.7;
     font-variant-numeric: tabular-nums;
@@ -178,7 +178,7 @@ const formatFullDate = (date: string | Date) =>
   }
 
   .post-desc {
-    color: var(--preview-muted);
+    color: var(--text-muted);
     font-size: 0.875rem;
     line-height: 1.8;
     display: -webkit-box;
@@ -193,7 +193,7 @@ const formatFullDate = (date: string | Date) =>
   }
 
   @media (max-width: 640px) {
-    .preview-page {
+    .content-page {
       padding-top: 3.75rem;
     }
 
