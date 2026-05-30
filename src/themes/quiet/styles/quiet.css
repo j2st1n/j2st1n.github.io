@@ -1,15 +1,15 @@
 :root {
-  --preview-width: 48rem;
-  --preview-line: oklch(88% 0.006 250);
-  --preview-muted: color-mix(in oklch, var(--foreground), transparent 48%);
+  --content-width: 48rem;
+  --border-color: oklch(88% 0.006 250);
+  --text-muted: color-mix(in oklch, var(--foreground), transparent 48%);
 }
 
 :root[data-theme="dark"] {
-  --preview-line: oklch(31% 0.006 250);
-  --preview-muted: color-mix(in oklch, var(--foreground), transparent 38%);
+  --border-color: oklch(31% 0.006 250);
+  --text-muted: color-mix(in oklch, var(--foreground), transparent 38%);
 }
 
-.preview-skip {
+.skip-link {
   position: absolute;
   inset-inline-start: 1rem;
   top: -100%;
@@ -20,18 +20,18 @@
   transition: top 0.2s ease;
 }
 
-.preview-skip:focus {
+.skip-link:focus {
   top: 1rem;
 }
 
-.preview-header {
+.site-header {
   width: 100%;
   padding-top: 1.5rem;
 }
 
-.preview-header-inner {
+.site-header-inner {
   width: 100%;
-  max-width: var(--preview-width);
+  max-width: var(--content-width);
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
@@ -40,7 +40,7 @@
   gap: 1rem;
 }
 
-.preview-brand {
+.site-brand {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -58,7 +58,7 @@
   flex-shrink: 0;
 }
 
-.preview-tools {
+.site-tools {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -139,15 +139,15 @@
 
 .site-footer {
   width: 100%;
-  max-width: var(--preview-width);
+  max-width: var(--content-width);
   margin: 0 auto;
   padding: 1.25rem 1rem 2.5rem;
-  border-top: 1px solid var(--preview-line);
+  border-top: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  color: var(--preview-muted);
+  color: var(--text-muted);
   font-size: 0.8125rem;
   line-height: 1.7;
 }
@@ -171,15 +171,15 @@
 }
 
 .separator {
-  color: color-mix(in oklch, var(--preview-muted), transparent 42%);
+  color: color-mix(in oklch, var(--text-muted), transparent 42%);
 }
 
 @media (max-width: 640px) {
-  .preview-header {
+  .site-header {
     padding-top: 1rem;
   }
 
-  .preview-brand {
+  .site-brand {
     font-size: 1.125rem;
   }
 
