@@ -130,25 +130,17 @@
 
 .quiet-content {
   width: 100%;
-}
-
-.quiet-shell[data-footer-mode="balanced"] .quiet-content {
-  min-block-size: clamp(18rem, 58svh, 34rem);
-  padding-block-end: clamp(3.5rem, 8svh, 6.5rem);
+  flex: 1;
 }
 
 .quiet-shell[data-footer-mode="none"] {
   min-block-size: 100svh;
 }
 
-.quiet-shell[data-footer-mode="balanced"] .site-footer {
-  margin-block-start: auto;
-}
-
 .site-footer {
   width: 100%;
   max-width: var(--preview-width);
-  margin: clamp(3.5rem, 8svh, 6.5rem) auto 0;
+  margin: 0 auto;
   padding: 1.25rem 1rem 2.5rem;
   border-top: 1px solid var(--preview-line);
   display: flex;
