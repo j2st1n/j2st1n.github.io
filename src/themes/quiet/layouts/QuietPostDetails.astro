@@ -1,0 +1,426 @@
+---
+import { type CollectionEntry, render } from "astro:content";
+import QuietLayout from "./QuietLayout.astro";
+import QuietFooter from "../components/QuietFooter.astro";
+import { SITE } from "@/config";
+import { getQuietPath } from "@/utils/getQuietPath";
+import { slugifyStr } from "@/utils/slugify";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+type Props = {
+  post: CollectionEntry<"blog">;
+  posts: CollectionEntry<"blog">[];
+  titleSuffix?: string;
+};
+
+const { post, posts, titleSuffix } = Astro.props;
+const { Content } = await render(post);
+const { title, description, pubDatetime, modDatetime, tags, timezone: postTimezone } = post.data;
+const displayTimezone = postTimezone ?? SITE.timezone;
+const postIndex = posts.findIndex(item => item.id === post.id);
+const prevPost = postIndex > 0 ? posts[postIndex - 1] : null;
+const nextPost = postIndex >= 0 && postIndex < posts.length - 1
+  ? posts[postIndex + 1]
+  : null;
+const postNavClass = [
+  "post-nav",
+  prevPost && !nextPost ? "post-nav-only-prev" : "",
+  nextPost && !prevPost ? "post-nav-only-next" : "",
+].filter(Boolean).join(" ");
+
+const formatFullDate = (date: string | Date) =>
+  dayjs(date).tz(displayTimezone).format("YYYY.MM.DD");
+
+const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
+---
+
+<QuietLayout
+  title={`${title}${titleSuffix ? ` | ${titleSuffix}` : ""} | ${SITE.title}`}
+  description={description}
+  pubDatetime={pubDatetime}
+  modDatetime={modDatetime}
+  scrollSmooth
+>
+
+  <main id="main-content" class="article-preview">
+    <header class="article-hero">
+      <h1 transition:name={slugifyStr(title.replaceAll(".", "-"))}>{title}</h1>
+      <p>{description}</p>
+      <div class="article-meta">
+        <time datetime={new Date(pubDatetime).toISOString()}>{formatFullDate(pubDatetime)}</time>
+        {updatedDate && (
+          <>
+            <span class="separator">·</span>
+            <span>更新 {updatedDate}</span>
+          </>
+        )}
+        {tags.length > 0 && (
+          <>
+            <span class="separator">·</span>
+            <span class="meta-tags">
+              {tags.map(tag => (
+                <a href={`/quiet/tags/${slugifyStr(tag)}/`}>{tag}</a>
+              ))}
+            </span>
+          </>
+        )}
+      </div>
+    </header>
+
+    <article id="article" class="article-body app-prose prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)">
+      <Content />
+    </article>
+
+    <footer class="article-end" aria-label="文章页脚">
+      <nav class={postNavClass} aria-label="上一篇和下一篇文章">
+        {prevPost && (
+          <a href={getQuietPath(prevPost.id, prevPost.filePath)} class="post-nav-link post-nav-prev">
+            <span>上一篇</span>
+            <strong>{prevPost.data.title}</strong>
+          </a>
+        )}
+        {nextPost && (
+          <a href={getQuietPath(nextPost.id, nextPost.filePath)} class="post-nav-link post-nav-next">
+            <span>下一篇</span>
+            <strong>{nextPost.data.title}</strong>
+          </a>
+        )}
+      </nav>
+    </footer>
+
+    <QuietFooter />
+  </main>
+</QuietLayout>
+
+<style>
+  :global(html) {
+    --article-width: 42rem;
+    --article-progress-line: oklch(64% 0.012 250);
+  }
+
+  :global(html[data-theme="dark"]) {
+    --article-progress-line: oklch(48% 0.012 250);
+  }
+
+  .article-preview {
+    max-width: var(--preview-width);
+    margin: 0 auto;
+    padding: 2.5rem 1rem 4.5rem;
+  }
+
+  .article-hero {
+    max-width: var(--article-width);
+    padding: clamp(3rem, 8vw, 5.25rem) 0 2.35rem;
+    border-bottom: 1px solid var(--preview-line);
+  }
+
+  .article-hero h1 {
+    max-width: 11.5em;
+    color: var(--foreground);
+    font-size: clamp(2.125rem, 5vw, 3.875rem);
+    font-weight: 650;
+    line-height: 1.16;
+    letter-spacing: -0.056em;
+    text-wrap: balance;
+  }
+
+  .article-hero p {
+    margin-top: 1.35rem;
+    max-width: 35rem;
+    color: var(--foreground);
+    opacity: 0.62;
+    font-size: 1.02rem;
+    line-height: 1.82;
+    text-wrap: pretty;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0;
+    margin-top: 1.65rem;
+    color: var(--foreground);
+    opacity: 0.48;
+    font-size: 0.8125rem;
+    line-height: 1.8;
+  }
+
+  .meta-tags {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .meta-tags a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .meta-tags a::before {
+    content: "#";
+    opacity: 0.42;
+  }
+
+  .meta-tags a:hover {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  .article-meta .separator {
+    margin: 0 0.375rem;
+  }
+
+  .article-body {
+    max-width: var(--article-width);
+    margin-top: 3rem;
+  }
+
+  .article-body :global(p),
+  .article-body :global(li) {
+    line-height: 1.92;
+  }
+
+  .article-body :global(p) {
+    text-wrap: pretty;
+  }
+
+  .article-body :global(h2),
+  .article-body :global(h3),
+  .article-body :global(h4),
+  .article-body :global(h5),
+  .article-body :global(h6) {
+    scroll-margin-top: 5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .article-body :global(h2) {
+    margin-top: 2.55em;
+  }
+
+  .article-body :global(h3) {
+    margin-top: 2.15em;
+  }
+
+  .article-body :global(a) {
+    text-decoration-thickness: 0.06em;
+    text-underline-offset: 0.18em;
+  }
+
+  .article-body :global(p + ul),
+  .article-body :global(p + ol) {
+    margin-top: 1.15em;
+  }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    padding-inline-start: 1.35em;
+  }
+
+  .article-body :global(li) {
+    padding-inline-start: 0.15em;
+  }
+
+  .article-body :global(blockquote) {
+    border-inline-start-color: var(--preview-line);
+    color: color-mix(in oklch, var(--foreground), transparent 18%);
+  }
+
+  .article-body :global(hr) {
+    border-color: var(--preview-line);
+  }
+
+  .article-body :global(pre) {
+    border: 1px solid var(--preview-line);
+    border-radius: 0.9rem;
+  }
+
+  .article-body :global(code) {
+    font-family: var(--font-code);
+  }
+
+  :global(.article-progress-bar) {
+    background: var(--article-progress-line);
+  }
+
+  :global(.copy-code) {
+    opacity: 0.62;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  :global(.copy-code:hover),
+  :global(.copy-code:focus-visible) {
+    border-color: var(--accent);
+    opacity: 1;
+  }
+
+  .article-end {
+    max-width: var(--article-width);
+    margin-top: 3.5rem;
+    padding-top: 1.85rem;
+    border-top: 1px solid var(--preview-line);
+  }
+
+  .post-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .post-nav-link {
+    min-width: 0;
+    max-width: 22rem;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  .post-nav-link span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--foreground);
+    opacity: 0.34;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .post-nav-link strong {
+    display: block;
+    color: var(--foreground);
+    opacity: 0.62;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.65;
+    text-wrap: pretty;
+    transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .post-nav-prev {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .post-nav-next {
+    grid-column: 2;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .post-nav-link:hover strong,
+  .post-nav-link:focus-visible strong {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  .post-nav-prev:hover strong,
+  .post-nav-prev:focus-visible strong {
+    transform: translateX(-2px);
+  }
+
+  .post-nav-next:hover strong,
+  .post-nav-next:focus-visible strong {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 640px) {
+    .article-preview {
+      padding: 1.75rem 1rem 3.25rem;
+    }
+
+    .article-hero {
+      padding: 2.35rem 0 2rem;
+    }
+
+    .article-hero h1 {
+      font-size: 2rem;
+      letter-spacing: -0.045em;
+    }
+
+    .article-hero p {
+      font-size: 0.98rem;
+    }
+
+    .article-body {
+      margin-top: 2.45rem;
+    }
+
+    .post-nav {
+      gap: 1.25rem;
+    }
+
+    .post-nav-link {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script is:inline data-astro-rerun>
+  function createProgressBar() {
+    if (document.querySelector("[data-article-progress]")) return;
+    const progressContainer = document.createElement("div");
+    progressContainer.className = "fixed top-0 z-10 h-px w-full bg-background";
+    progressContainer.setAttribute("data-article-progress", "");
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "article-progress-bar h-px w-0";
+    progressBar.id = "article-progress-bar";
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+
+  function updateScrollProgress() {
+    if (window.__quietArticleProgressBound) return;
+    window.__quietArticleProgressBound = true;
+    document.addEventListener("scroll", () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      const progressBar = document.getElementById("article-progress-bar");
+      if (progressBar) progressBar.style.width = scrolled + "%";
+    }, { passive: true });
+  }
+
+  function addHeadingLinks() {
+    const headings = Array.from(document.querySelectorAll("#article h2, #article h3, #article h4, #article h5, #article h6"));
+    for (const heading of headings) {
+      if (heading.querySelector(".heading-link")) continue;
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className = "heading-link ms-2 no-underline opacity-60 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+
+  function attachCopyButtons() {
+    const codeBlocks = Array.from(document.querySelectorAll("#article pre"));
+    for (const codeBlock of codeBlocks) {
+      if (codeBlock.querySelector(".copy-code")) continue;
+      codeBlock.style.position = "relative";
+      const copyButton = document.createElement("button");
+      copyButton.className = "copy-code absolute end-3 top-3 rounded border border-muted bg-muted px-2 py-1 text-xs leading-4 text-foreground";
+      copyButton.textContent = "Copy";
+      copyButton.addEventListener("click", async () => {
+        const code = codeBlock.querySelector("code")?.textContent ?? "";
+        await navigator.clipboard.writeText(code);
+        copyButton.textContent = "Copied";
+        setTimeout(() => { copyButton.textContent = "Copy"; }, 700);
+      });
+      codeBlock.appendChild(copyButton);
+    }
+  }
+
+  createProgressBar();
+  updateScrollProgress();
+  addHeadingLinks();
+  attachCopyButtons();
+</script>
