@@ -1,0 +1,30 @@
+---
+import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
+import { SITE } from "@/config";
+---
+
+<QuietLayout showHeader={false} title={`404 预览 | ${SITE.title}`} description="新版 404 页面的轻量预览。">
+  <main class="fish-page" aria-label="404 页面预览">
+    <div class="fish-lane" aria-hidden="true">
+      <div class="fish">
+        <span class="fish-body"></span>
+        <span class="fish-tail"></span>
+        <span class="fish-eye"></span>
+      </div>
+    </div>
+    <span class="sr-only">404</span>
+  </main>
+</QuietLayout>
+
+<style>
+  .fish-page { min-height: 100vh; overflow: hidden; background: var(--background); }
+  .fish-lane { position: fixed; inset: 0; display: grid; place-items: center; }
+  .fish { position: relative; width: 5.5rem; height: 2.35rem; color: color-mix(in oklch, var(--foreground), transparent 30%); animation: swim-away 5.8s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+  .fish-body { position: absolute; inset: 0.2rem 1.05rem 0.2rem 0; border: 1.5px solid currentColor; border-radius: 999px 70% 70% 999px; background: color-mix(in oklch, var(--background), currentColor 3%); }
+  .fish-tail { position: absolute; right: 0; top: 50%; width: 1.45rem; height: 1.7rem; border: 1.5px solid currentColor; border-left: 0; transform: translateY(-50%) rotate(45deg); border-radius: 0.2rem 0.55rem 0.2rem 0.55rem; animation: tail-flick 0.72s ease-in-out infinite alternate; transform-origin: left center; }
+  .fish-eye { position: absolute; left: 0.95rem; top: 0.82rem; width: 0.22rem; height: 0.22rem; border-radius: 50%; background: currentColor; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @keyframes swim-away { 0% { opacity: 0; transform: translateX(-48vw) translateY(0) rotate(0deg); } 12% { opacity: 1; } 62% { opacity: 0.88; transform: translateX(8vw) translateY(-0.35rem) rotate(-2deg); } 100% { opacity: 0; transform: translateX(58vw) translateY(-1.2rem) rotate(-4deg); } }
+  @keyframes tail-flick { from { transform: translateY(-50%) rotate(38deg) skewX(-6deg); } to { transform: translateY(-50%) rotate(52deg) skewX(6deg); } }
+  @media (prefers-reduced-motion: reduce) { .fish { animation: none; transform: none; } .fish-tail { animation: none; } }
+</style>
