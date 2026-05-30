@@ -33,18 +33,16 @@ pnpm run build
 
 - Astro 类型检查
 - 静态站点构建
-- Pagefind 站内搜索索引生成
 
 ## 技术栈
 
 - [Astro](https://astro.build/)
 - TypeScript
 - Tailwind CSS
-- Pagefind
 
 ## 致谢
 
-这个博客基于 [Astro](https://astro.build/) 构建，
-并在 [AstroPaper](https://github.com/satnaing/astro-paper) 主题的基础上进行了持续修改与定制。
+这个博客使用 [Astro](https://astro.build/) 构建，
+源于 [AstroPaper](https://github.com/satnaing/astro-paper)，并根据个人喜好修改。
 
 感谢 Astro 社区，以及 AstroPaper 原作者与贡献者提供的优秀起点。
