@@ -23,17 +23,17 @@ const searchItems = sortedPosts.map(post => ({
 }));
 ---
 
-<QuietLayout footerMode="balanced" title={`搜索 | ${SITE.title}`} description="在 quiet 主题中按标题、摘要和标签搜索文章。">
-  <main id="main-content" class="preview-page">
+<QuietLayout footerMode="balanced" title={`搜索 | ${SITE.title}`} description="按标题、摘要和标签搜索文章。">
+  <main id="main-content" class="content-page">
     <section class="search-panel" aria-label="文章搜索">
       <label class="search-box">
         <IconSearch aria-hidden="true" />
         <span class="placeholder-variant" aria-hidden="true">摸一摸</span>
-        <input id="preview-search-input" type="search" aria-label="搜索文章" autocomplete="off" placeholder=" " autofocus />
+        <input id="search-input" type="search" aria-label="搜索文章" autocomplete="off" placeholder=" " autofocus />
       </label>
 
-      <p class="search-count" hidden><span id="preview-search-count">找到 0 个结果</span></p>
-      <ul class="result-list" id="preview-search-results">
+      <p class="search-count" hidden><span id="search-count">找到 0 个结果</span></p>
+      <ul class="result-list" id="search-results">
         {searchItems.map(item => (
           <li
             class="result-item"
@@ -57,32 +57,32 @@ const searchItems = sortedPosts.map(post => ({
 </QuietLayout>
 
 <style>
-  .preview-page { width: 100%; max-width: var(--preview-width); min-block-size: clamp(18rem, 58svh, 34rem); margin: 0 auto; padding: clamp(3rem, 8svh, 5rem) 1rem 3rem; display: grid; align-content: center; color: var(--foreground); }
-  .preview-page:has(.result-item:not([hidden])) { min-block-size: 0; display: block; padding-top: clamp(4.75rem, 11vh, 6.25rem); }
+  .content-page { width: 100%; max-width: var(--content-width); min-block-size: clamp(18rem, 58svh, 34rem); margin: 0 auto; padding: clamp(3rem, 8svh, 5rem) 1rem 3rem; display: grid; align-content: center; color: var(--foreground); }
+  .content-page:has(.result-item:not([hidden])) { min-block-size: 0; display: block; padding-top: clamp(4.75rem, 11vh, 6.25rem); }
   .search-panel { max-width: 42rem; }
-  .search-box { min-height: 4.75rem; padding: 0 1.25rem; display: flex; align-items: center; gap: 0.95rem; border: 1px solid var(--preview-line); border-radius: 1.25rem; background: color-mix(in oklch, var(--foreground), transparent 98%); color: var(--preview-muted); transition: border-color 0.2s ease, background-color 0.2s ease; position: relative; }
+  .search-box { min-height: 4.75rem; padding: 0 1.25rem; display: flex; align-items: center; gap: 0.95rem; border: 1px solid var(--border-color); border-radius: 1.25rem; background: color-mix(in oklch, var(--foreground), transparent 98%); color: var(--text-muted); transition: border-color 0.2s ease, background-color 0.2s ease; position: relative; }
   .search-box:focus-within { border-color: color-mix(in oklch, var(--foreground), transparent 68%); background: color-mix(in oklch, var(--foreground), transparent 97%); }
   .search-box svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
-  .placeholder-variant { pointer-events: none; position: absolute; left: 3.45rem; right: 1.25rem; top: 50%; transform: translateY(-50%); color: color-mix(in oklch, var(--preview-muted), transparent 18%); font-size: clamp(1.5rem, 5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.055em; white-space: nowrap; transition: opacity 0.16s ease; }
+  .placeholder-variant { pointer-events: none; position: absolute; left: 3.45rem; right: 1.25rem; top: 50%; transform: translateY(-50%); color: color-mix(in oklch, var(--text-muted), transparent 18%); font-size: clamp(1.5rem, 5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.055em; white-space: nowrap; transition: opacity 0.16s ease; }
   .search-box:has(input:not(:placeholder-shown)) .placeholder-variant { opacity: 0; }
   .search-box input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--foreground); font-size: clamp(1.5rem, 5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.055em; }
-  .search-count { margin: 1rem 0 0; color: var(--preview-muted); font-size: 0.8125rem; line-height: 1.8; }
+  .search-count { margin: 1rem 0 0; color: var(--text-muted); font-size: 0.8125rem; line-height: 1.8; }
   .result-list { margin: 2rem 0 0; padding: 0; list-style: none; }
-  .result-item + .result-item { border-top: 1px solid var(--preview-line); }
+  .result-item + .result-item { border-top: 1px solid var(--border-color); }
   .result-link { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 1.5rem; padding: 1.1rem 0; color: inherit; text-decoration: none; }
-  .result-link time { color: var(--preview-muted); font-size: 0.8125rem; line-height: 1.7; font-variant-numeric: tabular-nums; }
+  .result-link time { color: var(--text-muted); font-size: 0.8125rem; line-height: 1.7; font-variant-numeric: tabular-nums; }
   .result-content { display: grid; gap: 0.35rem; min-width: 0; }
   .result-title { color: var(--foreground); font-size: 1.05rem; font-weight: 560; line-height: 1.65; letter-spacing: -0.025em; transition: color 0.2s ease, transform 0.2s ease; }
-  .result-desc { color: var(--preview-muted); font-size: 0.875rem; line-height: 1.8; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .result-desc { color: var(--text-muted); font-size: 0.875rem; line-height: 1.8; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .result-link:hover .result-title { color: var(--accent); transform: translateX(0.125rem); }
   .result-item[hidden], .search-count[hidden] { display: none; }
-  @media (max-width: 640px) { .preview-page { padding-top: 4.75rem; } .search-box { min-height: 4rem; border-radius: 1rem; padding: 0 1rem; } .placeholder-variant { left: 3.05rem; right: 1rem; font-size: 1.35rem; } .search-box input { font-size: 1.35rem; } .result-link { grid-template-columns: 1fr; gap: 0.2rem; padding: 1rem 0; } .result-link time { font-size: 0.75rem; } }
+  @media (max-width: 640px) { .content-page { padding-top: 4.75rem; } .search-box { min-height: 4rem; border-radius: 1rem; padding: 0 1rem; } .placeholder-variant { left: 3.05rem; right: 1rem; font-size: 1.35rem; } .search-box input { font-size: 1.35rem; } .result-link { grid-template-columns: 1fr; gap: 0.2rem; padding: 1rem 0; } .result-link time { font-size: 0.75rem; } }
 </style>
 
 <script is:inline data-astro-rerun>
-  const input = document.querySelector("#preview-search-input");
+  const input = document.querySelector("#search-input");
   const items = Array.from(document.querySelectorAll(".result-item"));
-  const count = document.querySelector("#preview-search-count");
+  const count = document.querySelector("#search-count");
   const countLine = count?.closest(".search-count");
   function updateResults(value) {
     const query = value.trim().toLowerCase();
