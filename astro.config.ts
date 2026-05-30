@@ -15,7 +15,7 @@ export default defineConfig({
   site: SITE.website,
   integrations: [
     sitemap({
-      filter: page => !new URL(page).pathname.startsWith("/quiet") && (SITE.showArchives || !new URL(page).pathname.endsWith("/archives")),
+      filter: page => SITE.showArchives || !new URL(page).pathname.endsWith("/archives"),
     }),
   ],
   markdown: {

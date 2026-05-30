@@ -1,141 +1,113 @@
 ---
-import "@pagefind/default-ui/css/ui.css";
-import Main from "@/layouts/Main.astro";
-import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import { getCollection } from "astro:content";
+import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
+import IconSearch from "@/assets/icons/IconSearch.svg";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
-const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+const searchItems = sortedPosts.map(post => ({
+  title: post.data.title,
+  description: post.data.description ?? "",
+  date: dayjs(post.data.pubDatetime).tz(SITE.timezone).format("YYYY.MM.DD"),
+  href: getPath(post.id, post.filePath),
+  tags: post.data.tags ?? [],
+}));
 ---
 
-<Layout title={`搜索 | ${SITE.title}`}>
-  <Header />
-  <Main pageTitle="搜索" pageDesc="搜一下本站文章…">
-    <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
-  </Main>
-  <Footer />
-</Layout>
+<QuietLayout footerMode="balanced" title={`搜索 | ${SITE.title}`} description="在 quiet 主题中按标题、摘要和标签搜索文章。">
+  <main id="main-content" class="preview-page">
+    <section class="search-panel" aria-label="文章搜索">
+      <label class="search-box">
+        <IconSearch aria-hidden="true" />
+        <span class="placeholder-variant" aria-hidden="true">摸一摸</span>
+        <input id="preview-search-input" type="search" aria-label="搜索文章" autocomplete="off" placeholder=" " autofocus />
+      </label>
 
-<script>
-  function initSearch() {
-    const pageFindSearch: HTMLElement | null =
-      document.querySelector("#pagefind-search");
+      <p class="search-count" hidden><span id="preview-search-count">找到 0 个结果</span></p>
+      <ul class="result-list" id="preview-search-results">
+        {searchItems.map(item => (
+          <li
+            class="result-item"
+            hidden
+            data-title={item.title.toLowerCase()}
+            data-desc={item.description.toLowerCase()}
+            data-tags={item.tags.join(" ").toLowerCase()}
+          >
+            <a href={item.href} class="result-link">
+              <time>{item.date}</time>
+              <span class="result-content">
+                <span class="result-title">{item.title}</span>
+                {item.description && <span class="result-desc">{item.description}</span>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</QuietLayout>
 
-    if (!pageFindSearch) return;
+<style>
+  .preview-page { width: 100%; max-width: var(--preview-width); min-block-size: clamp(18rem, 58svh, 34rem); margin: 0 auto; padding: clamp(3rem, 8svh, 5rem) 1rem 3rem; display: grid; align-content: center; color: var(--foreground); }
+  .preview-page:has(.result-item:not([hidden])) { min-block-size: 0; display: block; padding-top: clamp(4.75rem, 11vh, 6.25rem); }
+  .search-panel { max-width: 42rem; }
+  .search-box { min-height: 4.75rem; padding: 0 1.25rem; display: flex; align-items: center; gap: 0.95rem; border: 1px solid var(--preview-line); border-radius: 1.25rem; background: color-mix(in oklch, var(--foreground), transparent 98%); color: var(--preview-muted); transition: border-color 0.2s ease, background-color 0.2s ease; position: relative; }
+  .search-box:focus-within { border-color: color-mix(in oklch, var(--foreground), transparent 68%); background: color-mix(in oklch, var(--foreground), transparent 97%); }
+  .search-box svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+  .placeholder-variant { pointer-events: none; position: absolute; left: 3.45rem; right: 1.25rem; top: 50%; transform: translateY(-50%); color: color-mix(in oklch, var(--preview-muted), transparent 18%); font-size: clamp(1.5rem, 5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.055em; white-space: nowrap; transition: opacity 0.16s ease; }
+  .search-box:has(input:not(:placeholder-shown)) .placeholder-variant { opacity: 0; }
+  .search-box input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--foreground); font-size: clamp(1.5rem, 5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.055em; }
+  .search-count { margin: 1rem 0 0; color: var(--preview-muted); font-size: 0.8125rem; line-height: 1.8; }
+  .result-list { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .result-item + .result-item { border-top: 1px solid var(--preview-line); }
+  .result-link { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 1.5rem; padding: 1.1rem 0; color: inherit; text-decoration: none; }
+  .result-link time { color: var(--preview-muted); font-size: 0.8125rem; line-height: 1.7; font-variant-numeric: tabular-nums; }
+  .result-content { display: grid; gap: 0.35rem; min-width: 0; }
+  .result-title { color: var(--foreground); font-size: 1.05rem; font-weight: 560; line-height: 1.65; letter-spacing: -0.025em; transition: color 0.2s ease, transform 0.2s ease; }
+  .result-desc { color: var(--preview-muted); font-size: 0.875rem; line-height: 1.8; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .result-link:hover .result-title { color: var(--accent); transform: translateX(0.125rem); }
+  .result-item[hidden], .search-count[hidden] { display: none; }
+  @media (max-width: 640px) { .preview-page { padding-top: 4.75rem; } .search-box { min-height: 4rem; border-radius: 1rem; padding: 0 1rem; } .placeholder-variant { left: 3.05rem; right: 1rem; font-size: 1.35rem; } .search-box input { font-size: 1.35rem; } .result-link { grid-template-columns: 1fr; gap: 0.2rem; padding: 1rem 0; } .result-link time { font-size: 0.75rem; } }
+</style>
 
-    const params = new URLSearchParams(window.location.search);
+<script is:inline data-astro-rerun>
+  const input = document.querySelector("#preview-search-input");
+  const items = Array.from(document.querySelectorAll(".result-item"));
+  const count = document.querySelector("#preview-search-count");
+  const countLine = count?.closest(".search-count");
+  function updateResults(value) {
+    const query = value.trim().toLowerCase();
+    let visible = 0;
 
-    const onIdle = window.requestIdleCallback || (cb => setTimeout(cb, 1));
+    for (const item of items) {
+      const text = `${item.dataset.title ?? ""} ${item.dataset.desc ?? ""} ${item.dataset.tags ?? ""}`;
+      const matched = query.length > 0 && text.includes(query);
+      item.toggleAttribute("hidden", !matched);
+      if (matched) visible += 1;
+    }
 
-    onIdle(async () => {
-      // @ts-expect-error — Missing types for @pagefind/default-ui package.
-      const { PagefindUI } = await import("@pagefind/default-ui");
+    countLine?.toggleAttribute("hidden", query.length === 0);
+    if (count) count.textContent = `找到 ${visible} 个结果`;
+  }
 
-      // Display warning inn dev mode
-      if (import.meta.env.DEV) {
-        pageFindSearch.innerHTML = `
-            <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
-              <p><strong>DEV mode Warning! </strong>You need to build the project at least once to see the search results during development.</p>
-              <code class="block bg-black text-white px-2 py-1 rounded">pnpm run build</code>
-            </div>
-          `;
-      }
+  const params = new URLSearchParams(window.location.search);
+  const presetQuery = params.get("q")?.trim() ?? "";
 
-      // Init pagefind ui
-      const search = new PagefindUI({
-        element: "#pagefind-search",
-        showImages: false,
-        showSubResults: true,
-        processTerm: function (term: string) {
-          params.set("q", term); // Update the `q` parameter in the URL
-          history.replaceState(history.state, "", "?" + params.toString()); // Push the new URL without reloading
-
-          const backUrl = pageFindSearch?.dataset?.backurl;
-          sessionStorage.setItem("backUrl", backUrl + "?" + params.toString());
-
-          return term;
-        },
-      });
-
-      // If search param exists (eg: search?q=astro), trigger search
-      const query = params.get("q");
-      if (query) {
-        search.triggerSearch(query);
-      }
-
-      // Reset search param if search input is cleared
-      const searchInput = document.querySelector(".pagefind-ui__search-input");
-      const clearButton = document.querySelector(".pagefind-ui__search-clear");
-      searchInput?.addEventListener("input", resetSearchParam);
-      clearButton?.addEventListener("click", resetSearchParam);
-
-      function resetSearchParam(e: Event) {
-        if ((e.target as HTMLInputElement)?.value.trim() === "") {
-          history.replaceState(history.state, "", window.location.pathname);
-        }
-      }
+  if (input instanceof HTMLInputElement) {
+    if (presetQuery) input.value = presetQuery;
+    updateResults(input.value);
+    input.addEventListener("input", event => {
+      const value = event.target instanceof HTMLInputElement ? event.target.value : "";
+      updateResults(value);
     });
   }
-
-  document.addEventListener("astro:after-swap", () => {
-    const pagefindSearch = document.querySelector("#pagefind-search");
-
-    // if pagefind search form already exists, don't initialize search component
-    if (pagefindSearch && pagefindSearch.querySelector("form")) return;
-
-    initSearch();
-  });
-  initSearch();
 </script>
-
-<style is:global>
-  #pagefind-search {
-    --pagefind-ui-font: var(--font-app);
-    --pagefind-ui-text: var(--foreground);
-    --pagefind-ui-background: var(--background);
-    --pagefind-ui-border: var(--border);
-    --pagefind-ui-primary: var(--accent);
-    --pagefind-ui-tag: var(--background);
-    --pagefind-ui-border-radius: 0.375rem;
-    --pagefind-ui-border-width: 1px;
-    --pagefind-ui-image-border-radius: 8px;
-    --pagefind-ui-image-box-ratio: 3 / 2;
-
-    form::before {
-      background-color: var(--foreground);
-    }
-
-    input {
-      font-weight: 400;
-      border: 1px solid var(--border);
-    }
-
-    input:focus-visible {
-      outline: 1px solid var(--accent);
-    }
-
-    .pagefind-ui__result-title a {
-      color: var(--accent);
-      outline-offset: 1px;
-      outline-color: var(--accent);
-      text-decoration-style: dashed;
-      text-underline-offset: 4px;
-    }
-
-    .pagefind-ui__result-title a:focus-visible,
-    .pagefind-ui__search-clear:focus-visible {
-      text-decoration-line: none;
-      outline-width: 2px;
-      outline-style: dashed;
-    }
-
-    .pagefind-ui__result:last-of-type {
-      border-bottom: 0;
-    }
-
-    .pagefind-ui__result-nested .pagefind-ui__result-link:before {
-      font-family: system-ui;
-    }
-  }
-</style>
