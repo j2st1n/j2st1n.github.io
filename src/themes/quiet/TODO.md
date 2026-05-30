@@ -25,7 +25,7 @@ Quiet is the experimental next theme for bins.blog. Keep it isolated under `/qui
 - [x] Finish `/quiet/article` reading layout with real typography rules for headings, paragraphs, lists, quotes, images, tables, and code blocks.
 - [x] Finish `/quiet/articles` or `/quiet/archives` as the primary article index.
 - [x] Validate desktop, tablet, and mobile spacing for the three core pages.
-- [ ] Decide whether preview routes like `/quiet/article` and `/quiet/tag` should stay after promotion.
+- [x] Remove preview routes like `/quiet/article` and `/quiet/tag`; real `/quiet/posts/[slug]` and `/quiet/tags/[tag]` routes are the canonical paths.
 
 ## P2: Real Route Model
 
