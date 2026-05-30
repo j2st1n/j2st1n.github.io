@@ -32,6 +32,22 @@ const loading = PUBLIC_GISCUS_LOADING?.trim() || "lazy";
 const emitMetadata = PUBLIC_GISCUS_EMIT_METADATA?.trim() || "0";
 const term = PUBLIC_GISCUS_TERM?.trim() || "";
 const origin = PUBLIC_GISCUS_ORIGIN?.trim() || "https://giscus.app";
+
+const giscusConfig = {
+  repo,
+  repoId,
+  category,
+  categoryId,
+  mapping,
+  strict,
+  reactionsEnabled,
+  emitMetadata,
+  inputPosition,
+  lang,
+  loading,
+  term,
+  origin,
+};
 ---
 
 {giscusEnabled && (
@@ -40,28 +56,7 @@ const origin = PUBLIC_GISCUS_ORIGIN?.trim() || "https://giscus.app";
 
     {
       isConfigured ? (
-        <div class="giscus-shell rounded-2xl border border-border/60 bg-background/60 p-3 sm:p-4">
-          <script
-            is:inline
-            src="https://giscus.app/client.js"
-            data-repo={repo}
-            data-repo-id={repoId}
-            data-category={category}
-            data-category-id={categoryId}
-            data-mapping={mapping}
-            data-strict={strict}
-            data-reactions-enabled={reactionsEnabled}
-            data-emit-metadata={emitMetadata}
-            data-input-position={inputPosition}
-            data-theme="preferred_color_scheme"
-            data-lang={lang}
-            data-loading={loading}
-            data-term={term}
-            data-origin={origin}
-            crossorigin="anonymous"
-            async
-          ></script>
-        </div>
+        <div class="giscus-shell rounded-2xl border border-border/60 bg-background/60 p-3 sm:p-4" data-giscus-shell data-giscus-config={JSON.stringify(giscusConfig)} />
       ) : (
         <div class="rounded-2xl border border-dashed border-border/70 bg-muted/30 p-4 text-sm text-foreground/75">
           Giscus 已接入代码，但尚未配置仓库参数。请补充公开环境变量后启用评论区。
@@ -69,4 +64,41 @@ const origin = PUBLIC_GISCUS_ORIGIN?.trim() || "https://giscus.app";
       )
     }
   </section>
+)}
+
+{giscusEnabled && isConfigured && (
+  <script is:inline data-astro-rerun>
+    function loadGiscus() {
+      const shell = document.querySelector("[data-giscus-shell]");
+      if (!(shell instanceof HTMLElement)) return;
+
+      const config = JSON.parse(shell.dataset.giscusConfig ?? "{}");
+      if (!config.repo || !config.repoId || !config.category || !config.categoryId) return;
+
+      shell.replaceChildren();
+
+      const script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.dataset.repo = config.repo;
+      script.dataset.repoId = config.repoId;
+      script.dataset.category = config.category;
+      script.dataset.categoryId = config.categoryId;
+      script.dataset.mapping = config.mapping;
+      script.dataset.strict = config.strict;
+      script.dataset.reactionsEnabled = config.reactionsEnabled;
+      script.dataset.emitMetadata = config.emitMetadata;
+      script.dataset.inputPosition = config.inputPosition;
+      script.dataset.theme = "preferred_color_scheme";
+      script.dataset.lang = config.lang;
+      script.dataset.loading = config.loading;
+      script.dataset.term = config.term;
+      script.dataset.origin = config.origin;
+
+      shell.appendChild(script);
+    }
+
+    loadGiscus();
+  </script>
 )}
