@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import QuietFooter from "@/themes/quiet/components/QuietFooter.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
 import getUniqueTags from "@/utils/getUniqueTags";
 import { SITE } from "@/config";
@@ -91,7 +90,6 @@ const formatFullDate = (date: string | Date) =>
       )}
     </section>
 
-    <QuietFooter />
   </main>
 </QuietLayout>
 
@@ -357,53 +355,6 @@ const formatFullDate = (date: string | Date) =>
     opacity: 0.4;
   }
 
-  .site-footer {
-    padding: 1.75rem 0 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
-  .footer-links,
-  .footer-legal {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .footer-links {
-    font-size: 0.8125rem;
-    justify-content: flex-end;
-  }
-
-  .footer-legal {
-    font-size: 0.75rem;
-    color: var(--foreground);
-    opacity: 0.38;
-  }
-
-  .footer-links a,
-  .footer-legal a {
-    color: var(--foreground);
-    text-decoration: none;
-    transition: opacity 0.2s ease, color 0.2s ease;
-  }
-
-  .footer-links a {
-    opacity: 0.58;
-  }
-
-  .footer-legal a {
-    color: inherit;
-  }
-
-  .footer-links a:hover,
-  .footer-legal a:hover {
-    opacity: 1;
-    color: var(--accent);
-  }
-
   @media (max-width: 700px) {
     .tag-link {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -452,20 +403,7 @@ const formatFullDate = (date: string | Date) =>
       font-size: 2.25rem;
     }
 
-    .site-footer {
-      padding-top: 1.75rem;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.625rem;
-    }
 
-    .footer-links {
-      order: 1;
-      justify-content: flex-start;
-    }
 
-    .footer-legal {
-      order: 2;
-    }
   }
 </style>

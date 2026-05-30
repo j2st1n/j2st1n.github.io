@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import QuietFooter from "@/themes/quiet/components/QuietFooter.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getQuietPath } from "@/utils/getQuietPath";
 import { SITE } from "@/config";
@@ -116,7 +115,6 @@ const formatFullDate = (date: string | Date) =>
     )}
 
     <!-- 04 页脚 -->
-    <QuietFooter />
   </main>
 </QuietLayout>
 
@@ -470,54 +468,6 @@ const formatFullDate = (date: string | Date) =>
     transform: translateX(2px);
   }
 
-  /* --- 04 页脚 --- */
-  .site-footer {
-    padding: 1.75rem 0 1rem;
-    border-top: 1px solid var(--preview-line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
-  .footer-links {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-size: 0.8125rem;
-    justify-content: flex-end;
-  }
-
-  .footer-legal {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-size: 0.75rem;
-    color: var(--foreground);
-    opacity: 0.38;
-  }
-
-  .footer-links a,
-  .footer-legal a {
-    color: var(--foreground);
-    text-decoration: none;
-    transition: opacity 0.2s ease, color 0.2s ease;
-  }
-
-  .footer-links a {
-    opacity: 0.58;
-  }
-
-  .footer-legal a {
-    color: inherit;
-  }
-
-  .footer-links a:hover,
-  .footer-legal a:hover {
-    opacity: 1;
-    color: var(--accent);
-  }
-
   /* --- 移动端适配 --- */
   @media (max-width: 640px) {
     .home-preview {
@@ -578,21 +528,8 @@ const formatFullDate = (date: string | Date) =>
       font-size: 1.125rem;
     }
 
-    .site-footer {
-      padding-top: 1.75rem;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.625rem;
-    }
 
-    .footer-links {
-      order: 1;
-      justify-content: flex-start;
-    }
 
-    .footer-legal {
-      order: 2;
-    }
   }
 
   /* --- 暗色模式微调 --- */

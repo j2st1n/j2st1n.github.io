@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import QuietFooter from "@/themes/quiet/components/QuietFooter.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getQuietPath } from "@/utils/getQuietPath";
 import { SITE } from "@/config";
@@ -50,7 +49,6 @@ const formatFullDate = (date: string | Date) => dayjs(date).tz(SITE.timezone).fo
       </ul>
     </section>
 
-    <QuietFooter />
   </main>
 </QuietLayout>
 
