@@ -19,9 +19,10 @@ type Props = {
 };
 
 const { post, posts, titleSuffix } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const { title, description, pubDatetime, modDatetime, tags, timezone: postTimezone } = post.data;
 const displayTimezone = postTimezone ?? SITE.timezone;
+const tocHeadings = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
 const postIndex = posts.findIndex(item => item.id === post.id);
 const prevPost = postIndex > 0 ? posts[postIndex - 1] : null;
 const nextPost = postIndex >= 0 && postIndex < posts.length - 1
@@ -71,6 +72,19 @@ const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
         )}
       </div>
     </header>
+
+    {tocHeadings.length > 0 && (
+      <nav class="article-toc" aria-label="文章目录">
+        <p>目录</p>
+        <ol>
+          {tocHeadings.map(heading => (
+            <li class={`toc-depth-${heading.depth}`}>
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
 
     <article id="article" class="article-body app-prose prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)">
       <Content />
@@ -187,7 +201,74 @@ const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
 
   .article-comments {
     max-width: var(--article-width);
-    margin: 0 auto;
+  }
+
+  .article-toc {
+    display: none;
+  }
+
+  .article-toc p {
+    margin: 0 0 0.65rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 620;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+
+  .article-toc ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-toc li + li {
+    margin-top: 0.35rem;
+  }
+
+  .article-toc a {
+    display: block;
+    color: var(--foreground);
+    opacity: 0.62;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    text-decoration: none;
+    text-wrap: pretty;
+    transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .article-toc a:hover,
+  .article-toc a:focus-visible {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  .article-toc .toc-depth-3 {
+    padding-inline-start: 1.1rem;
+  }
+
+  .article-toc .toc-depth-3 a {
+    font-size: 0.85rem;
+    opacity: 0.52;
+  }
+
+  @media (min-width: 80rem) {
+    .article-layout {
+      position: relative;
+    }
+
+    .article-toc {
+      display: block;
+      position: fixed;
+      top: 12.5rem;
+      left: calc(50% + (var(--content-width) / 2) + 2.5rem);
+      width: min(15rem, calc((100vw - var(--content-width)) / 2 - 4rem));
+      max-height: calc(100svh - 14rem);
+      overflow-y: auto;
+      padding-inline-start: 1rem;
+      border-inline-start: 1px solid var(--border-color);
+      color: var(--foreground);
+    }
   }
 
   .article-body :global(p),
