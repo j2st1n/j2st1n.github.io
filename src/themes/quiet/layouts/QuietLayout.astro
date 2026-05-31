@@ -58,23 +58,4 @@ const {
     </div>
     {footerMode !== "none" && <QuietFooter />}
   </div>
-  <script is:inline>
-    const themeButton = document.querySelector("#theme-btn");
-    const html = document.documentElement;
-
-    function syncThemeLabel() {
-      themeButton?.setAttribute(
-        "aria-label",
-        html.dataset.theme === "dark" ? "切换到浅色主题" : "切换到深色主题"
-      );
-    }
-
-    syncThemeLabel();
-    themeButton?.addEventListener("click", () => {
-      const nextTheme = html.dataset.theme === "dark" ? "light" : "dark";
-      html.dataset.theme = nextTheme;
-      localStorage.setItem("theme", nextTheme);
-      syncThemeLabel();
-    });
-  </script>
 </Layout>

@@ -25,6 +25,15 @@ function getThemeToggleLabel(theme: string): string {
   return theme === LIGHT ? "切换到深色主题" : "切换到浅色主题";
 }
 
+function syncGiscusTheme(theme: string): void {
+  const iframe = document.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
+
+  iframe?.contentWindow?.postMessage(
+    { giscus: { setConfig: { theme: theme === DARK ? "dark" : "light" } } },
+    "https://giscus.app"
+  );
+}
+
 // Use existing theme value from inline script if available, otherwise detect
 let themeValue = window.theme?.themeValue ?? getPreferTheme();
 
@@ -35,6 +44,7 @@ function setPreference(): void {
 
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
+  syncGiscusTheme(themeValue);
 
   const themeToggleLabel = getThemeToggleLabel(themeValue);
   const themeButton = document.querySelector("#theme-btn");

@@ -90,7 +90,7 @@ const giscusConfig = {
       script.dataset.reactionsEnabled = config.reactionsEnabled;
       script.dataset.emitMetadata = config.emitMetadata;
       script.dataset.inputPosition = config.inputPosition;
-      script.dataset.theme = "preferred_color_scheme";
+      script.dataset.theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
       script.dataset.lang = config.lang;
       script.dataset.loading = config.loading;
       script.dataset.term = config.term;
