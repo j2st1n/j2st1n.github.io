@@ -15,6 +15,8 @@ type Props = {
   showHeader?: boolean;
   footerMode?: "flow" | "balanced" | "none";
   isPost?: boolean;
+  noindex?: boolean;
+  nofollow?: boolean;
 };
 
 const {
@@ -28,6 +30,8 @@ const {
   showHeader = true,
   footerMode = "flow",
   isPost = false,
+  noindex = false,
+  nofollow,
 } = Astro.props;
 ---
 
@@ -40,6 +44,8 @@ const {
   modDatetime={modDatetime}
   scrollSmooth={scrollSmooth}
   isPost={isPost}
+  noindex={noindex}
+  nofollow={nofollow}
 >
   <div class="quiet-shell" data-footer-mode={footerMode}>
     {showHeader && <a id="skip-to-content" href="#main-content" class="skip-link">跳到正文</a>}

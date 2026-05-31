@@ -23,7 +23,7 @@ const searchItems = sortedPosts.map(post => ({
 }));
 ---
 
-<QuietLayout footerMode="balanced" title={`搜索 | ${SITE.title}`} description="按标题、摘要和标签搜索文章。">
+<QuietLayout footerMode="balanced" title={`搜索 | ${SITE.title}`} description="按标题、摘要和标签搜索文章。" noindex nofollow={false}>
   <main id="main-content" class="content-page">
     <section class="search-panel" aria-label="文章搜索">
       <label class="search-box">

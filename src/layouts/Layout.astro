@@ -16,6 +16,7 @@ type Props = {
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
   noindex?: boolean;
+  nofollow?: boolean;
   isPost?: boolean;
 };
 
@@ -30,6 +31,7 @@ const {
   modDatetime,
   scrollSmooth = false,
   noindex = false,
+  nofollow,
   isPost = false,
 } = Astro.props;
 
@@ -85,7 +87,7 @@ const structuredData = {
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex && <meta name="robots" content={`noindex, ${nofollow === false ? "follow" : "nofollow"}`} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
@@ -113,7 +115,6 @@ const structuredData = {
         />
       )
     }
-
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />

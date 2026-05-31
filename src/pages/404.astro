@@ -3,7 +3,7 @@ import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import { SITE } from "@/config";
 ---
 
-<QuietLayout showHeader={false} footerMode="none" title={`404 | ${SITE.title}`} description="页面不见了。">
+<QuietLayout showHeader={false} footerMode="none" title={`404 | ${SITE.title}`} description="页面不见了。" noindex>
   <main class="fish-page" aria-labelledby="lost-title">
     <section class="lost-card">
       <p class="error-code">404</p>
