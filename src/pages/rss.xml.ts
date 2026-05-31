@@ -1,12 +1,13 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { getPath } from "@/utils/getPath";
-import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
 export async function GET() {
-  const posts = await getCollection("blog");
-  const sortedPosts = getSortedPosts(posts);
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const sortedPosts = posts.toSorted(
+    (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
+  );
   return rss({
     title: SITE.title,
     description: SITE.desc,
@@ -15,7 +16,8 @@ export async function GET() {
       link: getPath(id, filePath),
       title: data.title,
       description: data.description,
-      pubDate: new Date(data.modDatetime ?? data.pubDatetime),
+      pubDate: new Date(data.pubDatetime),
+      categories: data.tags,
     })),
   });
 }
