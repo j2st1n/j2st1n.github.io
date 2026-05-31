@@ -21,6 +21,10 @@ function getPreferTheme(): string {
     : LIGHT;
 }
 
+function getThemeToggleLabel(theme: string): string {
+  return theme === LIGHT ? "切换到深色主题" : "切换到浅色主题";
+}
+
 // Use existing theme value from inline script if available, otherwise detect
 let themeValue = window.theme?.themeValue ?? getPreferTheme();
 
@@ -32,7 +36,11 @@ function setPreference(): void {
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
 
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  const themeToggleLabel = getThemeToggleLabel(themeValue);
+  const themeButton = document.querySelector("#theme-btn");
+
+  themeButton?.setAttribute("aria-label", themeToggleLabel);
+  themeButton?.setAttribute("title", themeToggleLabel);
 
   // Get a reference to the body element
   const body = document.body;
