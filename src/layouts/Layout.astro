@@ -18,6 +18,7 @@ type Props = {
   noindex?: boolean;
   nofollow?: boolean;
   isPost?: boolean;
+  tags?: string[];
 };
 
 const {
@@ -33,17 +34,26 @@ const {
   noindex = false,
   nofollow,
   isPost = false,
+  tags = [],
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const canonicalURLString = canonicalURL.toString();
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: `${title}`,
+  description: `${description}`,
   image: `${socialImageURL}`,
+  url: canonicalURLString,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURLString,
+  },
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+  ...(tags.length > 0 && { keywords: tags.join(", ") }),
   author: [
     {
       "@type": "Person",
@@ -115,6 +125,9 @@ const structuredData = {
         />
       )
     }
+    {isPost && tags.map(tag => <meta property="article:tag" content={tag} />)}
+    {isPost && profile && <meta property="article:author" content={profile} />}
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />

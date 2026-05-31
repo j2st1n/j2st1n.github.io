@@ -17,6 +17,7 @@ type Props = {
   isPost?: boolean;
   noindex?: boolean;
   nofollow?: boolean;
+  tags?: string[];
 };
 
 const {
@@ -32,6 +33,7 @@ const {
   isPost = false,
   noindex = false,
   nofollow,
+  tags,
 } = Astro.props;
 ---
 
@@ -46,6 +48,7 @@ const {
   isPost={isPost}
   noindex={noindex}
   nofollow={nofollow}
+  tags={tags}
 >
   <div class="quiet-shell" data-footer-mode={footerMode}>
     {showHeader && <a id="skip-to-content" href="#main-content" class="skip-link">跳到正文</a>}
