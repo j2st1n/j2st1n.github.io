@@ -7,30 +7,39 @@ import "../styles/quiet.css";
 type Props = {
   title?: string;
   description?: string;
+  ogImage?: string;
+  canonicalURL?: string | URL;
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
   showHeader?: boolean;
   footerMode?: "flow" | "balanced" | "none";
+  isPost?: boolean;
 };
 
 const {
   title,
   description,
+  ogImage,
+  canonicalURL,
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
   showHeader = true,
   footerMode = "flow",
+  isPost = false,
 } = Astro.props;
 ---
 
 <Layout
   title={title}
   description={description}
+  ogImage={ogImage}
+  canonicalURL={canonicalURL}
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}
   scrollSmooth={scrollSmooth}
+  isPost={isPost}
 >
   <div class="quiet-shell" data-footer-mode={footerMode}>
     {showHeader && <a id="skip-to-content" href="#main-content" class="skip-link">跳到正文</a>}

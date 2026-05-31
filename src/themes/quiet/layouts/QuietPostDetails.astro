@@ -20,7 +20,16 @@ type Props = {
 
 const { post, posts, titleSuffix } = Astro.props;
 const { Content, headings } = await render(post);
-const { title, description, pubDatetime, modDatetime, tags, timezone: postTimezone } = post.data;
+const {
+  title,
+  description,
+  pubDatetime,
+  modDatetime,
+  tags,
+  timezone: postTimezone,
+  canonicalURL,
+  ogImage,
+} = post.data;
 const displayTimezone = postTimezone ?? SITE.timezone;
 const tocHeadings = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
 const postIndex = posts.findIndex(item => item.id === post.id);
@@ -38,14 +47,21 @@ const formatFullDate = (date: string | Date) =>
   dayjs(date).tz(displayTimezone).format("YYYY.MM.DD");
 
 const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
+const postPath = getPath(post.id, post.filePath);
+const postOgImage = typeof ogImage === "string"
+  ? ogImage
+  : `${postPath}/index.png`;
 ---
 
 <QuietLayout
   title={`${title}${titleSuffix ? ` | ${titleSuffix}` : ""} | ${SITE.title}`}
   description={description}
+  ogImage={postOgImage}
+  canonicalURL={canonicalURL}
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}
   scrollSmooth
+  isPost
 >
 
   <main id="main-content" class="article-layout">
