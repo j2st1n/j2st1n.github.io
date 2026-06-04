@@ -1,9 +1,13 @@
 ---
-title: "A Lively-Minded Girl"
-description: "在朋友圈看到前同事关于蓝信封公益的采访，希望自己保持活跃思维不退化。"
+title: 一个采访
+description: 在朋友圈看到前同事关于蓝信封公益的采访，希望自己保持活跃思维不退化。
 pubDatetime: 2026-05-31T15:30:00+08:00
 author: J2
-tags: [随笔, 职场, 成长, 公益]
+tags:
+  - 随笔
+  - 职场
+  - 成长
+  - 公益
 draft: false
 ---
 
