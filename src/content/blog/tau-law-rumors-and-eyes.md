@@ -1,7 +1,7 @@
 ---
 title: "韬定律、谣言与眼睛"
 description: "听韬定律播客的感触，职场谣言的智慧，眼睛酸涩的危机感。"
-pubDatetime: 2026-06-08T16:00:00+08:00
+pubDatetime: 2026-06-09T11:57:10+08:00
 author: J2
 tags: [随笔, 半导体, 职场, 健康]
 draft: false
