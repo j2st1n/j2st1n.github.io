@@ -444,15 +444,22 @@ const postOgImage = typeof ogImage === "string"
 
     .article-hero h1 {
       font-size: 2rem;
-      letter-spacing: -0.045em;
+      letter-spacing: -0.025em;
+      text-wrap: wrap;
     }
 
     .article-hero p {
       font-size: 0.98rem;
+      text-wrap: wrap;
     }
 
     .article-body {
       margin-top: 2.45rem;
+    }
+
+    .article-body :global(p),
+    .post-nav-link strong {
+      text-wrap: wrap;
     }
 
     .post-nav {

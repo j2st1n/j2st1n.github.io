@@ -31,6 +31,6 @@ import { SITE } from "@/config";
   .lost-links a:hover, .lost-links a:focus-visible { color: var(--accent); text-decoration: underline; text-decoration-style: dotted; }
   .lost-links span { color: color-mix(in oklch, var(--text-muted), transparent 42%); }
   @keyframes surface-copy { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: translateY(0); } }
-  @media (max-width: 640px) { .lost-card { text-align: left; } .lost-card h1 { font-size: clamp(2rem, 12vw, 2.7rem); } .lost-copy { margin-left: 0; } .lost-links { justify-content: flex-start; gap: 0.5rem; } }
+  @media (max-width: 640px) { .lost-card { text-align: left; } .lost-card h1 { font-size: clamp(2rem, 12vw, 2.7rem); letter-spacing: -0.035em; text-wrap: wrap; } .lost-copy { margin-left: 0; text-wrap: wrap; } .lost-links { justify-content: flex-start; gap: 0.5rem; } }
   @media (prefers-reduced-motion: reduce) { .lost-card { animation: none; } }
 </style>
