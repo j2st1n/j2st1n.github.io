@@ -333,6 +333,10 @@ const postOgImage = typeof ogImage === "string"
     padding-inline-start: 0.15em;
   }
 
+  .article-body :global(li > strong:first-child) {
+    white-space: nowrap;
+  }
+
   .article-body :global(blockquote) {
     border-inline-start-color: var(--border-color);
     color: color-mix(in oklch, var(--foreground), transparent 18%);
