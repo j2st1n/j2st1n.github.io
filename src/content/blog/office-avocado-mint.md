@@ -2,7 +2,6 @@
 author: J2
 title: 办公室牛油果树下，薄荷发芽了
 titleEn: "Mint Sprouted Under My Office Avocado"
-slug: office-avocado-mint
 description: 办公室小盆栽观察日记：牛油果树下撒了薄荷种子，没想到真发芽了（以及同盆小提醒）。
 pubDatetime: 2026-03-16T08:10:00+08:00
 tags:

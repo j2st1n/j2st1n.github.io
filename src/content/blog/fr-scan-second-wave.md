@@ -2,7 +2,6 @@
 author: J2
 title: 新站被扫第二回：别把 requests 当访问量，做点“低误伤”防护就够了
 titleEn: "The Second Wave of Scans: Don’t Confuse Requests with Real Traffic"
-slug: fr-scan-second-wave
 description: 扫描不是一次性事件：第二波又来了。这篇记录我怎么读 Cloudflare 指标、怎么判断“噪音 vs 读者”，以及怎么用低误伤策略把扫描流量压下去（不公开具体规则）。
 pubDatetime: 2026-03-18T09:45:00+08:00
 tags:
@@ -25,7 +24,7 @@ ogImage: https://img.bins.blog/2026-03-18/fr-scan-second-wave/nsoc-1985.webp
 
 这篇不打算做“安全教程”，也不会公开任何可被复用的具体规则表达式；就讲三件事：**怎么读指标、怎么判断是不是扫描、怎么做低误伤防护**。
 
-![](https://img.bins.blog/2026-03-18/fr-scan-second-wave/nsoc-1985.webp)
+![1985 年左右的国家安全行动中心照片](https://img.bins.blog/2026-03-18/fr-scan-second-wave/nsoc-1985.webp)
 
 > National Security Operations Center photo (c. 1985) — CC0  
 > Source: https://commons.wikimedia.org/w/index.php?curid=27095683
@@ -97,6 +96,6 @@ ogImage: https://img.bins.blog/2026-03-18/fr-scan-second-wave/nsoc-1985.webp
 - **requests 不等于访问量**，别自嗨/别自吓
 - 用 **低误伤 + 分层** 的策略，成本很低，效果很好
 
-***
+---
 
 最后一句：别慌。静态站 + 缓存 + 基础防护，扫就扫吧——该写博客写博客。

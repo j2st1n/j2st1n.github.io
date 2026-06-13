@@ -103,8 +103,8 @@ wechat:
 
 **参考线索**
 
-- CBS News, *Strait of Hormuz remains shut as Trump pushes U.S. allies to help open the key waterway. Here's what to know.* (2026-03-25)
-- CSIS, *What Are the Implications of the Iran Conflict for Japan?* (2026-03-20)
-- Dallas Fed, *What the closure of the Strait of Hormuz means for the global economy* (2026-03-20)
-- The Conversation, *Soaring gas prices and disrupted supply chains will ripple out to increase costs in every store and sector of the economy* (2026)
-- Gasgoo, *Fuel Prices in China Near the “¥9 Era,” but Not Across the Board Yet* (2026-03-25)
+- CBS News, _Strait of Hormuz remains shut as Trump pushes U.S. allies to help open the key waterway. Here's what to know._ (2026-03-25)
+- CSIS, _What Are the Implications of the Iran Conflict for Japan?_ (2026-03-20)
+- Dallas Fed, _What the closure of the Strait of Hormuz means for the global economy_ (2026-03-20)
+- The Conversation, _Soaring gas prices and disrupted supply chains will ripple out to increase costs in every store and sector of the economy_ (2026)
+- Gasgoo, _Fuel Prices in China Near the “¥9 Era,” but Not Across the Board Yet_ (2026-03-25)

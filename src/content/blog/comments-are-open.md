@@ -1,7 +1,6 @@
 ---
 author: J2
 title: 博客加上评论区了，欢迎留言
-slug: comments-are-open
 description: 博客现已支持评论，欢迎在文章底部留言交流。
 pubDatetime: 2026-05-04T18:32:52+08:00
 tags:

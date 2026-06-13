@@ -12,6 +12,6 @@ featured: false
 draft: false
 ---
 
-![](https://img.bins.blog/2026/05/sheng-tu-2-zhang/dabo_codex-gpt-image-2_20260505_012419_f7d05a6d---ad0f1a6e.png)
+![AI 生成图像作品 1](https://img.bins.blog/2026/05/sheng-tu-2-zhang/dabo_codex-gpt-image-2_20260505_012419_f7d05a6d---ad0f1a6e.png)
 
-![](https://img.bins.blog/2026/05/sheng-tu-2-zhang/dabo_codex-gpt-image-2_20260505_012755_468b131d---ce5c07ef.png)
+![AI 生成图像作品 2](https://img.bins.blog/2026/05/sheng-tu-2-zhang/dabo_codex-gpt-image-2_20260505_012755_468b131d---ce5c07ef.png)

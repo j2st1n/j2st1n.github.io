@@ -1,7 +1,6 @@
 ---
 author: J2
 title: 一张无版权图片（Public Domain）示例
-slug: public-domain-image
 description: 用一张 NASA 公共领域图片，跑通图床上传与引用。
 pubDatetime: 2026-03-15T13:50:00+08:00
 tags:
@@ -19,7 +18,7 @@ draft: false
 
 ## 版权说明
 
-图片来源：Wikimedia Commons（NASA / Apollo 17 *The Blue Marble*）。
+图片来源：Wikimedia Commons（NASA / Apollo 17 _The Blue Marble_）。
 
 - 文件页：<https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17.jpg>
 - 授权：Public domain

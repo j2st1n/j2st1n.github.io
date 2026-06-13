@@ -1,7 +1,6 @@
 ---
 author: J2
 title: 给博客换了一套更安静的主题
-slug: quiet-theme-for-this-blog
 description: 博客换成了一套更安静的主题：少一点装饰，多一点留白，把阅读、归档、搜索和评论这些真正会用到的东西留下来。
 pubDatetime: 2026-05-30T23:30:00+08:00
 tags:
