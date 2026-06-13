@@ -77,7 +77,10 @@
   border-radius: 999px;
   background: transparent;
   cursor: pointer;
-  transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .tool-link:hover,
@@ -102,7 +105,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .sun-icon {
@@ -119,7 +124,6 @@
   opacity: 1;
   transform: translate(-50%, -50%) rotate(0) scale(1);
 }
-
 
 .quiet-shell {
   width: 100%;

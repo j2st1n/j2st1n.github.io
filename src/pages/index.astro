@@ -15,7 +15,8 @@ const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts);
 
 // 规则：有置顶用置顶，没有置顶用最新
-const featuredPost = sortedPosts.find(({ data }) => data.featured) ?? sortedPosts[0];
+const featuredPost =
+  sortedPosts.find(({ data }) => data.featured) ?? sortedPosts[0];
 // 最近文章排除主推，最多 6 篇
 const recentPosts = sortedPosts
   .filter(post => post.id !== featuredPost?.id)
@@ -37,11 +38,9 @@ const formatDay = (date: string | Date) =>
 
 const formatFullDate = (date: string | Date) =>
   dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
-
 ---
 
 <QuietLayout title={`${SITE.title} | ${SITE.desc}`}>
-
   <main id="main-content" class="home-page">
     <!-- 01 顶部个人开场 -->
     <section class="hero">
@@ -59,60 +58,79 @@ const formatFullDate = (date: string | Date) =>
     </section>
 
     <!-- 02 主推文章 -->
-    {featuredPost && (
-      <section class="featured">
-        <a href={getPath(featuredPost.id, featuredPost.filePath)} class="featured-link">
-          <span class="featured-marker" aria-hidden="true">01</span>
-          <div class="featured-body">
-            <h2 class="featured-title">{featuredPost.data.title}</h2>
-            {featuredPost.data.description && (
-              <p class="featured-desc">{featuredPost.data.description}</p>
-            )}
-            <div class="featured-meta">
-              <time datetime={new Date(featuredPost.data.pubDatetime).toISOString()}>
-                {formatFullDate(featuredPost.data.pubDatetime)}
-              </time>
-              {featuredPost.data.tags?.length > 0 && (
-                <>
-                  <span class="separator">·</span>
-                  <span class="featured-tags">
-                    {featuredPost.data.tags.slice(0, 2).join(" / ")}
-                  </span>
-                </>
+    {
+      featuredPost && (
+        <section class="featured">
+          <a
+            href={getPath(featuredPost.id, featuredPost.filePath)}
+            class="featured-link"
+          >
+            <span class="featured-marker" aria-hidden="true">
+              01
+            </span>
+            <div class="featured-body">
+              <h2 class="featured-title">{featuredPost.data.title}</h2>
+              {featuredPost.data.description && (
+                <p class="featured-desc">{featuredPost.data.description}</p>
               )}
+              <div class="featured-meta">
+                <time
+                  datetime={new Date(
+                    featuredPost.data.pubDatetime
+                  ).toISOString()}
+                >
+                  {formatFullDate(featuredPost.data.pubDatetime)}
+                </time>
+                {featuredPost.data.tags?.length > 0 && (
+                  <>
+                    <span class="separator">·</span>
+                    <span class="featured-tags">
+                      {featuredPost.data.tags.slice(0, 2).join(" / ")}
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        </a>
-      </section>
-    )}
+          </a>
+        </section>
+      )
+    }
 
     <!-- 03 最近文章 -->
-    {recentPosts.length > 0 && (
-      <section class="recent">
-        <div class="section-head">
-          <div class="section-label">最近文章</div>
-          <a href="/archives" class="section-action">全部文章 <span class="arrow">→</span></a>
-        </div>
-        <ul class="recent-list">
-          {recentPosts.map(post => (
-            <li class="recent-item">
-              <a href={getPath(post.id, post.filePath)} class="recent-link">
-                <span class="recent-date">
-                  <span class="recent-date-month">{formatMonth(post.data.pubDatetime)}</span>
-                  <span class="recent-date-day">{formatDay(post.data.pubDatetime)}</span>
-                </span>
-                <div class="recent-content">
-                  <span class="recent-title">{post.data.title}</span>
-                  {post.data.description && (
-                    <span class="recent-desc">{post.data.description}</span>
-                  )}
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    {
+      recentPosts.length > 0 && (
+        <section class="recent">
+          <div class="section-head">
+            <div class="section-label">最近文章</div>
+            <a href="/archives" class="section-action">
+              全部文章 <span class="arrow">→</span>
+            </a>
+          </div>
+          <ul class="recent-list">
+            {recentPosts.map(post => (
+              <li class="recent-item">
+                <a href={getPath(post.id, post.filePath)} class="recent-link">
+                  <span class="recent-date">
+                    <span class="recent-date-month">
+                      {formatMonth(post.data.pubDatetime)}
+                    </span>
+                    <span class="recent-date-day">
+                      {formatDay(post.data.pubDatetime)}
+                    </span>
+                  </span>
+                  <div class="recent-content">
+                    <span class="recent-title">{post.data.title}</span>
+                    {post.data.description && (
+                      <span class="recent-desc">{post.data.description}</span>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
     <!-- 04 页脚 -->
   </main>
@@ -247,7 +265,10 @@ const formatFullDate = (date: string | Date) =>
     opacity: 0.52;
     text-decoration: none;
     font-size: 0.8125rem;
-    transition: opacity 0.2s ease, color 0.2s ease, gap 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease,
+      gap 0.2s ease;
   }
 
   .section-action:hover {
@@ -399,7 +420,6 @@ const formatFullDate = (date: string | Date) =>
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
-
   }
 
   /* --- 暗色模式微调 --- */
@@ -431,13 +451,19 @@ const formatFullDate = (date: string | Date) =>
       while (true) {
         const next = new Date(cursor);
         next.setFullYear(next.getFullYear() + 1);
-        if (next <= to) { years += 1; cursor = next; } else break;
+        if (next <= to) {
+          years += 1;
+          cursor = next;
+        } else break;
       }
       let months = 0;
       while (true) {
         const next = new Date(cursor);
         next.setMonth(next.getMonth() + 1);
-        if (next <= to) { months += 1; cursor = next; } else break;
+        if (next <= to) {
+          months += 1;
+          cursor = next;
+        } else break;
       }
       let rest = Math.max(0, to.getTime() - cursor.getTime());
       const days = Math.floor(rest / 86400000);
@@ -452,7 +478,10 @@ const formatFullDate = (date: string | Date) =>
 
     const render = () => {
       const now = new Date();
-      const { years, months, days, hours, minutes, seconds } = diffParts(startDate, now);
+      const { years, months, days, hours, minutes, seconds } = diffParts(
+        startDate,
+        now
+      );
       const parts = [];
       if (years > 0) parts.push(`${years}年`);
       if (months > 0) parts.push(`${months}个月`);
