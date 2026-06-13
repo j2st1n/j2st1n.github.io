@@ -32,6 +32,7 @@ public/pagefind
 
 # Obsidian (vault config, plugins, workspace — local only)
 src/content/.obsidian/
+src/content/.SynologyWorkingDirectory/
 
 # Obsidian dashboard (builder-only file, not a blog post)
 src/content/_dashboard.md
