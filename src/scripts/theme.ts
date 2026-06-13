@@ -26,7 +26,9 @@ function getThemeToggleLabel(theme: string): string {
 }
 
 function syncGiscusTheme(theme: string): void {
-  const iframe = document.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
+  const iframe = document.querySelector<HTMLIFrameElement>(
+    "iframe.giscus-frame"
+  );
 
   iframe?.contentWindow?.postMessage(
     { giscus: { setConfig: { theme: theme === DARK ? "dark" : "light" } } },
@@ -50,6 +52,7 @@ function reflectPreference(): void {
   const themeButton = document.querySelector("#theme-btn");
 
   themeButton?.setAttribute("aria-label", themeToggleLabel);
+  themeButton?.setAttribute("aria-pressed", String(themeValue === DARK));
   themeButton?.setAttribute("title", themeToggleLabel);
 
   // Get a reference to the body element
