@@ -15,7 +15,7 @@ draft: false
 
 ## 图片
 
-![](https://img.bins.blog/2026/03/public-domain-image/blue-marble.webp)
+![NASA 蓝色大理石 Blue Marble 照片](https://img.bins.blog/2026/03/public-domain-image/blue-marble.webp)
 
 ## 版权说明
 

@@ -20,7 +20,7 @@ draft: false
 
 ## 图片
 
-![](https://img.bins.blog/2026/03/earthrise-public-domain/earthrise.webp)
+![阿波罗8号拍摄的地出 Earthrise 照片](https://img.bins.blog/2026/03/earthrise-public-domain/earthrise.webp)
 
 ## 版权 / 授权说明
 
