@@ -2,7 +2,6 @@
 author: J2
 title: 嚯，昨天的大哥又来串门啦？
 titleEn: "The Guy From Yesterday Came Back Again?"
-slug: traffic-peak-not-readers
 description: 上午看见一个小峰值，差点以为新文章有动静了。拆开才发现，里面混着监控请求、正常访问，还有昨天那位又来拧门把手的大哥。
 pubDatetime: 2026-03-19T14:35:00+08:00
 tags:
@@ -37,7 +36,7 @@ ogImage: https://img.bins.blog/2026-03-19/traffic-peak-not-readers/oval-office-d
 你看到 requests 涨了，不一定是内容被看见；你看到有个峰值，也不一定是什么值得庆祝的事。
 有时候，只是昨天那位大哥，又回来试了试门。
 
-![](https://img.bins.blog/2026-03-19/traffic-peak-not-readers/triangular-door-handle.webp)
+![三角形门把手照片](https://img.bins.blog/2026-03-19/traffic-peak-not-readers/triangular-door-handle.webp)
 
 ## 版权 / 授权说明
 

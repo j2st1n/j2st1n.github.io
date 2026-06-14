@@ -10,4 +10,4 @@ image: https://img.bins.blog/2026/04/tumen-border/file_26---276c45c2-f02b-47d6-b
 
 透过圆形瞭望镜，看到的是朝鲜南阳站。一条图们江，隔开两种秩序。这里没有高墙，但边界清晰，这边是景区，那边是岗哨。
 
-![](https://img.bins.blog/2026/04/tumen-border/file_26---276c45c2-f02b-47d6-b617-2894cfb6fcb1.webp)
+![图们江两岸对比](https://img.bins.blog/2026/04/tumen-border/file_26---276c45c2-f02b-47d6-b617-2894cfb6fcb1.webp)

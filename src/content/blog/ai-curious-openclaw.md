@@ -2,7 +2,6 @@
 author: J2
 title: 略懂一点的人，正在用 AI 追上时代
 titleEn: "Catching Up With AI as a Non-Tech Person"
-slug: ai-curious-openclaw
 description: 不从事技术行业，但对 AI 和 OpenClaw 充满好奇：一边怕被甩下，一边越学越觉得有意思。
 pubDatetime: 2026-03-16T18:45:00+08:00
 tags:
@@ -34,7 +33,7 @@ ogImage: https://img.bins.blog/2026/03/ai-curious-openclaw/eniac.jpg
 
 ## 配图来源
 
-![](https://img.bins.blog/2026/03/ai-curious-openclaw/eniac.webp)
+![ENIAC 早期计算机照片](https://img.bins.blog/2026/03/ai-curious-openclaw/eniac.webp)
 
 - 图片：ENIAC（约 1947–1955）
 - 来源：Wikimedia Commons：<https://commons.wikimedia.org/wiki/File:Glen_Beck_and_Betty_Snyder_program_the_ENIAC_in_building_328_at_the_Ballistic_Research_Laboratory.jpg>

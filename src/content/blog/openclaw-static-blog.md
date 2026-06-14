@@ -65,6 +65,6 @@ draft: false
 
 当然，前提还是那个前提——你得会表达。
 
-![](https://img.bins.blog/2026/03/openclaw-static-blog/openclaw-logo-text.png)
+![OpenClaw 项目 logo](https://img.bins.blog/2026/03/openclaw-static-blog/openclaw-logo-text.png)
 
-*配图基于 OpenClaw 项目公开 logo。*
+_配图基于 OpenClaw 项目公开 logo。_

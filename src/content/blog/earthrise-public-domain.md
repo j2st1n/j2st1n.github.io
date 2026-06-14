@@ -2,7 +2,6 @@
 author: J2
 title: Earthrise：一张公共领域（Public Domain）的“地出”照片
 titleEn: "Earthrise: A Public Domain Photo"
-slug: earthrise-public-domain
 description: 用一张 Apollo 8 的 Earthrise 公共领域图片，记录来源与授权，并放到图床验证链路。
 pubDatetime: 2026-03-15T21:55:00+08:00
 tags:
@@ -20,7 +19,7 @@ draft: false
 
 ## 图片
 
-![](https://img.bins.blog/2026/03/earthrise-public-domain/earthrise.webp)
+![阿波罗8号拍摄的地出 Earthrise 照片](https://img.bins.blog/2026/03/earthrise-public-domain/earthrise.webp)
 
 ## 版权 / 授权说明
 

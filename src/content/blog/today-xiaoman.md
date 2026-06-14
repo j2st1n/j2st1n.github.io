@@ -2,7 +2,6 @@
 author: J2
 title: 今日小满
 titleEn: "Today Xiaoman"
-slug: today-xiaoman
 description: 麦穗初齐，万物将满。
 pubDatetime: 2026-05-21T12:07:00+08:00
 tags:

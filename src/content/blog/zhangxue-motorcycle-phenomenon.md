@@ -1,7 +1,6 @@
 ---
 author: J2
 title: 追了20年的少年
-slug: zhangxue-motorcycle-phenomenon
 description: 从一条陌生热搜出发，去查了这个人，然后被一个陌生人的20年击中。
 pubDatetime: 2026-03-31T22:50:00+08:00
 tags:

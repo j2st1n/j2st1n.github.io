@@ -32,7 +32,10 @@ const tagSummaries = tags
   });
 
 const frequentTagSummaries = tagSummaries.filter(({ count }) => count > 1);
-const primaryTagSummaries = frequentTagSummaries.length > 0 ? frequentTagSummaries : tagSummaries.slice(0, 12);
+const primaryTagSummaries =
+  frequentTagSummaries.length > 0
+    ? frequentTagSummaries
+    : tagSummaries.slice(0, 12);
 const hiddenTagCount = tagSummaries.length - primaryTagSummaries.length;
 
 const latestDate = posts.length
@@ -49,8 +52,10 @@ const formatFullDate = (date: string | Date) =>
   dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
-<QuietLayout title={`标签 | ${SITE.title}`} description="所有文章标签的轻量索引。">
-
+<QuietLayout
+  title={`标签 | ${SITE.title}`}
+  description="所有文章标签的轻量索引。"
+>
   <main id="main-content" class="tags-page">
     <header class="tags-hero">
       <p class="tags-kicker">Tags</p>
@@ -65,31 +70,40 @@ const formatFullDate = (date: string | Date) =>
 
     <section class="tag-index" aria-label="标签索引">
       <ul class="tag-list">
-        {primaryTagSummaries.map(({ tag, tagName, count, latestPost }) => (
-          <li class="tag-item">
-            <a href={`/tags/${tag}/`} class="tag-link">
-              <span class="tag-name">{tagName}</span>
-              <span class="tag-count">{count} 篇</span>
-              {latestPost && (
-                <span class="tag-latest">
-                  <span class="tag-latest-label">最近</span>
-                  <span class="tag-latest-title">{latestPost.data.title}</span>
-                  <time datetime={new Date(latestPost.data.pubDatetime).toISOString()}>
-                    {formatFullDate(latestPost.data.pubDatetime)}
-                  </time>
-                </span>
-              )}
-            </a>
-          </li>
-        ))}
+        {
+          primaryTagSummaries.map(({ tag, tagName, count, latestPost }) => (
+            <li class="tag-item">
+              <a href={`/tags/${tag}/`} class="tag-link">
+                <span class="tag-name">{tagName}</span>
+                <span class="tag-count">{count} 篇</span>
+                {latestPost && (
+                  <span class="tag-latest">
+                    <span class="tag-latest-label">最近</span>
+                    <span class="tag-latest-title">
+                      {latestPost.data.title}
+                    </span>
+                    <time
+                      datetime={new Date(
+                        latestPost.data.pubDatetime
+                      ).toISOString()}
+                    >
+                      {formatFullDate(latestPost.data.pubDatetime)}
+                    </time>
+                  </span>
+                )}
+              </a>
+            </li>
+          ))
+        }
       </ul>
-      {hiddenTagCount > 0 && (
-        <p class="tag-note">
-          <a href="/all-tags">全部标签 →</a>
-        </p>
-      )}
+      {
+        hiddenTagCount > 0 && (
+          <p class="tag-note">
+            <a href="/all-tags">全部标签 →</a>
+          </p>
+        )
+      }
     </section>
-
   </main>
 </QuietLayout>
 
@@ -206,7 +220,9 @@ const formatFullDate = (date: string | Date) =>
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .tag-note {
@@ -222,7 +238,9 @@ const formatFullDate = (date: string | Date) =>
     color: inherit;
     text-decoration: none;
     border-bottom: 1px solid color-mix(in oklch, currentColor, transparent 68%);
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .tag-note a:hover {

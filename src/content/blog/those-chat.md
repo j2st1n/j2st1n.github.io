@@ -29,4 +29,4 @@ draft: false
 有些重要，也不是在工作里才会明白。
 反倒是那些不经意的闲聊，常常会提醒我们：别只顾着把事情做完，也要记得把日子过好。
 
-![](https://img.bins.blog/2026/03/those-chat/those-chat-photo-stripped.webp)
+![一次闲聊相关的配图](https://img.bins.blog/2026/03/those-chat/those-chat-photo-stripped.webp)

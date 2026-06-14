@@ -12,7 +12,7 @@ featured: false
 draft: false
 ---
 
-![](https://img.bins.blog/2026/05/formalism-against-formalism/dabo_codex-gpt-image-2_20260509_140520_d9c77648---4ef45506.png)
+![关于反对形式主义的 AI 生成配图](https://img.bins.blog/2026/05/formalism-against-formalism/dabo_codex-gpt-image-2_20260509_140520_d9c77648---4ef45506.png)
 
 有时候会觉得，很多“反形式主义”的动作，最后也变成了一种形式主义。
 

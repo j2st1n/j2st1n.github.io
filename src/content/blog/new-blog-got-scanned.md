@@ -2,7 +2,6 @@
 author: J2
 title: 刚开张的博客，就被互联网“打招呼”了
 titleEn: "A New Blog, and the Internet Immediately Said Hello"
-slug: new-blog-got-scanned
 description: 刚把博客搭好，第二天 Cloudflare 就出现一波异常扫描：404/405 暴涨、来自 FR 的请求占比极高。记录一次“新站必经的洗礼”，以及我做了哪些低误伤防护。
 pubDatetime: 2026-03-17T07:05:00+08:00
 tags:
@@ -42,7 +41,7 @@ ogImage: https://img.bins.blog/2026-03-17/new-blog-got-scanned/nsoc-1975.webp
 
 几个特别明显的特征：
 
-1) **状态码很不正常**
+1. **状态码很不正常**
 
 3/16 的 Top 状态码里：
 
@@ -52,13 +51,13 @@ ogImage: https://img.bins.blog/2026-03-17/new-blog-got-scanned/nsoc-1975.webp
 
 这类组合基本就是：**在扫**。
 
-2) **来源国家集中**
+2. **来源国家集中**
 
 3/16 的请求里，来自 **FR** 的占比非常高（还贡献了绝大多数 threats）。
 
 这不等于“法国人很坏”，而是说明：这波扫描器的出口在那边。
 
-3) **峰值集中在一个小时**
+3. **峰值集中在一个小时**
 
 3/16 下午有一个小时请求量特别高（典型脚本行为），不像真实读者的自然波动。
 
@@ -104,7 +103,7 @@ ogImage: https://img.bins.blog/2026-03-17/new-blog-got-scanned/nsoc-1975.webp
 
 ## 配图（合规可引用：CC0）
 
-![](https://img.bins.blog/2026-03-17/new-blog-got-scanned/nsoc-1975.webp)
+![1975 年左右的国家安全行动中心照片](https://img.bins.blog/2026-03-17/new-blog-got-scanned/nsoc-1975.webp)
 
 - 文件页（Wikimedia Commons）：https://commons.wikimedia.org/wiki/File:National_Security_Operations_Center_photograph,_c._1975_-_National_Cryptologic_Museum_-_DSC07658.JPG
 - 授权：CC0（无需署名，但我还是放了来源链接）

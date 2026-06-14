@@ -26,7 +26,9 @@ function getThemeToggleLabel(theme: string): string {
 }
 
 function syncGiscusTheme(theme: string): void {
-  const iframe = document.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
+  const iframe = document.querySelector<HTMLIFrameElement>(
+    "iframe.giscus-frame"
+  );
 
   iframe?.contentWindow?.postMessage(
     { giscus: { setConfig: { theme: theme === DARK ? "dark" : "light" } } },
@@ -50,6 +52,7 @@ function reflectPreference(): void {
   const themeButton = document.querySelector("#theme-btn");
 
   themeButton?.setAttribute("aria-label", themeToggleLabel);
+  themeButton?.setAttribute("aria-pressed", String(themeValue === DARK));
   themeButton?.setAttribute("title", themeToggleLabel);
 
   // Get a reference to the body element
@@ -89,16 +92,20 @@ if (window.theme) {
 // Ensure theme is reflected (in case body wasn't ready when inline script ran)
 reflectPreference();
 
+function handleThemeToggle(): void {
+  themeValue = themeValue === LIGHT ? DARK : LIGHT;
+  window.theme?.setTheme(themeValue);
+  setPreference();
+}
+
 function setThemeFeature(): void {
   // set on load so screen readers can get the latest value on the button
   reflectPreference();
 
   // now this script can find and listen for clicks on the control
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
-    window.theme?.setTheme(themeValue);
-    setPreference();
-  });
+  const btn = document.querySelector("#theme-btn");
+  btn?.removeEventListener("click", handleThemeToggle);
+  btn?.addEventListener("click", handleThemeToggle);
 }
 
 // Set up theme features after page load

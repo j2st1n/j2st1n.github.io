@@ -29,14 +29,19 @@ export async function getStaticPaths() {
 
 const { tagName, posts } = Astro.props;
 const latestDate = posts.length
-  ? dayjs(posts[0].data.modDatetime ?? posts[0].data.pubDatetime).tz(SITE.timezone).format("YYYY.MM.DD")
+  ? dayjs(posts[0].data.modDatetime ?? posts[0].data.pubDatetime)
+      .tz(SITE.timezone)
+      .format("YYYY.MM.DD")
   : "";
 
 const formatFullDate = (date: string | Date) =>
   dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
-<QuietLayout title={`${tagName} | ${SITE.title}`} description={`包含标签「${tagName}」的所有文章。`}>
+<QuietLayout
+  title={`${tagName} | ${SITE.title}`}
+  description={`包含标签「${tagName}」的所有文章。`}
+>
   <main id="main-content" class="content-page">
     <header class="page-hero">
       <div class="hero-line">
@@ -52,22 +57,25 @@ const formatFullDate = (date: string | Date) =>
 
     <section class="post-index" aria-label={`${tagName} 标签文章列表`}>
       <ul class="post-list">
-        {posts.map(post => (
-          <li class="post-item">
-            <a href={getPath(post.id, post.filePath)} class="post-link">
-              <time datetime={new Date(post.data.pubDatetime).toISOString()}>
-                {formatFullDate(post.data.pubDatetime)}
-              </time>
-              <span class="post-content">
-                <span class="post-title">{post.data.title}</span>
-                {post.data.description && <span class="post-desc">{post.data.description}</span>}
-              </span>
-            </a>
-          </li>
-        ))}
+        {
+          posts.map(post => (
+            <li class="post-item">
+              <a href={getPath(post.id, post.filePath)} class="post-link">
+                <time datetime={new Date(post.data.pubDatetime).toISOString()}>
+                  {formatFullDate(post.data.pubDatetime)}
+                </time>
+                <span class="post-content">
+                  <span class="post-title">{post.data.title}</span>
+                  {post.data.description && (
+                    <span class="post-desc">{post.data.description}</span>
+                  )}
+                </span>
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </section>
-
   </main>
 </QuietLayout>
 
@@ -107,7 +115,9 @@ const formatFullDate = (date: string | Date) =>
     font-size: 0.875rem;
     line-height: 1.7;
     text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .all-tags-link:hover {
@@ -174,7 +184,9 @@ const formatFullDate = (date: string | Date) =>
     font-weight: 560;
     line-height: 1.65;
     letter-spacing: -0.025em;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .post-desc {

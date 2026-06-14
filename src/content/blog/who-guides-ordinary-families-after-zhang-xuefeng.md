@@ -69,7 +69,7 @@ ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-
 
 ![普通家庭在报志愿时的沉默时刻](https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_hfxj7uhfxj7uhfxj---a5c93706-3afa-4054-b8b2-6eb1b2bb5b06.png)
 
-*配图由 AI 生成。*
+_配图由 AI 生成。_
 
 这不是因为他们不关心，恰恰是因为太关心了。只是他们也不懂新的填报规则，不懂专业冷热，不知道哪些差别只是名字不同，哪些差别会真正影响几年后的生活。
 

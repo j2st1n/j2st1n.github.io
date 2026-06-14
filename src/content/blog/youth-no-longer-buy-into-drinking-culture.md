@@ -43,7 +43,7 @@ ogImage: https://img.bins.blog/2026-03-24/youth-no-longer-buy-into-drinking-cult
 
 **更像是他们越来越不接受：为什么很多关系，一定要靠额外的消耗来证明？为什么下班后的表演，要继续决定工作里的评价？为什么亲近，非得通过勉强自己来完成？**
 
-![](https://img.bins.blog/2026-03-24/youth-no-longer-buy-into-drinking-culture/ref-capital-cant-teach-drinking.webp)
+![关于酒桌文化和资本关系的配图](https://img.bins.blog/2026-03-24/youth-no-longer-buy-into-drinking-culture/ref-capital-cant-teach-drinking.webp)
 
 ### 酒桌退潮，本质上是旧关系逻辑在退潮
 

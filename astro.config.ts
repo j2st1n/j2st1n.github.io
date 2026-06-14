@@ -9,17 +9,23 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+import { rehypeLazyImages } from "./src/utils/rehype/lazyImages";
 import { SITE } from "./src/config";
 
 export default defineConfig({
   site: SITE.website,
   integrations: [
     sitemap({
-      filter: page => SITE.showArchives || !new URL(page).pathname.endsWith("/archives"),
+      filter: page => {
+        const pathname = new URL(page).pathname;
+        if (pathname === "/search/") return false;
+        return SITE.showArchives || !pathname.endsWith("/archives");
+      },
     }),
   ],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
+    rehypePlugins: [rehypeLazyImages],
     shikiConfig: {
       themes: { light: "min-light", dark: "night-owl" },
       defaultColor: false,

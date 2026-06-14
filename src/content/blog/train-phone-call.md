@@ -23,4 +23,4 @@ draft: false
 
 ![火车上打电话的姑娘](https://img.bins.blog/2026/05/blog/train-phone-call---6995baa5.jpg)
 
-*配图由 AI 根据文章内容生成*
+_配图由 AI 根据文章内容生成_

@@ -2,7 +2,6 @@
 author: J2
 title: 办公室牛油果树下，薄荷发芽了
 titleEn: "Mint Sprouted Under My Office Avocado"
-slug: office-avocado-mint
 description: 办公室小盆栽观察日记：牛油果树下撒了薄荷种子，没想到真发芽了（以及同盆小提醒）。
 pubDatetime: 2026-03-16T08:10:00+08:00
 tags:
@@ -22,7 +21,7 @@ draft: false
 
 ## 今日记录
 
-![](https://img.bins.blog/2026/03/office-avocado-mint/file_0---3f577a7e-8cca-4935-b5ce-b6e4354fe579.webp)
+![办公室牛油果盆栽](https://img.bins.blog/2026/03/office-avocado-mint/file_0---3f577a7e-8cca-4935-b5ce-b6e4354fe579.webp)
 
 薄荷这玩意儿是真的很会抓住机会：只要给点水、给点光，它就敢长给你看。
 
