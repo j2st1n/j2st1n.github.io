@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
-import LiveSignals from "@/themes/quiet/components/LiveSignals.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
@@ -97,10 +96,7 @@ const formatFullDate = (date: string | Date) =>
       )
     }
 
-    <!-- 03 实时热点 -->
-    <LiveSignals />
-
-    <!-- 04 最近文章 -->
+    <!-- 03 最近文章 -->
     {
       recentPosts.length > 0 && (
         <section class="recent">
