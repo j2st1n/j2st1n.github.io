@@ -38,6 +38,21 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const ogImageVersion =
+  process.env.GITHUB_SHA?.slice(0, 12) ??
+  process.env.CF_PAGES_COMMIT_SHA?.slice(0, 12) ??
+  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ??
+  "";
+
+if (
+  ogImageVersion &&
+  socialImageURL.origin === Astro.url.origin &&
+  socialImageURL.pathname.endsWith(".png") &&
+  !socialImageURL.search
+) {
+  socialImageURL.searchParams.set("v", ogImageVersion);
+}
+
 const canonicalURLString = canonicalURL.toString();
 
 const structuredData = {
