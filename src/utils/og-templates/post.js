@@ -2,18 +2,86 @@ import satori from "satori";
 import { SITE } from "@/config";
 import loadGoogleFonts from "../loadGoogleFont";
 
+const WIDTH = 1200;
+const HEIGHT = 630;
+
+function truncateText(text, maxLength) {
+  if (!text || text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength - 1)}…`;
+}
+
+function formatDate(date) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: SITE.timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(new Date(date))
+    .replaceAll("/", ".");
+}
+
+function getTitleSize(title) {
+  if (title.length <= 14) return 78;
+  if (title.length <= 24) return 68;
+  if (title.length <= 38) return 58;
+  return 50;
+}
+
+function tagNode(tag) {
+  return {
+    type: "span",
+    props: {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        borderRadius: 999,
+        border: "1px solid #d7d2c4",
+        background: "rgba(255,255,255,0.74)",
+        color: "#51605d",
+        padding: "8px 16px",
+        fontSize: 22,
+        lineHeight: 1,
+      },
+      children: tag,
+    },
+  };
+}
+
 export default async post => {
+  const { title, description, pubDatetime, tags = [], author } = post.data;
+  const displayTitle = truncateText(title, 58);
+  const displayDescription = truncateText(description, 96);
+  const displayTags = tags.slice(0, 4);
+  const date = formatDate(pubDatetime);
+  const hostname = new URL(SITE.website).hostname;
+  const fontText = [
+    displayTitle,
+    displayDescription,
+    displayTags.join(""),
+    author,
+    SITE.title,
+    hostname,
+    date,
+    "by随笔",
+  ].join("");
+
   return satori(
     {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
-          width: "100%",
-          height: "100%",
+          width: WIDTH,
+          height: HEIGHT,
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          position: "relative",
+          overflow: "hidden",
+          background: "#f7f3ea",
+          color: "#17201d",
+          padding: "54px 64px",
+          fontFamily: "Noto Sans SC",
         },
         children: [
           {
@@ -21,17 +89,12 @@ export default async post => {
             props: {
               style: {
                 position: "absolute",
-                top: "-1px",
-                right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
-                opacity: "0.9",
-                borderRadius: "4px",
+                left: 0,
+                top: 0,
+                width: "100%",
+                height: 18,
+                background: "#0f766e",
                 display: "flex",
-                justifyContent: "center",
-                margin: "2.5rem",
-                width: "88%",
-                height: "80%",
               },
             },
           },
@@ -39,83 +102,83 @@ export default async post => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
-                borderRadius: "4px",
+                position: "absolute",
+                right: 0,
+                top: 18,
+                width: 18,
+                height: "100%",
+                background: "#c05621",
                 display: "flex",
-                justifyContent: "center",
-                margin: "2rem",
-                width: "88%",
-                height: "80%",
+              },
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "absolute",
+                right: 58,
+                top: 86,
+                color: "rgba(15,118,110,0.08)",
+                fontSize: 172,
+                fontWeight: 700,
+                lineHeight: 1,
+                display: "flex",
+              },
+              children: SITE.title,
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                position: "relative",
+                color: "#51605d",
+                fontSize: 24,
               },
               children: {
                 type: "div",
                 props: {
                   style: {
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    margin: "20px",
-                    width: "90%",
-                    height: "90%",
+                    alignItems: "center",
+                    gap: 14,
                   },
                   children: [
                     {
-                      type: "p",
+                      type: "span",
                       props: {
                         style: {
-                          fontSize: 72,
-                          fontWeight: "bold",
-                          maxHeight: "84%",
-                          overflow: "hidden",
+                          width: 10,
+                          height: 10,
+                          borderRadius: 999,
+                          background: "#0f766e",
+                          display: "flex",
                         },
-                        children: post.data.title,
                       },
                     },
                     {
-                      type: "div",
+                      type: "span",
                       props: {
-                        style: {
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                          marginBottom: "8px",
-                          fontSize: 28,
-                        },
-                        children: [
-                          {
-                            type: "span",
-                            props: {
-                              children: [
-                                "by ",
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: { color: "transparent" },
-                                    children: '"',
-                                  },
-                                },
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: {
-                                      overflow: "hidden",
-                                      fontWeight: "bold",
-                                    },
-                                    children: post.data.author,
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            type: "span",
-                            props: {
-                              style: { overflow: "hidden", fontWeight: "bold" },
-                              children: SITE.title,
-                            },
-                          },
-                        ],
+                        style: { fontWeight: 700, color: "#25302d" },
+                        children: SITE.title,
+                      },
+                    },
+                    {
+                      type: "span",
+                      props: {
+                        children: "by",
+                      },
+                    },
+                    {
+                      type: "span",
+                      props: {
+                        style: { fontWeight: 700, color: "#25302d" },
+                        children: author,
                       },
                     },
                   ],
@@ -123,16 +186,135 @@ export default async post => {
               },
             },
           },
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "absolute",
+                right: 64,
+                top: 54,
+                color: "#6b746f",
+                fontSize: 24,
+                display: "flex",
+              },
+              children: date,
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                paddingRight: 92,
+              },
+              children: [
+                {
+                  type: "h1",
+                  props: {
+                    style: {
+                      margin: 0,
+                      fontSize: getTitleSize(displayTitle),
+                      fontWeight: 700,
+                      lineHeight: 1.16,
+                      letterSpacing: 0,
+                      maxHeight: 270,
+                      overflow: "hidden",
+                      color: "#17201d",
+                    },
+                    children: displayTitle,
+                  },
+                },
+                {
+                  type: "p",
+                  props: {
+                    style: {
+                      margin: "28px 0 0",
+                      fontSize: 30,
+                      lineHeight: 1.45,
+                      maxHeight: 92,
+                      overflow: "hidden",
+                      color: "#56625f",
+                    },
+                    children: displayDescription,
+                  },
+                },
+              ],
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "relative",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                gap: 32,
+                width: "100%",
+                borderTop: "1px solid #d7d2c4",
+                paddingTop: 26,
+              },
+              children: [
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
+                      gap: 12,
+                      maxWidth: 740,
+                      overflow: "hidden",
+                    },
+                    children:
+                      displayTags.length > 0
+                        ? displayTags.map(tagNode)
+                        : [tagNode("随笔")],
+                  },
+                },
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      color: "#25302d",
+                      fontSize: 25,
+                      fontWeight: 700,
+                      whiteSpace: "nowrap",
+                    },
+                    children: [
+                      {
+                        type: "span",
+                        props: {
+                          style: {
+                            display: "flex",
+                            width: 34,
+                            height: 4,
+                            background: "#c05621",
+                          },
+                        },
+                      },
+                      {
+                        type: "span",
+                        props: { children: hostname },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
         ],
       },
     },
     {
-      width: 1200,
-      height: 630,
+      width: WIDTH,
+      height: HEIGHT,
       embedFont: true,
-      fonts: await loadGoogleFonts(
-        post.data.title + post.data.author + SITE.title + "by"
-      ),
+      fonts: await loadGoogleFonts(fontText),
     }
   );
 };
