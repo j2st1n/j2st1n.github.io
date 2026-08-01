@@ -3,6 +3,7 @@ import { type CollectionEntry, render } from "astro:content";
 import Comments from "@/components/Comments.astro";
 import QuietLayout from "./QuietLayout.astro";
 import { SITE } from "@/config";
+import { getGeneratedOgImageFileName } from "@/utils/getOgImageVersion";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import dayjs from "dayjs";
@@ -52,7 +53,9 @@ const formatFullDate = (date: string | Date) =>
 const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
 const postPath = getPath(post.id, post.filePath);
 const postOgImage =
-  typeof ogImage === "string" ? ogImage : `${postPath}/index.png`;
+  typeof ogImage === "string"
+    ? ogImage
+    : `${postPath}/${getGeneratedOgImageFileName()}`;
 ---
 
 <QuietLayout

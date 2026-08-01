@@ -3,6 +3,10 @@ import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
+import {
+  getGeneratedOgImageFileName,
+  getOgImageVersion,
+} from "@/utils/getOgImageVersion";
 import "@/styles/global.css";
 
 type Props = {
@@ -21,12 +25,15 @@ type Props = {
   tags?: string[];
 };
 
+const generatedOgImageFileName = getGeneratedOgImageFileName();
+const ogImageVersion = getOgImageVersion();
+
 const {
   title = SITE.title,
   author = SITE.author,
   profile = SITE.profile,
   description = SITE.desc,
-  ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
+  ogImage = SITE.ogImage ? `/${SITE.ogImage}` : `/${generatedOgImageFileName}`,
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
   modDatetime,
@@ -40,22 +47,7 @@ const {
 const socialImageURL = new URL(ogImage, Astro.url);
 const isGeneratedOgImage =
   socialImageURL.origin === Astro.url.origin &&
-  (socialImageURL.pathname === "/og.png" ||
-    socialImageURL.pathname.endsWith("/index.png"));
-const ogImageVersion =
-  process.env.GITHUB_SHA?.slice(0, 12) ??
-  process.env.CF_PAGES_COMMIT_SHA?.slice(0, 12) ??
-  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ??
-  "";
-
-if (
-  ogImageVersion &&
-  isGeneratedOgImage &&
-  socialImageURL.pathname.endsWith(".png") &&
-  !socialImageURL.search
-) {
-  socialImageURL.searchParams.set("v", ogImageVersion);
-}
+  socialImageURL.pathname.endsWith(`/share-${ogImageVersion}.png`);
 
 const canonicalURLString = canonicalURL.toString();
 
