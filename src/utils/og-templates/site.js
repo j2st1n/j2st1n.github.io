@@ -3,7 +3,7 @@ import { SITE } from "@/config";
 import loadGoogleFonts from "../loadGoogleFont";
 
 const WIDTH = 1200;
-const HEIGHT = 630;
+const HEIGHT = 1200;
 
 export default async () => {
   const hostname = new URL(SITE.website).hostname;
@@ -31,7 +31,7 @@ export default async () => {
           overflow: "hidden",
           background: "#f7f3ea",
           color: "#17201d",
-          padding: "54px 64px",
+          padding: "72px",
           fontFamily: "Noto Sans SC",
         },
         children: [
@@ -43,7 +43,7 @@ export default async () => {
                 left: 0,
                 top: 0,
                 width: "100%",
-                height: 18,
+                height: 24,
                 background: "#0f766e",
                 display: "flex",
               },
@@ -55,8 +55,8 @@ export default async () => {
               style: {
                 position: "absolute",
                 right: 0,
-                top: 18,
-                width: 18,
+                top: 24,
+                width: 24,
                 height: "100%",
                 background: "#c05621",
                 display: "flex",
@@ -68,10 +68,10 @@ export default async () => {
             props: {
               style: {
                 position: "absolute",
-                right: 56,
-                top: 86,
+                right: 60,
+                top: 176,
                 color: "rgba(15,118,110,0.08)",
-                fontSize: 172,
+                fontSize: 230,
                 fontWeight: 700,
                 lineHeight: 1,
                 display: "flex",
@@ -88,7 +88,7 @@ export default async () => {
                 gap: 14,
                 position: "relative",
                 color: "#51605d",
-                fontSize: 24,
+                fontSize: 26,
               },
               children: [
                 {
@@ -134,7 +134,7 @@ export default async () => {
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
-                paddingRight: 120,
+                paddingRight: 24,
               },
               children: [
                 {
@@ -142,7 +142,7 @@ export default async () => {
                   props: {
                     style: {
                       margin: 0,
-                      fontSize: 96,
+                      fontSize: 118,
                       fontWeight: 700,
                       lineHeight: 1.08,
                       letterSpacing: 0,
@@ -155,10 +155,10 @@ export default async () => {
                   type: "p",
                   props: {
                     style: {
-                      margin: "34px 0 0",
-                      fontSize: 32,
+                      margin: "42px 0 0",
+                      fontSize: 38,
                       lineHeight: 1.5,
-                      maxWidth: 850,
+                      maxWidth: 900,
                       color: "#56625f",
                     },
                     children: SITE.desc,
@@ -178,7 +178,7 @@ export default async () => {
                 gap: 32,
                 width: "100%",
                 borderTop: "1px solid #d7d2c4",
-                paddingTop: 26,
+                paddingTop: 32,
               },
               children: [
                 {

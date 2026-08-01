@@ -3,7 +3,7 @@ import { SITE } from "@/config";
 import loadGoogleFonts from "../loadGoogleFont";
 
 const WIDTH = 1200;
-const HEIGHT = 630;
+const HEIGHT = 1200;
 
 function truncateText(text, maxLength) {
   if (!text || text.length <= maxLength) return text;
@@ -22,10 +22,10 @@ function formatDate(date) {
 }
 
 function getTitleSize(title) {
-  if (title.length <= 14) return 78;
-  if (title.length <= 24) return 68;
-  if (title.length <= 38) return 58;
-  return 50;
+  if (title.length <= 14) return 96;
+  if (title.length <= 24) return 84;
+  if (title.length <= 38) return 72;
+  return 64;
 }
 
 function tagNode(tag) {
@@ -80,7 +80,7 @@ export default async post => {
           overflow: "hidden",
           background: "#f7f3ea",
           color: "#17201d",
-          padding: "54px 64px",
+          padding: "72px",
           fontFamily: "Noto Sans SC",
         },
         children: [
@@ -92,7 +92,7 @@ export default async post => {
                 left: 0,
                 top: 0,
                 width: "100%",
-                height: 18,
+                height: 24,
                 background: "#0f766e",
                 display: "flex",
               },
@@ -104,8 +104,8 @@ export default async post => {
               style: {
                 position: "absolute",
                 right: 0,
-                top: 18,
-                width: 18,
+                top: 24,
+                width: 24,
                 height: "100%",
                 background: "#c05621",
                 display: "flex",
@@ -117,10 +117,10 @@ export default async post => {
             props: {
               style: {
                 position: "absolute",
-                right: 58,
-                top: 86,
+                right: 60,
+                top: 176,
                 color: "rgba(15,118,110,0.08)",
-                fontSize: 172,
+                fontSize: 230,
                 fontWeight: 700,
                 lineHeight: 1,
                 display: "flex",
@@ -138,7 +138,7 @@ export default async post => {
                 width: "100%",
                 position: "relative",
                 color: "#51605d",
-                fontSize: 24,
+                fontSize: 26,
               },
               children: {
                 type: "div",
@@ -191,10 +191,10 @@ export default async post => {
             props: {
               style: {
                 position: "absolute",
-                right: 64,
-                top: 54,
+                right: 72,
+                top: 72,
                 color: "#6b746f",
-                fontSize: 24,
+                fontSize: 26,
                 display: "flex",
               },
               children: date,
@@ -208,7 +208,7 @@ export default async post => {
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
-                paddingRight: 92,
+                paddingRight: 24,
               },
               children: [
                 {
@@ -220,7 +220,7 @@ export default async post => {
                       fontWeight: 700,
                       lineHeight: 1.16,
                       letterSpacing: 0,
-                      maxHeight: 270,
+                      maxHeight: 430,
                       overflow: "hidden",
                       color: "#17201d",
                     },
@@ -231,10 +231,10 @@ export default async post => {
                   type: "p",
                   props: {
                     style: {
-                      margin: "28px 0 0",
-                      fontSize: 30,
+                      margin: "36px 0 0",
+                      fontSize: 34,
                       lineHeight: 1.45,
-                      maxHeight: 92,
+                      maxHeight: 150,
                       overflow: "hidden",
                       color: "#56625f",
                     },
@@ -255,7 +255,7 @@ export default async post => {
                 gap: 32,
                 width: "100%",
                 borderTop: "1px solid #d7d2c4",
-                paddingTop: 26,
+                paddingTop: 32,
               },
               children: [
                 {
@@ -264,7 +264,7 @@ export default async post => {
                     style: {
                       display: "flex",
                       gap: 12,
-                      maxWidth: 740,
+                      maxWidth: 760,
                       overflow: "hidden",
                     },
                     children:
