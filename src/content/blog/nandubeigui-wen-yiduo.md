@@ -27,6 +27,6 @@ ChatGPT说：
 > 所以看臧克家和陈梦家，最令人感慨的不只是寿命差异，而是：
 > **一个人如何面对时代，时代又如何塑造一个人的命运。**
 
-![](https://img.bins.blog/2026/08/uploads/2026_08_uploads_image-c09e086e---80625f36.jpg)
+![陈梦家与夫人赵萝蕤合影](https://img.bins.blog/2026/08/uploads/2026_08_uploads_image-c09e086e---80625f36.jpg)
 
 陈梦家与夫人赵萝蕤（ruí），以现代人的眼光来看，也是男才女貌（女亦有才）。

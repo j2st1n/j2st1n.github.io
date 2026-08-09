@@ -40,7 +40,10 @@ const formatFullDate = (date: string | Date) =>
   dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
-<QuietLayout title={`${SITE.title} | ${SITE.desc}`}>
+<QuietLayout
+  title={`${SITE.title} | J2 的个人博客`}
+  ogImageAlt={`${SITE.title} 博客分享图片`}
+>
   <main id="main-content" class="home-page">
     <!-- 01 顶部个人开场 -->
     <section class="hero">
@@ -166,7 +169,7 @@ const formatFullDate = (date: string | Date) =>
     align-items: center;
     font-size: 0.8125rem;
     color: var(--foreground);
-    opacity: 0.42;
+    opacity: 0.64;
   }
 
   /* --- 通用 --- */
@@ -226,7 +229,7 @@ const formatFullDate = (date: string | Date) =>
     font-size: 0.9375rem;
     line-height: 1.65;
     color: var(--foreground);
-    opacity: 0.65;
+    opacity: 0.68;
     margin-bottom: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -237,7 +240,7 @@ const formatFullDate = (date: string | Date) =>
   .featured-meta {
     font-size: 0.8125rem;
     color: var(--foreground);
-    opacity: 0.45;
+    opacity: 0.64;
   }
 
   .featured-tags {
@@ -262,7 +265,7 @@ const formatFullDate = (date: string | Date) =>
     align-items: center;
     gap: 0.375rem;
     color: var(--foreground);
-    opacity: 0.52;
+    opacity: 0.64;
     text-decoration: none;
     font-size: 0.8125rem;
     transition:
@@ -325,13 +328,13 @@ const formatFullDate = (date: string | Date) =>
   .recent-date-month {
     font-size: 0.6875rem;
     line-height: 1;
-    opacity: 0.34;
+    opacity: 0.64;
   }
 
   .recent-date-day {
     font-size: 0.9375rem;
     line-height: 1.1;
-    opacity: 0.48;
+    opacity: 0.64;
     letter-spacing: -0.02em;
   }
 
@@ -354,7 +357,7 @@ const formatFullDate = (date: string | Date) =>
     font-size: 0.8125rem;
     line-height: 1.5;
     color: var(--foreground);
-    opacity: 0.5;
+    opacity: 0.64;
     margin-top: 0.25rem;
     overflow: hidden;
     text-overflow: ellipsis;

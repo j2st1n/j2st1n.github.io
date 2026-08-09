@@ -1,12 +1,12 @@
 :root {
   --content-width: 48rem;
   --border-color: oklch(88% 0.006 250);
-  --text-muted: color-mix(in oklch, var(--foreground), transparent 48%);
+  --text-muted: color-mix(in oklch, var(--foreground), transparent 35%);
 }
 
 :root[data-theme="dark"] {
   --border-color: oklch(31% 0.006 250);
-  --text-muted: color-mix(in oklch, var(--foreground), transparent 38%);
+  --text-muted: color-mix(in oklch, var(--foreground), transparent 36%);
 }
 
 .skip-link {

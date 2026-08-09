@@ -21,7 +21,7 @@ draft: false
 
 这个目录里是微信 Mac 版的聊天文件、图片、视频、缓存和各种历史数据。它不声不响长到几十 G，非常合理，也非常要命。
 
-![](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-1---157116db.png)
+![微信数据持续占用 Mac 系统盘空间的示意图](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-1---157116db.png)
 
 ## 第一反应：搬到外置盘，再软链接回来
 
@@ -82,7 +82,7 @@ WeChatData
 
 ## 实际操作流程
 
-![](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-2---2c7bcd4e.png)
+![将微信数据迁移到外置 APFS 卷的操作流程](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-2---2c7bcd4e.png)
 下面是我这次采用的流程。重点不是每条命令原样复制，而是顺序和安全边界。
 
 ### 1. 先完整备份
@@ -176,7 +176,7 @@ mount | grep xwechat_files
 /dev/diskXsY on /Users/<username>/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files (apfs, local, nodev, nosuid, journaled, noowners)
 ```
 
-![](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-3---7c76c85b.png)
+![APFS 卷成功挂载到微信原数据目录](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-3---7c76c85b.png)
 
 ### 5. 打开微信测试
 
@@ -225,7 +225,7 @@ launchctl bootout "gui/$(id -u)" ~/Library/LaunchAgents/com.example.wechatdata.m
 ```
 
 这部分最重要的是用 **Volume UUID**，不要依赖 `diskXsY` 这种编号。磁盘编号重启后可能变，UUID 稳定得多。
-![](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_52-4---da839579.png)
+![使用卷 UUID 和 LaunchAgent 自动挂载微信数据卷](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_52-4---da839579.png)
 
 ## 这个方案的风险点
 

@@ -8,6 +8,7 @@ type Props = {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   canonicalURL?: string | URL;
   pubDatetime?: Date;
   modDatetime?: Date | null;
@@ -24,6 +25,7 @@ const {
   title,
   description,
   ogImage,
+  ogImageAlt,
   canonicalURL,
   pubDatetime,
   modDatetime,
@@ -41,6 +43,7 @@ const {
   title={title}
   description={description}
   ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
   canonicalURL={canonicalURL}
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}

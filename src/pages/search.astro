@@ -45,7 +45,13 @@ const searchItems = sortedPosts.map(post => ({
         />
       </label>
 
-      <p class="search-count" hidden>
+      <p
+        class="search-count"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        hidden
+      >
         <span id="search-count">找到 0 个结果</span>
       </p>
       <ul class="result-list" id="search-results">
@@ -112,6 +118,7 @@ const searchItems = sortedPosts.map(post => ({
   .search-box:focus-within {
     border-color: color-mix(in oklch, var(--foreground), transparent 68%);
     background: color-mix(in oklch, var(--foreground), transparent 97%);
+    box-shadow: 0 0 0 2px var(--accent);
   }
   .search-box svg {
     width: 1.25rem;

@@ -12,6 +12,7 @@ type Props = {
   profile?: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   canonicalURL?: string | URL;
   pubDatetime?: Date;
   modDatetime?: Date | null;
@@ -30,6 +31,7 @@ const {
   profile = SITE.profile,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : `/${generatedOgImageFileName}`,
+  ogImageAlt = title,
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
   modDatetime,
@@ -46,6 +48,8 @@ const isGeneratedOgImage =
   /\/share-[a-f0-9]{12}\.png$/.test(socialImageURL.pathname);
 
 const canonicalURLString = canonicalURL.toString();
+const siteURL = new URL("/", Astro.site ?? Astro.url.origin).toString();
+const ogLocale = SITE.lang.replace("-", "_");
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -59,16 +63,33 @@ const structuredData = {
     "@id": canonicalURLString,
   },
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+  ...(pubDatetime && {
+    dateModified: (modDatetime ?? pubDatetime).toISOString(),
+  }),
   ...(tags.length > 0 && { keywords: tags.join(", ") }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`,
-      ...(profile && { url: profile }),
-    },
-  ],
+  inLanguage: SITE.lang,
+  author: {
+    "@type": "Person",
+    name: `${author}`,
+    ...(profile && { url: profile }),
+  },
+  isPartOf: {
+    "@type": "Blog",
+    name: SITE.title,
+    url: siteURL,
+  },
 };
+
+const websiteStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE.title,
+  url: siteURL,
+  description: SITE.desc,
+  inLanguage: SITE.lang,
+};
+
+const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -79,7 +100,7 @@ const structuredData = {
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Favicon (light/dark) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -119,6 +140,7 @@ const structuredData = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     {
       isGeneratedOgImage && (
         <>
@@ -129,6 +151,7 @@ const structuredData = {
     }
     <meta property="og:type" content={isPost ? "article" : "website"} />
     <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content={ogLocale} />
 
     <!-- Article Published/Modified time -->
     {
@@ -151,11 +174,12 @@ const structuredData = {
     {isPost && profile && <meta property="article:author" content={profile} />}
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={socialImageURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <!-- Google JSON-LD Structured data -->
     {
@@ -164,6 +188,15 @@ const structuredData = {
           type="application/ld+json"
           is:inline
           set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
+    {
+      isHomePage && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(websiteStructuredData)}
         />
       )
     }
