@@ -5,7 +5,7 @@ description: 带团队清理历史欠账，记一笔关于问题积累与偿还�
 pubDatetime: 2026-05-29T12:00:00+08:00
 tags:
   - 随笔
-  - 工作
+  - 职场
 draft: false
 ---
 

@@ -7,7 +7,6 @@ on:
   pull_request:
     types:
       - opened
-      - edited
       - synchronize
       - reopened
   workflow_call:
@@ -53,6 +52,9 @@ jobs:
 
       - name: "📝 Checking code format"
         run: pnpm run format:check
+
+      - name: "🔬 Check Astro types"
+        run: pnpm run check
 
       - name: "🚀 Build the project"
         run: pnpm run build

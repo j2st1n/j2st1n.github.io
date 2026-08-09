@@ -19,7 +19,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build && node scripts/pruneOgImageCache.mjs",
+    "check": "astro check",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",

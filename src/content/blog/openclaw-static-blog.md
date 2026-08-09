@@ -7,7 +7,7 @@ tags:
   - OpenClaw
   - 博客
   - 微信公众号
-  - Workflow
+  - 工作流
 featured: false
 ogImage: https://img.bins.blog/2026/03/openclaw-static-blog/openclaw-logo-text.png
 draft: false

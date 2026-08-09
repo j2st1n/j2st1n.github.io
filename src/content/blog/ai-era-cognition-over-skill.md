@@ -5,7 +5,6 @@ description: AI 让技术平权，但平权的边界取决于认知。三个项�
 pubDatetime: 2026-05-27T20:00:00+08:00
 tags:
   - AI
-  - 认知
   - 思考
 draft: false
 ---

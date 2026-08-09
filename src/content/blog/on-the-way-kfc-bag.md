@@ -8,8 +8,8 @@ ogImage: https://img.bins.blog/2026/04/uploads/on-the-way-kfc-bag---a0ff8c2f.jpg
 tags:
   - 随笔
   - 旅行
-  - 路上
-  - 生活观察
+  - 生活
+  - 观察
 featured: false
 draft: false
 ---

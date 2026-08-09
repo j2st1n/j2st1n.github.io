@@ -3,7 +3,7 @@ title: "再读《教父》三部曲"
 description: "再次看完教父三部曲小说，人性是永恒不变的主题。顺便缅怀一下丢失的电子书。"
 pubDatetime: 2026-06-11T13:28:26+08:00
 author: J2
-tags: [阅读, 教父, 随笔]
+tags: [读书, 随笔]
 draft: false
 ---
 

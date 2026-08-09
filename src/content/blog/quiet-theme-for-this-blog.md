@@ -5,8 +5,6 @@ description: 博客换成了一套更安静的主题：少一点装饰，多一�
 pubDatetime: 2026-05-30T23:30:00+08:00
 tags:
   - 博客
-  - Astro
-  - 随便写写
 featured: false
 draft: false
 ---

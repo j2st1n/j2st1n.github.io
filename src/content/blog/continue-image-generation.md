@@ -6,9 +6,8 @@ pubDatetime: 2026-05-05T09:15:00+08:00
 image: https://img.bins.blog/2026/05/image-2-gallery/dabo_codex-gpt-image-2_20260505_085023_922d5cb9---2b6fb653.webp
 ogImage: https://img.bins.blog/2026/05/image-2-gallery/dabo_codex-gpt-image-2_20260505_085023_922d5cb9---2b6fb653.webp
 tags:
+  - AI
   - 生图
-  - image-2
-  - 图集
 featured: false
 draft: false
 ---

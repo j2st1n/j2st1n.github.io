@@ -5,8 +5,7 @@ description: 51岁，食道癌术后，只能靠流食维持生活。他用刀�
 pubDatetime: 2026-05-04T16:00:00+08:00
 tags:
   - 随笔
-  - 记忆
-  - 生命
+  - 思考
 featured: false
 draft: false
 ---

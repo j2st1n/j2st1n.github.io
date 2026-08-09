@@ -4,9 +4,8 @@ description: 没有过度的表演，全是真挚的感情。人生总是充满�
 pubDatetime: 2026-06-06T15:00:00+08:00
 author: J2
 tags:
-  - 电影
   - 随笔
-  - 感悟
+  - 生活
 draft: false
 ---
 

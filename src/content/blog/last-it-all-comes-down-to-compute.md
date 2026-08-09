@@ -5,7 +5,7 @@ description: 这两天 Linux.do 上的公益站死了大半，一片哀鸿遍野
 pubDatetime: 2026-03-31T12:23:00+08:00
 tags:
   - AI
-  - 算力
+  - 科技
   - 随笔
   - Linux.do
 draft: false

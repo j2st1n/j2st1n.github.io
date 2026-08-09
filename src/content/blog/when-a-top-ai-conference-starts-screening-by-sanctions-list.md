@@ -4,11 +4,10 @@ title: 当顶会开始按制裁名单收稿
 description: 看起来只是 NeurIPS 的一条投稿规则，真正被撬动的却是很多人对国际学术共同体仍然按论文质量说话的那点信任。
 pubDatetime: 2026-03-27T12:28:00+08:00
 tags:
-  - 科技观察
-  - 学术
   - AI
-  - 国际规则
-  - NeurIPS
+  - 科技
+  - 观察
+  - 社会
 featured: false
 draft: false
 ogImage: /src/assets/imported-covers/2026-03-27/when-a-top-ai-conference-starts-screening-by-sanctions-list-cover.jpg

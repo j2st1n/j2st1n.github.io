@@ -26,15 +26,17 @@ pnpm run dev
 ## 构建
 
 ```bash
+pnpm run check
 pnpm run build
 ```
 
-构建会执行：
+`check` 用于执行 Astro 与 TypeScript 诊断，`build` 只负责静态站点构建。CI 会依次完成检查和构建，部署流程只运行构建，避免重复解析内容。
 
-- Astro 类型检查
-- 静态站点构建
+首次构建会把自动生成的 OG 图片缓存到 `.cache/og-images/`。后续构建会按文章内容哈希复用缓存，只为新增或发生变化的文章重新生成图片，并在成功构建后清理不再使用的旧缓存。修改 OG 模板、字体或渲染规则时，请同步递增 `src/utils/getOgImageVersion.ts` 中的 `OG_TEMPLATE_VERSION`。
 
-首次构建会把自动生成的 OG 图片缓存到 `.cache/og-images/`。后续构建会按文章内容哈希复用缓存，只为新增或发生变化的文章重新生成图片。修改 OG 模板、字体或渲染规则时，请同步递增 `src/utils/getOgImageVersion.ts` 中的 `OG_TEMPLATE_VERSION`。
+## 文章标签
+
+标签使用 `src/content.config.ts` 中的受控词表。每篇文章必须使用 1–4 个标签；完整提取与新增规则维护在 Obsidian Wiki 的“博客发布工作流 → 博客文章标签规则”。发布时优先匹配已有标签，确实没有合适标签时按 Wiki 准入规则创建，并同步扩展 `BLOG_TAGS`。未填写标签、使用库外标签或重复标签都会导致内容检查失败。
 
 ## 技术栈
 

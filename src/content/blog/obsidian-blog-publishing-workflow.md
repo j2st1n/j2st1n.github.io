@@ -6,7 +6,6 @@ pubDatetime: 2026-05-26T23:30:00+08:00
 tags:
   - Obsidian
   - 博客
-  - 工具
   - 工作流
 draft: false
 ---

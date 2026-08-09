@@ -4,7 +4,8 @@ title: 你好，世界
 description: 一句话开张：这里记录摸鱼时的认真。
 pubDatetime: 2026-03-15T08:30:00+08:00
 tags:
-  - 随便写写
+  - 博客
+  - 随笔
 featured: false
 draft: false
 ---

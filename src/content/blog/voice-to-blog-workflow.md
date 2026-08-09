@@ -6,7 +6,6 @@ author: J2
 tags:
   - 博客
   - 工作流
-  - 效率
   - Obsidian
 draft: false
 ---

@@ -4,11 +4,10 @@ title: 张雪峰之后，谁来告诉普通家庭怎么报志愿？
 description: 又快到高考季了。比一个人离开更现实的问题是，普通家庭报志愿时，至今还是常常没人可问。
 pubDatetime: 2026-03-25T22:58:00+08:00
 tags:
-  - 高考
-  - 志愿填报
   - 教育
   - AI
   - 家庭
+  - 社会
 featured: false
 draft: false
 ogImage: https://img.bins.blog/2026/03/who-guides-ordinary-families-after-zhang-xuefeng/Gemini_Generated_Image_bw32d5bw32d5bw32_1---b7a08684-61e9-48a6-bfb2-9cc21dbeaffb.png

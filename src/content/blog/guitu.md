@@ -6,10 +6,9 @@ pubDatetime: 2026-05-05T07:35:00+08:00
 image: https://img.bins.blog/2026/05/guitu/dabo_codex-gpt-image-2_20260505_073437_c9bddf84---852a0124.png
 ogImage: https://img.bins.blog/2026/05/guitu/dabo_codex-gpt-image-2_20260505_073437_c9bddf84---852a0124.png
 tags:
-  - 归途
-  - 回家
-  - 旅途
   - 随笔
+  - 旅行
+  - 生活
 featured: false
 draft: false
 ---

@@ -7,7 +7,7 @@ tags:
   - 随笔
   - 博客
   - AI
-  - 公众号
+  - 微信公众号
 draft: false
 ---
 

@@ -5,7 +5,8 @@ description: 2026年4月，Claude 开始要求用户上传护照和刷脸才能�
 pubDatetime: 2026-04-16T16:00:00+08:00
 tags:
   - AI
-  - 科技观察
+  - 科技
+  - 观察
 featured: false
 draft: false
 ogImage: https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80

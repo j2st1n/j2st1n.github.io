@@ -5,7 +5,6 @@ description: 高铁上旁听了一路电话，不是想听，是不得不听。
 pubDatetime: 2026-05-13T11:10:00+08:00
 tags:
   - 随笔
-  - 火车
   - 生活
 ogImage: https://img.bins.blog/2026/05/blog/train-phone-call---6995baa5.jpg
 draft: false

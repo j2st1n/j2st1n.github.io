@@ -5,9 +5,8 @@ titleEn: "Earthrise: A Public Domain Photo"
 description: 用一张 Apollo 8 的 Earthrise 公共领域图片，记录来源与授权，并放到图床验证链路。
 pubDatetime: 2026-03-15T21:55:00+08:00
 tags:
-  - 随便写写
   - 图床
-  - Public Domain
+  - 公共领域
 featured: false
 draft: false
 ---

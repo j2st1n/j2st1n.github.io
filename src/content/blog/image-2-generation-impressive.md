@@ -8,7 +8,6 @@ ogImage: https://img.bins.blog/2026/05/image-2-generation-impressive/dabo_codex-
 tags:
   - AI
   - 生图
-  - image-2
 featured: false
 draft: false
 ---

@@ -4,11 +4,9 @@ title: 战争的荒诞
 description: 真正先落到普通人生活里的，往往不是炮火，而是价格、账单和不确定性。
 pubDatetime: 2026-03-26T16:25:00+08:00
 tags:
-  - 社会观察
-  - 战争
-  - 油价
-  - 普通人
-  - 不确定性
+  - 社会
+  - 观察
+  - 生活
 featured: false
 draft: false
 ogImage: /src/assets/imported-covers/2026-03-27/war-absurdity-cover.jpg

@@ -6,8 +6,6 @@ author: J2
 tags:
   - 随笔
   - 职场
-  - 成长
-  - 公益
 draft: false
 ---
 

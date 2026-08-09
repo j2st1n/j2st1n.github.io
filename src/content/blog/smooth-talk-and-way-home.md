@@ -6,7 +6,7 @@ author: J2
 tags:
   - 随笔
   - 出差
-  - 家人
+  - 家庭
 draft: false
 ---
 

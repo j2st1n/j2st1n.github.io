@@ -5,10 +5,8 @@ pubDatetime: 2026-06-12T14:11:47+08:00
 author: J2
 tags:
   - AI
-  - Whisper
   - Obsidian
-  - 自动化
-  - 录音转录
+  - 工作流
 featured: false
 draft: false
 ---

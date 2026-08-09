@@ -5,7 +5,7 @@ description: 花了19.9美元通过Google Play订阅ChatGPT Plus，用了三天�
 pubDatetime: 2026-05-01T14:30:00+08:00
 tags:
   - AI
-  - 吐槽
+  - 随笔
 featured: false
 draft: false
 ---

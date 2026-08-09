@@ -6,8 +6,8 @@ pubDatetime: 2026-03-19T21:51:53+08:00
 tags:
   - 随笔
   - 生活
-  - 工作
-  - 家人
+  - 职场
+  - 家庭
 featured: false
 ogImage: https://img.bins.blog/2026/03/those-chat/those-chat-photo-stripped.webp
 draft: false

@@ -5,9 +5,8 @@ titleEn: "Mint Sprouted Under My Office Avocado"
 description: 办公室小盆栽观察日记：牛油果树下撒了薄荷种子，没想到真发芽了（以及同盆小提醒）。
 pubDatetime: 2026-03-16T08:10:00+08:00
 tags:
-  - 随便写写
-  - 办公室
-  - 植物
+  - 随笔
+  - 生活
 ogImage: https://img.bins.blog/2026/03/office-avocado-mint/file_0---3f577a7e-8cca-4935-b5ce-b6e4354fe579.jpg
 featured: false
 draft: false

@@ -3,7 +3,7 @@ title: "出发，去新疆"
 description: "从正定机场出发，落地伊宁，逛六星街，吃六根棍拌面。"
 pubDatetime: 2026-07-04T12:00:00+08:00
 author: J2
-tags: [游记, 新疆, 伊宁, 旅行]
+tags: [旅行, 新疆, 伊宁]
 draft: false
 ---
 

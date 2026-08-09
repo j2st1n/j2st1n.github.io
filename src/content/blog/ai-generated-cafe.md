@@ -7,7 +7,7 @@ draft: false
 tags:
   - AI
   - 生图
-  - 随想
+  - 随笔
 description: "AI 生图效果确实好，人物虚构，以后眼见未必实。"
 ogImage: https://img.bins.blog/2026/05/blog/cafe-photo---cc8f8fa1.png
 ---

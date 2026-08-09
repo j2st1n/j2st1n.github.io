@@ -5,7 +5,7 @@ titleEn: "Catching Up With AI as a Non-Tech Person"
 description: 不从事技术行业，但对 AI 和 OpenClaw 充满好奇：一边怕被甩下，一边越学越觉得有意思。
 pubDatetime: 2026-03-16T18:45:00+08:00
 tags:
-  - 随便写写
+  - 随笔
   - AI
   - OpenClaw
 featured: false

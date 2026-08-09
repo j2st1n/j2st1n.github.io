@@ -7,7 +7,6 @@ tags:
   - 微信
   - Agent
   - OpenClaw
-  - 龙虾
 featured: false
 draft: false
 ogImage: https://img.bins.blog/2026-03-22/weixin-clawbot-launch/file_4---215898f1-e278-41f4-aaeb-97cd7d8ca92d.jpg

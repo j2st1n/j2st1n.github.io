@@ -6,7 +6,6 @@ pubDatetime: 2026-04-10T11:00:13+08:00
 tags:
   - AI
   - Agent
-  - Hermes
   - 随笔
 draft: false
 ---

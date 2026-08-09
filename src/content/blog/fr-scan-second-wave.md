@@ -7,8 +7,7 @@ pubDatetime: 2026-03-18T09:45:00+08:00
 tags:
   - Cloudflare
   - 安全
-  - 运维
-  - 随便写写
+  - 博客
 featured: false
 draft: false
 ogImage: https://img.bins.blog/2026-03-18/fr-scan-second-wave/nsoc-1985.webp

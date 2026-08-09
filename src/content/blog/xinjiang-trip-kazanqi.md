@@ -4,11 +4,10 @@ description: 离开新疆前逛喀赞其老街，读完《南渡北归》第一�
 pubDatetime: 2026-07-11T12:00:00+08:00
 author: J2
 tags:
-  - 游记
+  - 旅行
   - 新疆
   - 伊宁
-  - 喀赞其
-  - 阅读
+  - 读书
 draft: false
 ---
 

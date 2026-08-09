@@ -5,9 +5,7 @@ description: 之前用 TOKI 管日程，商业化后弃用了，干脆自己写�
 pubDatetime: 2026-05-17T19:55:00+08:00
 tags:
   - AI
-  - 日程管理
-  - 自部署
-  - 开源
+  - 工作流
 draft: false
 ---
 

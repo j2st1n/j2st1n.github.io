@@ -4,11 +4,10 @@ author: J2
 description: 微信读书上线官方 Skill 页面，目前支持书架、阅读统计、笔记划线、书籍搜索、书籍详情和推荐好书等能力。
 pubDatetime: 2026-05-15T20:23:49+08:00
 tags:
-  - 微信读书
+  - 微信
+  - 读书
   - AI
   - Agent
-  - Skill
-  - 产品动态
 draft: false
 ---
 

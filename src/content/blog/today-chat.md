@@ -5,9 +5,8 @@ description: 和航旅纵横团队聊了聊，记一笔对流量入口、年轻�
 pubDatetime: 2026-03-19T12:40:00+08:00
 tags:
   - 随笔
-  - 航旅纵横
-  - OTA
-  - 行业观察
+  - 科技
+  - 观察
 draft: false
 ---
 

@@ -5,9 +5,8 @@ description: 聊到贝塔斯曼书友会，才忽然发现，有些曾经像未�
 pubDatetime: 2026-03-20T18:28:48+08:00
 tags:
   - 随笔
-  - 阅读
-  - 贝塔斯曼
-  - 时代记忆
+  - 读书
+  - 生活
 featured: false
 ogImage: https://img.bins.blog/2026/03/today-chat-bertelsmann/today-chat-reading-group.jpg
 draft: false

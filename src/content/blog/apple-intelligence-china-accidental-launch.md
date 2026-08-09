@@ -5,7 +5,6 @@ description: 苹果一个配置失误，让中国用户第一次看到了 Apple 
 pubDatetime: 2026-03-31T09:48:00+08:00
 tags:
   - 科技
-  - Apple
   - AI
 draft: false
 ---

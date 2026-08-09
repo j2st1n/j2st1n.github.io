@@ -4,8 +4,8 @@ title: 一张无版权图片（Public Domain）示例
 description: 用一张 NASA 公共领域图片，跑通图床上传与引用。
 pubDatetime: 2026-03-15T13:50:00+08:00
 tags:
-  - 随便写写
   - 图床
+  - 公共领域
 featured: false
 draft: false
 ---

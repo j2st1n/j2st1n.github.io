@@ -5,7 +5,7 @@ description: 这是一篇测试文章，验证 Obsidian + Astro 博客发布流�
 pubDatetime: 2026-05-26T20:30:00+08:00
 tags:
   - 博客
-  - 测试
+  - Obsidian
 draft: false
 ---
 
