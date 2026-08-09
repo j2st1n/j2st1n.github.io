@@ -1,6 +1,7 @@
 # ===== Build =====
 dist/
 .astro/
+.cache/
 *.tsbuildinfo
 
 # ===== Dependencies =====

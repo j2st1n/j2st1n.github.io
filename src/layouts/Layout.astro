@@ -3,10 +3,7 @@ import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
-import {
-  getGeneratedOgImageFileName,
-  getOgImageVersion,
-} from "@/utils/getOgImageVersion";
+import { getGeneratedOgImageFileName } from "@/utils/getOgImageVersion";
 import "@/styles/global.css";
 
 type Props = {
@@ -26,7 +23,6 @@ type Props = {
 };
 
 const generatedOgImageFileName = getGeneratedOgImageFileName();
-const ogImageVersion = getOgImageVersion();
 
 const {
   title = SITE.title,
@@ -47,7 +43,7 @@ const {
 const socialImageURL = new URL(ogImage, Astro.url);
 const isGeneratedOgImage =
   socialImageURL.origin === Astro.url.origin &&
-  socialImageURL.pathname.endsWith(`/share-${ogImageVersion}.png`);
+  /\/share-[a-f0-9]{12}\.png$/.test(socialImageURL.pathname);
 
 const canonicalURLString = canonicalURL.toString();
 

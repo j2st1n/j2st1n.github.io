@@ -3,7 +3,10 @@ import { type CollectionEntry, render } from "astro:content";
 import Comments from "@/components/Comments.astro";
 import QuietLayout from "./QuietLayout.astro";
 import { SITE } from "@/config";
-import { getGeneratedOgImageFileName } from "@/utils/getOgImageVersion";
+import {
+  getGeneratedOgImageFileName,
+  getPostOgImageVersion,
+} from "@/utils/getOgImageVersion";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import dayjs from "dayjs";
@@ -55,7 +58,8 @@ const postPath = getPath(post.id, post.filePath);
 const postOgImage =
   typeof ogImage === "string"
     ? ogImage
-    : `${postPath}/${getGeneratedOgImageFileName()}`;
+    : (ogImage?.src ??
+      `${postPath}/${getGeneratedOgImageFileName(getPostOgImageVersion(post))}`);
 ---
 
 <QuietLayout

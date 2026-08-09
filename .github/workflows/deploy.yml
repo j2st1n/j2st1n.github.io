@@ -45,6 +45,14 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - name: Restore OG image cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/og-images
+          key: og-images-v1-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            og-images-v1-${{ runner.os }}-
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

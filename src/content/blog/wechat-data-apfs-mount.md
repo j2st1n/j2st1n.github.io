@@ -177,7 +177,9 @@ mount | grep xwechat_files
 ```text
 /dev/diskXsY on /Users/<username>/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files (apfs, local, nodev, nosuid, journaled, noowners)
 ```
+
 ![](https://img.bins.blog/2026/06/uploads/chatgpt-image-2026-6-21-11_37_51-3---7c76c85b.png)
+
 ### 5. 打开微信测试
 
 这一步只做一件事：打开微信，看聊天记录、图片、文件是否正常。

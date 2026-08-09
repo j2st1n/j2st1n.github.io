@@ -34,6 +34,8 @@ pnpm run build
 - Astro 类型检查
 - 静态站点构建
 
+首次构建会把自动生成的 OG 图片缓存到 `.cache/og-images/`。后续构建会按文章内容哈希复用缓存，只为新增或发生变化的文章重新生成图片。修改 OG 模板、字体或渲染规则时，请同步递增 `src/utils/getOgImageVersion.ts` 中的 `OG_TEMPLATE_VERSION`。
+
 ## 技术栈
 
 - [Astro](https://astro.build/)

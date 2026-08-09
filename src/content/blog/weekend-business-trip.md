@@ -10,6 +10,7 @@ tags:
 ogImage: https://img.bins.blog/2026/07/uploads/gu-an-station---20948233.jpg
 draft: false
 ---
+
 周末，继续出差。
 
 火车在固安停留，第一次知道这个地方，是因为追一笔回款。固安是河北省廊坊市下辖县，位于北京正南方向，夹在北京大兴、雄安新区和廊坊市区之间。

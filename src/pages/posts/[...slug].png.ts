@@ -1,24 +1,34 @@
 import type { APIRoute } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { SITE } from "@/config";
-import { getGeneratedOgImageFileName } from "@/utils/getOgImageVersion";
+import { getCachedOgImageForPost } from "@/utils/ogImageCache";
+import {
+  getGeneratedOgImageFileName,
+  getPostOgImageVersion,
+} from "@/utils/getOgImageVersion";
 import { getPath } from "@/utils/getPath";
-import { generateOgImageForPost } from "@/utils/generateOgImages";
 
 export async function getStaticPaths() {
   if (!SITE.dynamicOgImage) {
     return [];
   }
 
-  const imageName = getGeneratedOgImageFileName().replace(/\.png$/, "");
   const posts = await getCollection("blog").then(p =>
-    p.filter(({ data }) => !data.draft)
+    p.filter(({ data }) => !data.draft && !data.ogImage)
   );
 
-  return posts.map(post => ({
-    params: { slug: `${getPath(post.id, post.filePath, false)}/${imageName}` },
-    props: post,
-  }));
+  return posts.map(post => {
+    const imageName = getGeneratedOgImageFileName(
+      getPostOgImageVersion(post)
+    ).replace(/\.png$/, "");
+
+    return {
+      params: {
+        slug: `${getPath(post.id, post.filePath, false)}/${imageName}`,
+      },
+      props: post,
+    };
+  });
 }
 
 export const GET: APIRoute = async ({ props }) => {
@@ -29,7 +39,9 @@ export const GET: APIRoute = async ({ props }) => {
     });
   }
 
-  const buffer = await generateOgImageForPost(props as CollectionEntry<"blog">);
+  const buffer = await getCachedOgImageForPost(
+    props as CollectionEntry<"blog">
+  );
   return new Response(new Uint8Array(buffer), {
     headers: { "Content-Type": "image/png" },
   });
