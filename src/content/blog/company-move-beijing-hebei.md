@@ -7,7 +7,7 @@ tags:
   - 随笔
   - 职场
 featured: false
-draft: true
+draft: false
 ---
 
 最近单位公司在搬家，从北京到河北，浩浩荡荡、颇为壮观。
