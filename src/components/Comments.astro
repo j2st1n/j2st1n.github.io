@@ -52,17 +52,18 @@ const giscusConfig = {
 
 {
   giscusEnabled && (
-    <section class="mt-10" aria-label="评论区">
-      <h2 class="mb-4 text-xl font-bold text-accent">评论</h2>
+    <section class="comments" aria-label="评论区">
+      <p class="comments-kicker">Comments</p>
+      <h2>留言</h2>
 
       {isConfigured ? (
         <div
-          class="giscus-shell rounded-2xl border border-border/60 bg-background/60 p-3 sm:p-4"
+          class="giscus-shell"
           data-giscus-shell
           data-giscus-config={JSON.stringify(giscusConfig)}
         />
       ) : (
-        <div class="rounded-2xl border border-dashed border-border/70 bg-muted/30 p-4 text-sm text-foreground/75">
+        <div class="comments-empty">
           Giscus
           已接入代码，但尚未配置仓库参数。请补充公开环境变量后启用评论区。
         </div>
@@ -72,3 +73,40 @@ const giscusConfig = {
 }
 
 {giscusEnabled && isConfigured && <script src="../scripts/giscus.ts" />}
+
+<style>
+  .comments {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .comments-kicker {
+    margin: 0 0 0.6rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .comments h2 {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-editorial);
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+
+  .giscus-shell,
+  .comments-empty {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    background: var(--surface);
+  }
+
+  .comments-empty {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+</style>

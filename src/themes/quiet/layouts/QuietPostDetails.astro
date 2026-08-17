@@ -186,7 +186,7 @@ const postOgImage =
     max-width: 11.5em;
     color: var(--foreground);
     font-size: clamp(2.125rem, 5vw, 3.875rem);
-    font-weight: 650;
+    font-weight: 500;
     line-height: 1.16;
     letter-spacing: -0.056em;
     text-wrap: balance;
@@ -259,7 +259,7 @@ const postOgImage =
     margin: 0 0 0.65rem;
     color: var(--text-muted);
     font-size: 0.75rem;
-    font-weight: 620;
+    font-weight: 500;
     line-height: 1;
     letter-spacing: 0.12em;
   }
@@ -511,6 +511,120 @@ const postOgImage =
 
     .post-nav-link {
       max-width: 100%;
+    }
+  }
+
+  /* Kami reading page */
+  :global(html) {
+    --article-width: var(--reading-width);
+    --article-progress-line: var(--brand);
+  }
+
+  .article-layout {
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  .article-hero,
+  .article-body,
+  .article-comments,
+  .article-end {
+    margin-inline: auto;
+  }
+
+  .article-hero {
+    padding: clamp(4rem, 9vw, 7.5rem) 0 2.6rem;
+  }
+
+  .article-hero h1 {
+    max-width: 12em;
+    font-family: var(--font-editorial);
+    font-size: clamp(2.5rem, 5.7vw, 4.75rem);
+    font-weight: 500;
+    line-height: 1.16;
+    letter-spacing: 0.012em;
+  }
+
+  .article-hero p {
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+    opacity: 1;
+    line-height: 1.65;
+  }
+
+  .article-meta {
+    color: var(--text-tertiary);
+    opacity: 1;
+    font-family: var(--font-code);
+    font-size: 0.76rem;
+    letter-spacing: 0.025em;
+  }
+
+  .article-body {
+    margin-top: 3.5rem;
+    color: var(--text-secondary);
+    font-size: 1.0625rem;
+  }
+
+  .article-body :global(p),
+  .article-body :global(li) {
+    line-height: 1.72;
+  }
+
+  .article-body :global(h2),
+  .article-body :global(h3),
+  .article-body :global(h4) {
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    letter-spacing: 0.012em;
+  }
+
+  .article-body :global(pre) {
+    border-radius: 0.35rem;
+    background: var(--surface) !important;
+  }
+
+  .article-toc p {
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-weight: 500;
+  }
+
+  .article-toc a {
+    color: var(--text-secondary);
+    opacity: 1;
+  }
+
+  .post-nav-link span {
+    color: var(--text-tertiary);
+    opacity: 1;
+    font-family: var(--font-code);
+  }
+
+  .post-nav-link strong {
+    color: var(--text-secondary);
+    opacity: 1;
+    font-family: var(--font-editorial);
+    font-size: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .article-layout {
+      padding: 1.25rem 1.25rem 3rem;
+    }
+
+    .article-hero {
+      padding: 3.6rem 0 2rem;
+    }
+
+    .article-hero h1 {
+      font-size: clamp(2.15rem, 10vw, 3rem);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    .article-body {
+      margin-top: 2.6rem;
+      font-size: 1rem;
     }
   }
 </style>

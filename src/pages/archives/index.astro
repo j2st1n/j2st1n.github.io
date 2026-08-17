@@ -163,7 +163,8 @@ const yearGroups = Object.entries(groupedPosts).sort(
     margin-bottom: 1rem;
     font-size: clamp(2rem, 5vw, 3.75rem);
     line-height: 1.08;
-    font-weight: 650;
+    font-family: var(--font-editorial);
+    font-weight: 500;
     letter-spacing: -0.055em;
     color: var(--foreground);
   }
@@ -184,6 +185,10 @@ const yearGroups = Object.entries(groupedPosts).sort(
     border-bottom: 1px solid var(--border-color);
   }
 
+  .year-block:last-child {
+    border-bottom: none;
+  }
+
   .year-head {
     display: flex;
     align-items: baseline;
@@ -195,7 +200,8 @@ const yearGroups = Object.entries(groupedPosts).sort(
   .year-head h2 {
     font-size: 1.75rem;
     line-height: 1;
-    font-weight: 600;
+    font-family: var(--font-editorial);
+    font-weight: 500;
     letter-spacing: -0.04em;
     color: var(--foreground);
   }

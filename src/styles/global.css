@@ -1,33 +1,63 @@
 @import "tailwindcss";
 @import "./typography.css";
 
+@font-face {
+  font-family: "TsangerJinKai02";
+  src: url("/fonts/kami-cn.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+}
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
+  --background: #f5f4ed;
+  --surface: #faf9f5;
+  --surface-raised: #fffefa;
+  --foreground: #141413;
+  --text-secondary: #504e49;
+  --text-tertiary: #6b6a64;
+  --brand: #1b365d;
+  --accent: #1b365d;
+  --brand-tint: #eef2f7;
+  --tag-background: #e4ecf5;
+  --muted: #e8e6dc;
+  --border: #e5e3d8;
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  --background: #141413;
+  --surface: #242422;
+  --surface-raised: #30302e;
+  --foreground: #f5f4ed;
+  --text-secondary: #d2cfc4;
+  --text-tertiary: #aaa79e;
+  --brand: #2d5a8a;
+  --accent: #84aad6;
+  --brand-tint: #1d2936;
+  --tag-background: #263748;
+  --muted: #30302e;
+  --border: #3d3d39;
 }
 
 @theme inline {
   --font-app:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
-    "WenQuanYi Micro Hei", sans-serif;
+    "TsangerJinKai02", "Source Han Serif SC", "Source Han Serif CN",
+    "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "STSong", "SimSun",
+    Georgia, serif;
+  --font-ui:
+    "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-code:
-    var(--font-google-sans-code), ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", monospace;
+    var(--font-google-sans-code), "JetBrains Mono", "SF Mono", SFMono-Regular,
+    Menlo, Monaco, Consolas, "TsangerJinKai02", "Source Han Serif SC",
+    "Songti SC", monospace;
+  --font-editorial:
+    "TsangerJinKai02", "Source Han Serif SC", "Source Han Serif CN",
+    "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "STSong", "SimSun",
+    Georgia, serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
@@ -46,6 +76,21 @@ html[data-theme="dark"] {
   }
   body {
     @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+    font-synthesis: none;
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: 1.58;
+    letter-spacing: 0.025em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  strong {
+    font-weight: 500;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font-family: var(--font-ui);
   }
   a,
   button {

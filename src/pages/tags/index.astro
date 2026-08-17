@@ -133,7 +133,8 @@ const formatFullDate = (date: string | Date) =>
     margin-bottom: 1rem;
     font-size: clamp(2rem, 5vw, 3.75rem);
     line-height: 1.08;
-    font-weight: 650;
+    font-family: var(--font-editorial);
+    font-weight: 500;
     letter-spacing: -0.055em;
     color: var(--foreground);
   }
@@ -157,6 +158,10 @@ const formatFullDate = (date: string | Date) =>
 
   .tag-item {
     border-bottom: 1px solid var(--border-color);
+  }
+
+  .tag-item:last-child {
+    border-bottom: none;
   }
 
   .tag-link {
@@ -183,7 +188,8 @@ const formatFullDate = (date: string | Date) =>
     min-width: 0;
     font-size: 1.125rem;
     line-height: 1.35;
-    font-weight: 540;
+    font-family: var(--font-editorial);
+    font-weight: 500;
     color: var(--foreground);
     overflow-wrap: anywhere;
     transition: color 0.2s ease;

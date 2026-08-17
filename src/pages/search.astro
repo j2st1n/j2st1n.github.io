@@ -98,7 +98,9 @@ const searchItems = sortedPosts.map(post => ({
     padding-top: clamp(4.75rem, 11vh, 6.25rem);
   }
   .search-panel {
+    width: 100%;
     max-width: 42rem;
+    margin-inline: auto;
   }
   .search-box {
     min-height: 4.75rem;
@@ -107,8 +109,8 @@ const searchItems = sortedPosts.map(post => ({
     align-items: center;
     gap: 0.95rem;
     border: 1px solid var(--border-color);
-    border-radius: 1.25rem;
-    background: color-mix(in oklch, var(--foreground), transparent 98%);
+    border-radius: 0.4rem;
+    background: var(--surface);
     color: var(--text-muted);
     transition:
       border-color 0.2s ease,
@@ -134,6 +136,7 @@ const searchItems = sortedPosts.map(post => ({
     transform: translateY(-50%);
     color: color-mix(in oklch, var(--text-muted), transparent 18%);
     font-size: clamp(1.5rem, 5vw, 2.25rem);
+    font-family: var(--font-editorial);
     line-height: 1.2;
     letter-spacing: -0.055em;
     white-space: nowrap;
@@ -149,6 +152,7 @@ const searchItems = sortedPosts.map(post => ({
     background: transparent;
     color: var(--foreground);
     font-size: clamp(1.5rem, 5vw, 2.25rem);
+    font-family: var(--font-editorial);
     line-height: 1.2;
     letter-spacing: -0.055em;
   }
@@ -188,7 +192,8 @@ const searchItems = sortedPosts.map(post => ({
   .result-title {
     color: var(--foreground);
     font-size: 1.05rem;
-    font-weight: 560;
+    font-family: var(--font-editorial);
+    font-weight: 500;
     line-height: 1.65;
     letter-spacing: -0.025em;
     transition:
@@ -218,7 +223,7 @@ const searchItems = sortedPosts.map(post => ({
     }
     .search-box {
       min-height: 4rem;
-      border-radius: 1rem;
+      border-radius: 0.35rem;
       padding: 0 1rem;
     }
     .placeholder-variant {
