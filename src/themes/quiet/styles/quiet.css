@@ -234,11 +234,3 @@
     height: 1.8rem;
   }
 }
-
-/* 首页：让页眉/页脚内容与中间内容(54rem measure)右缘对齐，
-   避免右侧工具图标与页脚分割线“探出”内容之外。
-   仅首页生效（文章页保持 62rem）。 */
-body.home .site-header-inner,
-body.home .site-footer {
-  max-width: 54rem;
-}
