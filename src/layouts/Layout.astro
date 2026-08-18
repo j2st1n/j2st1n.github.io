@@ -256,7 +256,7 @@ const isHomePage = Astro.url.pathname === "/";
       })();
     </script>
   </head>
-  <body>
+  <body class={isHomePage ? "home" : undefined}>
     <slot />
 
     <!-- Load full theme logic -->
