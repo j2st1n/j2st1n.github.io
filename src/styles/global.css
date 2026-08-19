@@ -78,7 +78,7 @@ html[data-theme="dark"] {
     @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
     font-synthesis: none;
     font-variant-numeric: lining-nums tabular-nums;
-    line-height: 1.58;
+    line-height: 1.55;
     letter-spacing: 0.025em;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

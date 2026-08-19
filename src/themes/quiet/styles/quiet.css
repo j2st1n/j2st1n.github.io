@@ -234,3 +234,16 @@
     height: 1.8rem;
   }
 }
+
+/* 桌面：右侧控件（页眉工具、页脚右侧链接）内收，
+   使其右缘与 54rem 内容右缘对齐（仅 ≥1000px 生效，移动端不受影响）。
+   原理：页眉/页脚 62rem 居中、内容 54rem 居中，右缘差 4rem；
+   页眉/页脚自身桌面右内边距为 2rem，故补 margin-inline-end: 2rem 即对齐。 */
+@media (min-width: 1000px) {
+  .site-tools {
+    margin-inline-end: 2rem;
+  }
+  .footer-links {
+    margin-inline-end: 2rem;
+  }
+}
