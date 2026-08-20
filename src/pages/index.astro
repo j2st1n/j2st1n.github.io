@@ -69,7 +69,7 @@ const formatFullDate = (date: string | Date) =>
             class="featured-link"
           >
             <span class="featured-marker" aria-hidden="true">
-              01
+              {featuredPost.data.featured ? "卷首 · 置顶" : "卷首 · 近作"}
             </span>
             <div class="featured-body">
               <h2 class="featured-title">{featuredPost.data.title}</h2>
@@ -104,9 +104,9 @@ const formatFullDate = (date: string | Date) =>
       recentPosts.length > 0 && (
         <section class="recent">
           <div class="section-head">
-            <div class="section-label">最近文章</div>
+            <div class="section-label">近期辑录</div>
             <a href="/archives" class="section-action">
-              全部文章 <span class="arrow">→</span>
+              全部篇目 <span class="arrow">→</span>
             </a>
           </div>
           <ul class="recent-list">
@@ -188,10 +188,11 @@ const formatFullDate = (date: string | Date) =>
   .section-label {
     margin: 0;
     color: var(--accent);
-    font-family: var(--font-code);
-    font-size: 0.85rem;
+    font-family: var(--font-editorial), var(--font-app);
+    font-size: 0.88rem;
+    font-weight: 500;
     line-height: 1.2;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
   }
 
   .featured {
@@ -222,10 +223,11 @@ const formatFullDate = (date: string | Date) =>
     margin-bottom: 0.65rem;
     color: var(--accent);
     opacity: 1;
-    font-family: var(--font-code);
-    font-size: 0.75rem;
+    font-family: var(--font-editorial), var(--font-app);
+    font-size: 0.82rem;
+    font-weight: 500;
     line-height: 1;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
   }
 
   .featured-title {
