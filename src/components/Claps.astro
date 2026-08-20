@@ -73,6 +73,26 @@ const { slug } = Astro.props;
     transform: scale(0.94);
   }
 
+  .clap-btn.max-clapped {
+    cursor: default;
+    border-color: color-mix(in oklch, var(--brand), var(--border-color) 40%);
+  }
+
+  .clap-btn.max-clapped:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .clap-btn.shake {
+    animation: clap-shake 0.4s ease;
+  }
+
+  @keyframes clap-shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+
   .stamp-icon {
     display: flex;
     align-items: center;
@@ -153,6 +173,7 @@ const { slug } = Astro.props;
     const bubbleEl = root.querySelector<HTMLElement>("[data-clap-bubble]");
     if (!button || !countEl || !bubbleEl) return;
 
+    const currentButton: HTMLButtonElement = button;
     const currentCountEl: HTMLElement = countEl;
     const currentBubbleEl: HTMLElement = bubbleEl;
 
@@ -161,9 +182,24 @@ const { slug } = Astro.props;
       (window as any).__CLAPS_API_URL__ || "https://claps.bins.blog/api/claps";
 
     const storageKey = `claps:${slug}`;
+    const userClappedKey = `clapped_count:${slug}`;
+    const MAX_CLAPS_PER_USER = 10;
+
     let currentTotal = 0;
     let pendingIncrement = 0;
     let syncTimeout: number | undefined;
+
+    // 读取该用户本地针对该文章已盖印次数
+    function getUserClappedCount(): number {
+      return parseInt(localStorage.getItem(userClappedKey) || "0", 10);
+    }
+
+    function checkButtonState() {
+      if (getUserClappedCount() >= MAX_CLAPS_PER_USER) {
+        currentButton.classList.add("max-clapped");
+        currentButton.title = "已达到单篇盖印上限 (10次)";
+      }
+    }
 
     // 1. 读取服务器已有点赞
     async function fetchClaps() {
@@ -184,6 +220,7 @@ const { slug } = Astro.props;
       } catch {
         fallbackLocalRead();
       }
+      checkButtonState();
     }
 
     function fallbackLocalRead() {
@@ -217,13 +254,29 @@ const { slug } = Astro.props;
     }
 
     // 3. 点击盖印
-    button.addEventListener("click", () => {
+    currentButton.addEventListener("click", () => {
+      const alreadyClapped = getUserClappedCount();
+      if (alreadyClapped >= MAX_CLAPS_PER_USER) {
+        // 达到上限时，轻微抖动提醒
+        currentButton.classList.remove("shake");
+        void currentButton.offsetWidth;
+        currentButton.classList.add("shake");
+        return;
+      }
+
+      const nextClapped = alreadyClapped + 1;
+      localStorage.setItem(userClappedKey, String(nextClapped));
+
       currentTotal += 1;
       pendingIncrement += 1;
       currentCountEl.textContent = String(currentTotal);
       localStorage.setItem(storageKey, String(currentTotal));
 
-      button.classList.add("stamped");
+      currentButton.classList.add("stamped");
+      if (nextClapped >= MAX_CLAPS_PER_USER) {
+        currentButton.classList.add("max-clapped");
+        currentButton.title = "已达到单篇盖印上限 (10次)";
+      }
 
       // 弹出 +1 动画
       currentBubbleEl.textContent = `+${pendingIncrement}`;
