@@ -1,6 +1,5 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
-import Comments from "@/components/Comments.astro";
 import QuietLayout from "./QuietLayout.astro";
 import { SITE } from "@/config";
 import {
@@ -127,10 +126,6 @@ const postOgImage =
       <Content />
     </article>
 
-    <div class="article-comments">
-      <Comments />
-    </div>
-
     <footer class="article-end" aria-label="文章页脚">
       <nav class={postNavClass} aria-label="上一篇和下一篇文章">
         {
@@ -162,43 +157,45 @@ const postOgImage =
 
 <style>
   :global(html) {
-    --article-width: 42rem;
-    --article-progress-line: oklch(64% 0.012 250);
-  }
-
-  :global(html[data-theme="dark"]) {
-    --article-progress-line: oklch(48% 0.012 250);
+    --article-width: var(--reading-width);
+    --article-progress-line: var(--brand);
   }
 
   .article-layout {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 2.5rem 1rem 3rem;
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  .article-hero,
+  .article-body,
+  .article-end {
+    max-width: var(--article-width);
+    margin-inline: auto;
   }
 
   .article-hero {
-    max-width: var(--article-width);
-    padding: clamp(3rem, 8vw, 5.25rem) 0 2.35rem;
+    padding: clamp(3.5rem, 8vw, 6.5rem) 0 2.5rem;
     border-bottom: 1px solid var(--border-color);
   }
 
   .article-hero h1 {
-    max-width: 11.5em;
+    max-width: 12em;
     color: var(--foreground);
-    font-size: clamp(2.125rem, 5vw, 3.875rem);
+    font-family: var(--font-editorial);
+    font-size: clamp(2.35rem, 5.5vw, 4.5rem);
     font-weight: 500;
     line-height: 1.16;
-    letter-spacing: -0.056em;
+    letter-spacing: 0.012em;
     text-wrap: balance;
   }
 
   .article-hero p {
-    margin-top: 1.35rem;
-    max-width: 35rem;
-    color: var(--foreground);
-    opacity: 0.68;
+    margin-top: 1.5rem;
+    max-width: 38rem;
+    color: var(--text-secondary);
     font-size: 1.02rem;
-    line-height: 1.82;
+    line-height: 1.7;
     text-wrap: pretty;
   }
 
@@ -208,10 +205,10 @@ const postOgImage =
     align-items: center;
     gap: 0.35rem 0;
     margin-top: 1.65rem;
-    color: var(--foreground);
-    opacity: 0.64;
-    font-size: 0.8125rem;
-    line-height: 1.8;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.76rem;
+    letter-spacing: 0.025em;
   }
 
   .meta-tags {
@@ -243,92 +240,24 @@ const postOgImage =
   }
 
   .article-body {
-    max-width: var(--article-width);
-    margin-top: 3rem;
-  }
-
-  .article-comments {
-    max-width: var(--article-width);
-  }
-
-  .article-toc {
-    display: none;
-  }
-
-  .article-toc p {
-    margin: 0 0 0.65rem;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: 0.12em;
-  }
-
-  .article-toc ol {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .article-toc li + li {
-    margin-top: 0.35rem;
-  }
-
-  .article-toc a {
-    display: block;
-    color: var(--foreground);
-    opacity: 0.68;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    text-decoration: none;
-    text-wrap: pretty;
-    transition:
-      color 0.2s ease,
-      opacity 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .article-toc a:hover,
-  .article-toc a:focus-visible {
-    color: var(--accent);
-    opacity: 1;
-  }
-
-  .article-toc .toc-depth-3 {
-    padding-inline-start: 1.1rem;
-  }
-
-  .article-toc .toc-depth-3 a {
-    font-size: 0.85rem;
-    opacity: 0.64;
-  }
-
-  @media (min-width: 80rem) {
-    .article-layout {
-      position: relative;
-    }
-
-    .article-toc {
-      display: block;
-      position: fixed;
-      top: 12.5rem;
-      left: calc(50% + (var(--content-width) / 2) + 2.5rem);
-      width: min(15rem, calc((100vw - var(--content-width)) / 2 - 4rem));
-      max-height: calc(100svh - 14rem);
-      overflow-y: auto;
-      padding-inline-start: 1rem;
-      border-inline-start: 1px solid var(--border-color);
-      color: var(--foreground);
-    }
+    margin-top: 3.5rem;
+    color: var(--text-secondary);
+    font-size: 1.0625rem;
   }
 
   .article-body :global(p),
   .article-body :global(li) {
-    line-height: 1.92;
+    line-height: 1.75;
   }
 
   .article-body :global(p) {
     text-wrap: pretty;
+  }
+
+  .article-body :global(strong),
+  .article-body :global(b) {
+    color: var(--foreground);
+    font-weight: 600;
   }
 
   .article-body :global(h2),
@@ -337,7 +266,9 @@ const postOgImage =
   .article-body :global(h5),
   .article-body :global(h6) {
     scroll-margin-top: 5rem;
-    letter-spacing: -0.02em;
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    letter-spacing: 0.012em;
   }
 
   .article-body :global(h2) {
@@ -382,7 +313,7 @@ const postOgImage =
 
   .article-body :global(pre) {
     border: 1px solid var(--border-color);
-    border-radius: 0.9rem;
+    border-radius: 0.45rem;
   }
 
   .article-body :global(code) {
@@ -406,8 +337,87 @@ const postOgImage =
     opacity: 1;
   }
 
+  .article-toc {
+    display: none;
+  }
+
+  .article-toc p {
+    margin: 0 0 0.65rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+
+  .article-toc ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-toc li + li {
+    margin-top: 0.35rem;
+  }
+
+  .article-toc a {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    text-decoration: none;
+    text-wrap: pretty;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .article-toc a:hover,
+  .article-toc a:focus-visible,
+  .article-toc a.active {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .article-toc a.active {
+    transform: translateX(2px);
+  }
+
+  .article-toc .toc-depth-3 {
+    padding-inline-start: 1.1rem;
+  }
+
+  .article-toc .toc-depth-3 a {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  .article-toc .toc-depth-3 a.active {
+    opacity: 1;
+  }
+
+  @media (min-width: 80rem) {
+    .article-layout {
+      position: relative;
+    }
+
+    .article-toc {
+      display: block;
+      position: fixed;
+      top: 12.5rem;
+      left: calc(50% + (var(--content-width) / 2) + 2.5rem);
+      width: min(15rem, calc((100vw - var(--content-width)) / 2 - 4rem));
+      max-height: calc(100svh - 14rem);
+      overflow-y: auto;
+      padding-inline-start: 1rem;
+      border-inline-start: 1px solid var(--border-color);
+      color: var(--foreground);
+    }
+  }
+
   .article-end {
-    max-width: var(--article-width);
     margin-top: 3.5rem;
     padding-top: 1.85rem;
     border-top: 1px solid var(--border-color);
@@ -429,23 +439,22 @@ const postOgImage =
   .post-nav-link span {
     display: block;
     margin-bottom: 0.35rem;
-    color: var(--foreground);
-    opacity: 0.64;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
     font-size: 0.75rem;
     letter-spacing: 0.08em;
   }
 
   .post-nav-link strong {
     display: block;
-    color: var(--foreground);
-    opacity: 0.68;
-    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-family: var(--font-editorial);
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.65;
     text-wrap: pretty;
     transition:
       color 0.2s ease,
-      opacity 0.2s ease,
       transform 0.2s ease;
   }
 
@@ -463,7 +472,6 @@ const postOgImage =
   .post-nav-link:hover strong,
   .post-nav-link:focus-visible strong {
     color: var(--accent);
-    opacity: 1;
   }
 
   .post-nav-prev:hover strong,
@@ -478,16 +486,17 @@ const postOgImage =
 
   @media (max-width: 640px) {
     .article-layout {
-      padding: 1.75rem 1rem 2.5rem;
+      padding: 1.75rem 1.75rem 3rem;
     }
 
     .article-hero {
-      padding: 2.35rem 0 2rem;
+      padding: 3.2rem 0 2rem;
     }
 
     .article-hero h1 {
-      font-size: 2rem;
-      letter-spacing: -0.025em;
+      font-size: clamp(2.15rem, 10vw, 3rem);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
       text-wrap: wrap;
     }
 
@@ -497,7 +506,8 @@ const postOgImage =
     }
 
     .article-body {
-      margin-top: 2.45rem;
+      margin-top: 2.6rem;
+      font-size: 1rem;
     }
 
     .article-body :global(p),
@@ -511,120 +521,6 @@ const postOgImage =
 
     .post-nav-link {
       max-width: 100%;
-    }
-  }
-
-  /* Kami reading page */
-  :global(html) {
-    --article-width: var(--reading-width);
-    --article-progress-line: var(--brand);
-  }
-
-  .article-layout {
-    padding: 2rem clamp(1.25rem, 4vw, 2rem) 4rem;
-  }
-
-  .article-hero,
-  .article-body,
-  .article-comments,
-  .article-end {
-    margin-inline: auto;
-  }
-
-  .article-hero {
-    padding: clamp(4rem, 9vw, 7.5rem) 0 2.6rem;
-  }
-
-  .article-hero h1 {
-    max-width: 12em;
-    font-family: var(--font-editorial);
-    font-size: clamp(2.5rem, 5.7vw, 4.75rem);
-    font-weight: 500;
-    line-height: 1.16;
-    letter-spacing: 0.012em;
-  }
-
-  .article-hero p {
-    margin-top: 1.5rem;
-    color: var(--text-secondary);
-    opacity: 1;
-    line-height: 1.65;
-  }
-
-  .article-meta {
-    color: var(--text-tertiary);
-    opacity: 1;
-    font-family: var(--font-code);
-    font-size: 0.76rem;
-    letter-spacing: 0.025em;
-  }
-
-  .article-body {
-    margin-top: 3.5rem;
-    color: var(--text-secondary);
-    font-size: 1.0625rem;
-  }
-
-  .article-body :global(p),
-  .article-body :global(li) {
-    line-height: 1.72;
-  }
-
-  .article-body :global(h2),
-  .article-body :global(h3),
-  .article-body :global(h4) {
-    font-family: var(--font-editorial);
-    font-weight: 500;
-    letter-spacing: 0.012em;
-  }
-
-  .article-body :global(pre) {
-    border-radius: 0.35rem;
-    background: var(--surface) !important;
-  }
-
-  .article-toc p {
-    color: var(--text-tertiary);
-    font-family: var(--font-code);
-    font-weight: 500;
-  }
-
-  .article-toc a {
-    color: var(--text-secondary);
-    opacity: 1;
-  }
-
-  .post-nav-link span {
-    color: var(--text-tertiary);
-    opacity: 1;
-    font-family: var(--font-code);
-  }
-
-  .post-nav-link strong {
-    color: var(--text-secondary);
-    opacity: 1;
-    font-family: var(--font-editorial);
-    font-size: 1rem;
-  }
-
-  @media (max-width: 640px) {
-    .article-layout {
-      padding: 1.75rem 1.75rem 3rem;
-    }
-
-    .article-hero {
-      padding: 3.6rem 0 2rem;
-    }
-
-    .article-hero h1 {
-      font-size: clamp(2.15rem, 10vw, 3rem);
-      line-height: 1.2;
-      letter-spacing: 0.01em;
-    }
-
-    .article-body {
-      margin-top: 2.6rem;
-      font-size: 1rem;
     }
   }
 
@@ -715,8 +611,64 @@ const postOgImage =
     }
   }
 
+  function wrapTables() {
+    const tables = Array.from(document.querySelectorAll("#article table"));
+    for (const table of tables) {
+      if (table.parentElement?.classList.contains("table-wrapper")) continue;
+      const wrapper = document.createElement("div");
+      wrapper.className = "table-wrapper";
+      table.parentNode?.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    }
+  }
+
+  function initTocScrollSpy() {
+    const tocLinks = Array.from(document.querySelectorAll(".article-toc a"));
+    if (tocLinks.length === 0) return;
+
+    const headings = Array.from(
+      document.querySelectorAll("#article h2, #article h3")
+    );
+    if (headings.length === 0) return;
+
+    const linkMap = new Map();
+    for (const link of tocLinks) {
+      const href = link.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        linkMap.set(decodeURIComponent(href.slice(1)), link);
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            tocLinks.forEach(l => l.classList.remove("active"));
+            const targetLink = linkMap.get(id);
+            if (targetLink) {
+              targetLink.classList.add("active");
+            }
+          }
+        }
+      },
+      {
+        rootMargin: "-80px 0px -70% 0px",
+        threshold: 0,
+      }
+    );
+
+    for (const heading of headings) {
+      if (heading.id) {
+        observer.observe(heading);
+      }
+    }
+  }
+
   createProgressBar();
   updateScrollProgress();
   addHeadingLinks();
   attachCopyButtons();
+  wrapTables();
+  initTocScrollSpy();
 </script>

@@ -43,10 +43,11 @@ pnpm run build
 - [Astro](https://astro.build/)
 - TypeScript
 - Tailwind CSS
+- [Kami 紙](https://kami.tw93.fun/) 视觉与排版系统
 
 ## 致谢
 
 这个博客使用 [Astro](https://astro.build/) 构建，
-源于 [AstroPaper](https://github.com/satnaing/astro-paper)，并根据个人喜好修改。
+源于 [AstroPaper](https://github.com/satnaing/astro-paper)，视觉设计与排版哲学深受 [Kami 紙](https://kami.tw93.fun/) 启发，并根据个人喜好进行深度定制重构。
 
-感谢 Astro 社区，以及 AstroPaper 原作者与贡献者提供的优秀起点。
+感谢 Astro 社区、AstroPaper 原作者与贡献者，以及 Kami 设计系统的优秀起点。

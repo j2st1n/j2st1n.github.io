@@ -23,13 +23,18 @@
     }
 
     p,
-    strong,
     ol,
     ul,
     figcaption,
     table,
     code {
       @apply text-foreground;
+    }
+
+    strong,
+    b {
+      @apply text-foreground;
+      font-weight: 600;
     }
 
     a {
@@ -49,22 +54,34 @@
     }
 
     img {
-      @apply mx-auto border border-border;
+      @apply mx-auto;
       border-radius: 0.35rem;
+    }
+
+    img:not([src*=".svg"]):not([data-no-border]) {
+      @apply border border-border;
     }
 
     figcaption {
       @apply opacity-75;
     }
 
+    /* 表格移动端防撑破与平滑滑动 */
+    .table-wrapper {
+      @apply my-6 w-full overflow-x-auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     table {
+      @apply my-0 w-full text-left;
+
       th,
       td {
         @apply border-b border-border p-2;
       }
 
       th {
-        @apply py-1.5;
+        @apply py-1.5 font-medium text-foreground;
       }
 
       code {

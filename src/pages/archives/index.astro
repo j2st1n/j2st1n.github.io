@@ -141,7 +141,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
   .archive-page {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 2rem 1rem 4rem;
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 4rem;
   }
 
   .archive-hero {
@@ -165,7 +165,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
     line-height: 1.08;
     font-family: var(--font-editorial);
     font-weight: 500;
-    letter-spacing: -0.055em;
+    letter-spacing: 0.015em;
     color: var(--foreground);
   }
 
@@ -202,7 +202,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
     line-height: 1;
     font-family: var(--font-editorial);
     font-weight: 500;
-    letter-spacing: -0.04em;
+    letter-spacing: 0.015em;
     color: var(--foreground);
   }
 

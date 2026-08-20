@@ -65,7 +65,7 @@ const formatFullDate = (date: string | Date) =>
     width: 100%;
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 5rem 1rem 3rem;
+    padding: 3.5rem clamp(1.25rem, 4vw, 2rem) 3rem;
     color: var(--foreground);
   }
   .page-hero {
@@ -87,7 +87,7 @@ const formatFullDate = (date: string | Date) =>
     font-family: var(--font-editorial);
     font-weight: 500;
     line-height: 0.98;
-    letter-spacing: -0.065em;
+    letter-spacing: 0.015em;
   }
   .page-hero p {
     max-width: 34rem;
@@ -132,7 +132,7 @@ const formatFullDate = (date: string | Date) =>
     font-family: var(--font-editorial);
     font-weight: 500;
     line-height: 1.65;
-    letter-spacing: -0.025em;
+    letter-spacing: 0.015em;
     transition:
       color 0.2s ease,
       transform 0.2s ease;

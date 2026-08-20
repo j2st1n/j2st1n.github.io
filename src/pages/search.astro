@@ -87,7 +87,7 @@ const searchItems = sortedPosts.map(post => ({
     max-width: var(--content-width);
     min-block-size: clamp(18rem, 58svh, 34rem);
     margin: 0 auto;
-    padding: clamp(3rem, 8svh, 5rem) 1rem 3rem;
+    padding: clamp(3rem, 8svh, 5rem) clamp(1.25rem, 4vw, 2rem) 3rem;
     display: grid;
     align-content: center;
     color: var(--foreground);
@@ -138,7 +138,7 @@ const searchItems = sortedPosts.map(post => ({
     font-size: clamp(1.5rem, 5vw, 2.25rem);
     font-family: var(--font-editorial);
     line-height: 1.2;
-    letter-spacing: -0.055em;
+    letter-spacing: 0.015em;
     white-space: nowrap;
     transition: opacity 0.16s ease;
   }
@@ -154,7 +154,7 @@ const searchItems = sortedPosts.map(post => ({
     font-size: clamp(1.5rem, 5vw, 2.25rem);
     font-family: var(--font-editorial);
     line-height: 1.2;
-    letter-spacing: -0.055em;
+    letter-spacing: 0.015em;
   }
   .search-count {
     margin: 1rem 0 0;
@@ -195,7 +195,7 @@ const searchItems = sortedPosts.map(post => ({
     font-family: var(--font-editorial);
     font-weight: 500;
     line-height: 1.65;
-    letter-spacing: -0.025em;
+    letter-spacing: 0.015em;
     transition:
       color 0.2s ease,
       transform 0.2s ease;
