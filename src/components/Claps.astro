@@ -66,7 +66,8 @@ const { slug } = Astro.props;
     background: var(--surface-raised);
     color: var(--foreground);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px color-mix(in oklch, var(--foreground), transparent 94%);
+    box-shadow: 0 4px 12px
+      color-mix(in oklch, var(--foreground), transparent 94%);
   }
 
   .clap-btn:active {
@@ -88,9 +89,16 @@ const { slug } = Astro.props;
   }
 
   @keyframes clap-shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    75% { transform: translateX(4px); }
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-4px);
+    }
+    75% {
+      transform: translateX(4px);
+    }
   }
 
   .stamp-icon {
@@ -132,7 +140,9 @@ const { slug } = Astro.props;
     font-size: 0.82rem;
     letter-spacing: 0.04em;
     opacity: 0.85;
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .claps-hint.maxed {
@@ -189,7 +199,7 @@ const { slug } = Astro.props;
 
     // API 地址支持全局环境变量覆盖，默认优雅降级为本地持久化与空连接
     const apiUrl =
-      (window as any).__CLAPS_API_URL__ || "https://claps.bins.blog/api/claps";
+      window.__CLAPS_API_URL__ || "https://claps.bins.blog/api/claps";
 
     const storageKey = `claps_total_${slug}`;
     const userClappedKey = `user_claps_${slug}`;

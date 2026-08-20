@@ -19,6 +19,7 @@ declare module "astro:env/client" {
 }
 
 interface Window {
+  __CLAPS_API_URL__?: string;
   theme?: {
     themeValue: string;
     setPreference: () => void;
