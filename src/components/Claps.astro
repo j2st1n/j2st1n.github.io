@@ -74,13 +74,14 @@ const { slug } = Astro.props;
   }
 
   .clap-btn.max-clapped {
-    cursor: default;
     border-color: color-mix(in oklch, var(--brand), var(--border-color) 40%);
+    background: var(--surface-raised);
+    opacity: 0.9;
   }
 
-  .clap-btn.max-clapped:hover {
-    transform: none;
-    box-shadow: none;
+  .clap-btn.max-clapped .stamp-icon {
+    color: var(--brand);
+    transform: rotate(-6deg) scale(1.12);
   }
 
   .clap-btn.shake {
@@ -259,10 +260,20 @@ const { slug } = Astro.props;
     currentButton.addEventListener("click", () => {
       const alreadyClapped = getUserClappedCount();
       if (alreadyClapped >= MAX_CLAPS_PER_USER) {
-        // 达到上限时，轻微抖动提醒
+        // 达到上限时禁止增加计数，展示轻柔的上限提示气泡与抖动
+        currentBubbleEl.textContent = "已达上限";
+        currentBubbleEl.classList.remove("pop");
+        void currentBubbleEl.offsetWidth;
+        currentBubbleEl.classList.add("pop");
+
         currentButton.classList.remove("shake");
         void currentButton.offsetWidth;
         currentButton.classList.add("shake");
+
+        window.clearTimeout(syncTimeout);
+        syncTimeout = window.setTimeout(() => {
+          currentBubbleEl.classList.remove("pop");
+        }, 1200);
         return;
       }
 
@@ -281,7 +292,8 @@ const { slug } = Astro.props;
       }
 
       // 弹出 +1 动画
-      currentBubbleEl.textContent = `+${pendingIncrement}`;
+      currentBubbleEl.textContent =
+        nextClapped >= MAX_CLAPS_PER_USER ? "+1 满印" : `+${pendingIncrement}`;
       currentBubbleEl.classList.remove("pop");
       void currentBubbleEl.offsetWidth; // 触发 reflow
       currentBubbleEl.classList.add("pop");
