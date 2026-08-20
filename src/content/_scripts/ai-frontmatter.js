@@ -142,8 +142,20 @@ draft: false
     const updatedContent = newFrontmatter + bodyContent;
     await app.vault.modify(activeFile, updatedContent);
 
+    // 8. 自动将笔记重命名为英文 Slug（若在根目录则自动归入 blog/ 文件夹）
+    if (result.slug) {
+      const parentPath = activeFile.parent ? activeFile.parent.path : "";
+      const targetFolder =
+        parentPath === "" || parentPath === "/" ? "blog" : parentPath;
+      const targetPath = `${targetFolder}/${result.slug}.md`;
+
+      if (targetPath !== activeFile.path) {
+        await app.fileManager.renameFile(activeFile, targetPath);
+      }
+    }
+
     new Notice(
-      `✅ 成功生成 Frontmatter！\n标题：《${result.title}》\n标签：${result.tags.join(" / ")}`,
+      `✅ 成功生成并重命名！\n标题：《${result.title}》\n文件：${result.slug}.md\n标签：${result.tags.join(" / ")}`,
       6000
     );
   } catch (err) {
