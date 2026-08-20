@@ -1,16 +1,19 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bins-claps",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-02-14",
-  "compatibility_flags": ["nodejs_compat"],
-  "observability": {
-    "enabled": true
-  },
-  "kv_namespaces": [
-    {
-      "binding": "CLAPS_KV",
-      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-    }
-  ]
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "bins-claps",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-02-14",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"observability": {
+		"enabled": true
+	},
+	"kv_namespaces": [
+		{
+			"binding": "CLAPS_KV",
+			"id": "c25c781c589149b292761afc6b157650",
+			"remote": true
+		}
+	]
 }
