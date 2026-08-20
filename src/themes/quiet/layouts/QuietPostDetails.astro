@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
+import Claps from "@/components/Claps.astro";
 import QuietLayout from "./QuietLayout.astro";
 import { SITE } from "@/config";
 import {
@@ -125,6 +126,8 @@ const postOgImage =
     >
       <Content />
     </article>
+
+    <Claps slug={post.id} />
 
     <footer class="article-end" aria-label="文章页脚">
       <nav class={postNavClass} aria-label="上一篇和下一篇文章">
