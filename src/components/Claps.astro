@@ -23,7 +23,7 @@ const { slug } = Astro.props;
       <span class="clap-count" data-clap-count>0</span>
       <span class="clap-bubble" data-clap-bubble aria-hidden="true">+1</span>
     </button>
-    <p class="claps-hint">摸个鱼吧</p>
+    <p class="claps-hint" data-claps-hint>摸个鱼吧</p>
   </div>
 </div>
 
@@ -76,22 +76,21 @@ const { slug } = Astro.props;
   .clap-btn.max-clapped {
     border-color: color-mix(in oklch, var(--brand), var(--border-color) 40%);
     background: var(--surface-raised);
-    opacity: 0.9;
+    color: var(--foreground);
   }
 
   .clap-btn.max-clapped .stamp-icon {
     color: var(--brand);
-    transform: rotate(-6deg) scale(1.12);
   }
 
   .clap-btn.shake {
-    animation: clap-shake 0.4s ease;
+    animation: clap-shake 0.35s ease;
   }
 
   @keyframes clap-shake {
     0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-4px); }
-    40%, 80% { transform: translateX(4px); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
   }
 
   .stamp-icon {
@@ -133,21 +132,29 @@ const { slug } = Astro.props;
     font-size: 0.82rem;
     letter-spacing: 0.04em;
     opacity: 0.85;
+    transition: color 0.2s ease, opacity 0.2s ease;
   }
 
-  /* 悬浮 +1 气泡动效 */
+  .claps-hint.maxed {
+    color: var(--brand);
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  /* 悬浮 +1 气泡动效：从数字上方轻盈升起，绝不遮挡左侧 Logo */
   .clap-bubble {
     position: absolute;
-    top: -1.5rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(6px) scale(0.7);
-    padding: 0.15rem 0.5rem;
+    top: -1.2rem;
+    right: 0.6rem;
+    transform: translateY(6px) scale(0.6);
+    padding: 0.12rem 0.4rem;
     border-radius: 9999px;
     background: var(--brand);
     color: #fff;
     font-family: var(--font-code);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 600;
+    line-height: 1;
     opacity: 0;
     pointer-events: none;
     transition:
@@ -157,7 +164,7 @@ const { slug } = Astro.props;
 
   .clap-bubble.pop {
     opacity: 1;
-    transform: translateX(-50%) translateY(-10px) scale(1);
+    transform: translateY(-12px) scale(1);
   }
 </style>
 
@@ -172,33 +179,40 @@ const { slug } = Astro.props;
     const button = root.querySelector<HTMLButtonElement>("[data-clap-button]");
     const countEl = root.querySelector<HTMLElement>("[data-clap-count]");
     const bubbleEl = root.querySelector<HTMLElement>("[data-clap-bubble]");
-    if (!button || !countEl || !bubbleEl) return;
+    const hintEl = root.querySelector<HTMLElement>("[data-claps-hint]");
+    if (!button || !countEl || !bubbleEl || !hintEl) return;
 
     const currentButton: HTMLButtonElement = button;
     const currentCountEl: HTMLElement = countEl;
     const currentBubbleEl: HTMLElement = bubbleEl;
+    const currentHintEl: HTMLElement = hintEl;
 
     // API 地址支持全局环境变量覆盖，默认优雅降级为本地持久化与空连接
     const apiUrl =
       (window as any).__CLAPS_API_URL__ || "https://claps.bins.blog/api/claps";
 
-    const storageKey = `claps:${slug}`;
-    const userClappedKey = `clapped_count:${slug}`;
+    const storageKey = `claps_total_${slug}`;
+    const userClappedKey = `user_claps_${slug}`;
     const MAX_CLAPS_PER_USER = 10;
 
     let currentTotal = 0;
     let pendingIncrement = 0;
     let syncTimeout: number | undefined;
 
-    // 读取该用户本地针对该文章已盖印次数
     function getUserClappedCount(): number {
       return parseInt(localStorage.getItem(userClappedKey) || "0", 10);
     }
 
     function checkButtonState() {
-      if (getUserClappedCount() >= MAX_CLAPS_PER_USER) {
+      const userClapped = getUserClappedCount();
+      if (userClapped > 0) {
+        currentButton.classList.add("stamped");
+      }
+      if (userClapped >= MAX_CLAPS_PER_USER) {
         currentButton.classList.add("max-clapped");
-        currentButton.title = "已达到单篇盖印上限 (10次)";
+        currentButton.title = "今天已摸满 10 条鱼啦";
+        currentHintEl.textContent = "今天已摸满 10 条鱼";
+        currentHintEl.classList.add("maxed");
       }
     }
 
@@ -214,6 +228,7 @@ const { slug } = Astro.props;
           if (typeof data.claps === "number") {
             currentTotal = data.claps;
             currentCountEl.textContent = String(currentTotal);
+            localStorage.setItem(storageKey, String(currentTotal));
           }
         } else {
           fallbackLocalRead();
@@ -249,6 +264,7 @@ const { slug } = Astro.props;
           if (typeof data.claps === "number") {
             currentTotal = data.claps;
             currentCountEl.textContent = String(currentTotal);
+            localStorage.setItem(storageKey, String(currentTotal));
           }
         }
       } catch {
@@ -260,20 +276,12 @@ const { slug } = Astro.props;
     currentButton.addEventListener("click", () => {
       const alreadyClapped = getUserClappedCount();
       if (alreadyClapped >= MAX_CLAPS_PER_USER) {
-        // 达到上限时禁止增加计数，展示轻柔的上限提示气泡与抖动
-        currentBubbleEl.textContent = "已达上限";
-        currentBubbleEl.classList.remove("pop");
-        void currentBubbleEl.offsetWidth;
-        currentBubbleEl.classList.add("pop");
-
+        // 达到上限：不再增数，仅抖动并在底注提示
         currentButton.classList.remove("shake");
         void currentButton.offsetWidth;
         currentButton.classList.add("shake");
-
-        window.clearTimeout(syncTimeout);
-        syncTimeout = window.setTimeout(() => {
-          currentBubbleEl.classList.remove("pop");
-        }, 1200);
+        currentHintEl.textContent = "今天已摸满 10 条鱼啦";
+        currentHintEl.classList.add("maxed");
         return;
       }
 
@@ -288,14 +296,15 @@ const { slug } = Astro.props;
       currentButton.classList.add("stamped");
       if (nextClapped >= MAX_CLAPS_PER_USER) {
         currentButton.classList.add("max-clapped");
-        currentButton.title = "已达到单篇盖印上限 (10次)";
+        currentButton.title = "今天已摸满 10 条鱼啦";
+        currentHintEl.textContent = "今天已摸满 10 条鱼";
+        currentHintEl.classList.add("maxed");
       }
 
-      // 弹出 +1 动画
-      currentBubbleEl.textContent =
-        nextClapped >= MAX_CLAPS_PER_USER ? "+1 满印" : `+${pendingIncrement}`;
+      // 弹出数字 +1 动画 (仅显示纯净数字，右侧升起不挡鱼)
+      currentBubbleEl.textContent = `+1`;
       currentBubbleEl.classList.remove("pop");
-      void currentBubbleEl.offsetWidth; // 触发 reflow
+      void currentBubbleEl.offsetWidth;
       currentBubbleEl.classList.add("pop");
 
       window.clearTimeout(syncTimeout);
