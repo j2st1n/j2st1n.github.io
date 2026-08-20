@@ -229,18 +229,20 @@ const { slug } = Astro.props;
       currentCountEl.textContent = String(currentTotal);
     }
 
-    // 2. 提交增量点赞 (带防抖合并)
+    // 2. 提交增量点赞 (使用 GET action=clap 避开跨域 WAF POST 拦截)
     async function syncClaps() {
       if (pendingIncrement <= 0) return;
       const countToSend = pendingIncrement;
       pendingIncrement = 0;
 
       try {
-        const res = await fetch(apiUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ slug, count: countToSend }),
-        });
+        const res = await fetch(
+          `${apiUrl}?slug=${encodeURIComponent(slug!)}&action=clap&count=${countToSend}`,
+          {
+            method: "GET",
+            headers: { Accept: "application/json" },
+          }
+        );
         if (res.ok) {
           const data = await res.json();
           if (typeof data.claps === "number") {
@@ -249,7 +251,7 @@ const { slug } = Astro.props;
           }
         }
       } catch {
-        // 网络异常时静默降级，不打扰阅读体验
+        // 网络异常时静默降级
       }
     }
 

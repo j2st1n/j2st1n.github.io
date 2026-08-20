@@ -44,9 +44,12 @@ export default {
 
     // 路由：/api/claps 或 /
     if (url.pathname === "/api/claps" || url.pathname === "/") {
-      // 1. GET: 读取点赞数
+      // 1. GET: 读取或通过 action=clap 增量盖印 (避免部分 CDN/WAF 拦截跨域 POST)
       if (request.method === "GET") {
-        const slug = url.searchParams.get("slug");
+        const slug = url.searchParams.get("slug")?.trim();
+        const action = url.searchParams.get("action");
+        const countParam = parseInt(url.searchParams.get("count") || "1", 10);
+
         if (!slug) {
           return new Response(JSON.stringify({ error: "Missing slug parameter" }), {
             status: 400,
@@ -54,6 +57,26 @@ export default {
           });
         }
 
+        // 如果是带 action=clap 的增量写入
+        if (action === "clap") {
+          const safeIncrement = Math.min(Math.max(1, countParam), 10);
+          const rawCount = await env.CLAPS_KV.get(`claps:${slug}`);
+          const prevTotal = rawCount ? parseInt(rawCount, 10) : 0;
+          const newTotal = prevTotal + safeIncrement;
+
+          await env.CLAPS_KV.put(`claps:${slug}`, String(newTotal));
+
+          return new Response(JSON.stringify({ slug, claps: newTotal }), {
+            status: 200,
+            headers: {
+              "Content-Type": "application/json",
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              ...corsHeaders,
+            },
+          });
+        }
+
+        // 默认只读
         const rawCount = await env.CLAPS_KV.get(`claps:${slug}`);
         const count = rawCount ? parseInt(rawCount, 10) : 0;
 
@@ -61,7 +84,7 @@ export default {
           status: 200,
           headers: {
             "Content-Type": "application/json",
-            "Cache-Control": "public, max-age=10, s-maxage=30",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
             ...corsHeaders,
           },
         });
