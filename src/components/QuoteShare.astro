@@ -104,7 +104,6 @@ const { title, pubDate } = Astro.props;
   (function () {
     const QRCodeLib = (function () {
       function createQRCode(text) {
-        // 请求 240x240 高清二维码，用于 Retina 级清晰度
         return (
           "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=4&data=" +
           encodeURIComponent(text)
@@ -125,7 +124,7 @@ const { title, pubDate } = Astro.props;
 
     if (!quoteBtn || !quoteModal) return;
 
-    // 记录鼠标/手指划选过程中的实时最后落脚点
+    // 记录鼠标实时落脚点
     document.addEventListener(
       "mousemove",
       e => {
@@ -135,7 +134,7 @@ const { title, pubDate } = Astro.props;
       { passive: true }
     );
 
-    // 1. 紧贴鼠标松开物理落点（0 距离吸附）
+    // 1. 紧贴鼠标松开物理落点
     function handleSelection(pointerEvent) {
       const selection = window.getSelection();
       if (!selection || selection.isCollapsed) {
@@ -160,7 +159,6 @@ const { title, pubDate } = Astro.props;
 
       selectedQuote = text;
 
-      // 优先使用鼠标真实落脚点坐标，触摸屏使用 touch 终点，无事件时回退选区矩形
       let clientX = lastMousePos.x;
       let clientY = lastMousePos.y;
 
@@ -178,7 +176,6 @@ const { title, pubDate } = Astro.props;
 
       const rect = range.getBoundingClientRect();
 
-      // 如果记录的鼠标位置偏离选区太远，回退到选区右下角/末尾
       if (
         clientX < rect.left - 50 ||
         clientX > rect.right + 50 ||
@@ -196,16 +193,13 @@ const { title, pubDate } = Astro.props;
         }
       }
 
-      // 紧贴光标上方 40px 处
       let top = clientY - 42;
       let left = clientX;
 
-      // 贴顶保护：若靠近屏幕顶端，翻转到光标下方
       if (top < 50) {
         top = clientY + 24;
       }
 
-      // 左右边界保护，避免贴出屏幕
       left = Math.max(56, Math.min(window.innerWidth - 56, left));
 
       quoteBtn.style.top = `${top}px`;
@@ -239,7 +233,6 @@ const { title, pubDate } = Astro.props;
       const padding = 44;
       const contentWidth = width - padding * 2;
 
-      // 字体设置
       const fontSerif =
         "TsangerJinKai02, 'Songti SC', 'Noto Serif SC', SimSun, serif";
       ctx.font = `500 21px ${fontSerif}`;
@@ -274,7 +267,7 @@ const { title, pubDate } = Astro.props;
       const quoteHeight = quoteLines.length * lineHeight;
 
       const headerHeight = 60;
-      const footerHeight = 130; // 调大底部留白，容纳 72px 高清二维码
+      const footerHeight = 130;
       const height = Math.max(
         520,
         padding * 2 + headerHeight + quoteHeight + 80 + footerHeight
@@ -293,31 +286,45 @@ const { title, pubDate } = Astro.props;
       ctx.lineWidth = 1;
       ctx.strokeRect(18, 18, width - 36, height - 36);
 
-      // C. 顶部 Eyebrow (墨蓝方块 + BINS.BLOG + 日期)
+      // C. 顶部 Eyebrow：站点官方 Logo SVG + BINS.BLOG + 日期
       const topY = padding + 10;
-      ctx.fillStyle = "#1B365D";
-      ctx.fillRect(padding, topY + 4, 6, 6);
 
+      // 绘制站点 Logo
+      const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="#1B365D" d="M709.2 566.2c22.5-19.4 42.8-40.5 62.7-62.1 33.4-36.3 66.9-72.6 108.4-100.2 30.2-20 62.7-34.5 98.1-42 1.3-.3 2.6-.5 3.9-.8 4.3-.9 8 0.3 10.7 3.8 2.8 3.7 2.2 7.5-.1 11.2-12.4 19.6-20.9 40.9-29 62.5-4.8 13-10.4 25.6-17.9 37.3-14.3 22.3-33.5 38.6-58.8 47.2-4.2 1.4-7.7.2-10.1-3.3-2.3-3.4-2.3-7.2.2-10.7 1.2-1.7 2.8-2.8 4.7-3.6 28.3-11 46.5-32 58.3-59.2 8.8-20.3 15.6-41.4 26.3-62.1-11 3-20.7 6.3-30.1 10.3-33.6 14.4-63 35.1-89.9 59.7-25.9 23.7-49.1 49.8-72.9 75.5-34.4 37.2-72.6 69.9-115.9 96.6-45.1 27.8-93.8 46.8-145.2 58.9-37.7 8.9-76 13.5-114.8 14.3-13 0.3-26 0.7-39-0.1-8.3-.5-11.8-4.6-9.9-12.8 1.8-8 5.7-15.3 10.1-22.2 9.2-14.6 21.7-26 35.1-36.6 23.5-18.7 49.4-34 73.6-51.7 15.1-11 30.1-22.3 41.8-37 11.1-14.1 17.4-29.8 14.4-48.2-3.1-19.2-15.7-31.9-35-35.4-42.9-7.8-79 16.5-87.9 59.1-.2 1-.5 1.9-.7 2.9-1.6 5.9-6 8.9-11.5 7.7-5.1-1.1-8.1-5.6-7-11.5 2-10.7 5.1-21.1 10.2-30.8 22.6-42.9 77.7-56.3 114.8-41.3 20.7 8.3 35.5 29.5 36.5 51.8 1.2 25.7-8.8 46.7-25.9 64.9-14.4 15.5-31.7 27.5-48.7 39.7-23.8 17.1-49 32.2-71.6 51-10.2 8.5-22.5 23.4-25.7 32.4 126.2 1.2 240-32.6 337.6-115.2zM405.9 338.9c18.9-12.6 37.6-24.7 58.6-32.9 24.5-9.6 49.8-15.6 75.8-19.2 16.4-2.3 32.9-2.3 49.3-3.7 4.1-.4 7.9.7 10 5 2.1 4.2 1 7.9-1.9 11.1-3.1 3.5-6.6 6.6-9.9 9.9-13.1 13.3-17.4 29.5-15.2 47.7.8 7.2-1.5 11.6-7.2 12.5-6 .9-10.5-2.8-11.5-9.7-2.8-18.9 1.4-36.4 11.7-52.4.7-1.1 2-1.8 1.9-3.7-7.4-.9-14.8.2-22.1 1.1-38.5 4.7-75 15.3-108.2 36-10.7 6.7-20.8 14.4-32.2 20-10.5 5.2-21.6 8.1-33.1 8.6-95.1 4.2-179.9 37-257.1 91.5-17.7 12.5-35 25.6-49.8 41.6-8.4 9.1-14.8 19.3-14.5 32.4.2 10.2 4.5 18.7 10.6 26.4 15.4 19.3 34.7 34 56.2 45.8 20.4 11.2 40 8.7 58.5-4.9 10-7.3 17.4-16.8 23.9-27.2-2.3-2.1-4.7-1.1-6.9-1.4-8.8-.1-11.8-1.8-12.2-5.9-.4-4.3 2.1-6.8 6-8.1 24.9-8.4 48.9 7.9 49.9 27.2.2 4.1-2.2 6.5-6 7.5-4.2 1.1-7.1-.6-9-4.4-1.2-2.5-1-5.6-3.4-7.6-2.4.4-2.8 2.7-3.8 4.2-10 15.2-22.3 28-38.7 36.1-22.6 11.2-45.2 10.3-67.1-1.7-23.1-12.7-43.4-29.1-60.3-49.4-8.9-10.7-14.6-23-15-37.3-.4-15.4 5-28.8 14.7-40.4 14-16.7 30.9-30.3 48.3-43.2 39.7-29.4 82.5-53.4 128.8-70.8 31.9-12 64.6-21.1 98.3-26 15.5-2.3 31.1-3.8 46.7-4.3 13.5-.4 25.9-4.2 37.5-12z"/></svg>`;
+      const logoDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(logoSvg)}`;
+      const logoImg = new Image();
+      logoImg.src = logoDataUrl;
+
+      await new Promise(resolve => {
+        logoImg.onload = () => {
+          ctx.drawImage(logoImg, padding, topY - 2, 20, 20);
+          resolve();
+        };
+        logoImg.onerror = resolve;
+      });
+
+      // 站点名
       ctx.fillStyle = "#1B365D";
-      ctx.font = `700 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+      ctx.font = `700 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
       ctx.letterSpacing = "0.08em";
-      ctx.fillText("BINS.BLOG", padding + 14, topY + 11);
+      ctx.fillText("BINS.BLOG", padding + 26, topY + 13);
 
+      // 日期
       ctx.fillStyle = "#7e796e";
       ctx.font = `500 13px -apple-system, BlinkMacSystemFont, sans-serif`;
       ctx.textAlign = "right";
-      ctx.fillText(postPubDate, width - padding, topY + 11);
+      ctx.fillText(postPubDate, width - padding, topY + 13);
       ctx.textAlign = "left";
 
       // 顶部发丝分割线
       ctx.strokeStyle = "#e8e6dc";
       ctx.beginPath();
-      ctx.moveTo(padding, topY + 24);
-      ctx.lineTo(width - padding, topY + 24);
+      ctx.moveTo(padding, topY + 26);
+      ctx.lineTo(width - padding, topY + 26);
       ctx.stroke();
 
       // D. 大号引号 ❝
-      const quoteStartY = topY + 68;
+      const quoteStartY = topY + 70;
       ctx.fillStyle = "#1B365D";
       ctx.font = `700 42px ${fontSerif}`;
       ctx.fillText("❝", padding, quoteStartY);
@@ -348,7 +355,7 @@ const { title, pubDate } = Astro.props;
       ctx.lineTo(width - padding, footerY);
       ctx.stroke();
 
-      // H. 底部左侧：朱砂红「摸鱼时刻」方印 + 个人署名
+      // H. 底部左侧：朱砂红「摸鱼时刻」方印 + 文摘便签注释（无多余人名与重复站名）
       const sealSize = 44;
       const sealX = padding;
       const sealY = footerY + 16;
@@ -365,20 +372,21 @@ const { title, pubDate } = Astro.props;
       ctx.fillText("摸鱼", sealX + 9, sealY + 17);
       ctx.fillText("时刻", sealX + 9, sealY + 33);
 
-      ctx.fillStyle = "#6b6a64";
-      ctx.font = `500 13px ${fontSerif}`;
-      ctx.fillText("BINS.BLOG · J2", sealX + sealSize + 14, sealY + 20);
+      ctx.fillStyle = "#1B365D";
+      ctx.font = `500 14px ${fontSerif}`;
+      ctx.letterSpacing = "0.04em";
+      ctx.fillText("片刻会心", sealX + sealSize + 14, sealY + 20);
 
       ctx.fillStyle = "#8a867c";
       ctx.font = `400 12px -apple-system, BlinkMacSystemFont, sans-serif`;
-      ctx.fillText("扫码或长按识别阅读全文", sealX + sealSize + 14, sealY + 38);
+      ctx.letterSpacing = "0.02em";
+      ctx.fillText("扫码长按阅读全文", sealX + sealSize + 14, sealY + 38);
 
-      // I. 底部右侧：72px 高清极速识别二维码（带白色保护底区）
+      // I. 底部右侧：72px 高清极速识别二维码（带纯白保护底区）
       const qrSize = 72;
       const qrX = width - padding - qrSize;
       const qrY = footerY + 12;
 
-      // 绘制白色高对比保护底块
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(qrX - 4, qrY - 4, qrSize + 8, qrSize + 8);
       ctx.strokeStyle = "#ded9cc";
