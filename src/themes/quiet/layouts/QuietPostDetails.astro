@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
 import Claps from "@/components/Claps.astro";
+import QuoteShare from "@/components/QuoteShare.astro";
 import QuietLayout from "./QuietLayout.astro";
 import { SITE } from "@/config";
 import {
@@ -126,6 +127,8 @@ const postOgImage =
     >
       <Content />
     </article>
+
+    <QuoteShare title={title} pubDate={formatFullDate(pubDatetime)} />
 
     <Claps slug={post.id} />
 

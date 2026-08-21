@@ -1,0 +1,659 @@
+---
+type Props = {
+  title: string;
+  pubDate: string;
+};
+
+const { title, pubDate } = Astro.props;
+---
+
+<div id="quote-share-root">
+  <!-- 选词浮动气泡 (紧贴鼠标松开物理落点) -->
+  <button
+    id="quote-share-btn"
+    type="button"
+    class="quote-share-btn"
+    aria-label="生成文摘卡片"
+    style="display: none;"
+  >
+    <span class="btn-icon">🎴</span>
+    <span class="btn-text">生成卡片</span>
+  </button>
+
+  <!-- 弹窗遮罩与卡片展示 -->
+  <div id="quote-share-modal" class="quote-share-modal" style="display: none;">
+    <div class="quote-share-backdrop"></div>
+    <div class="quote-share-dialog" role="dialog" aria-modal="true">
+      <div class="quote-share-header">
+        <span class="quote-share-title">🎴 纸质文摘卡片</span>
+        <button
+          type="button"
+          class="quote-share-close"
+          id="quote-share-close-btn"
+          aria-label="关闭"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="quote-share-body">
+        <div class="quote-img-container">
+          <img
+            id="quote-share-img"
+            alt="文摘卡片"
+            src=""
+            class="quote-share-img"
+          />
+        </div>
+      </div>
+
+      <div class="quote-share-footer">
+        <span class="quote-share-tip">长按图片保存或分享</span>
+        <div class="quote-share-actions">
+          <button type="button" class="btn-action" id="quote-copy-btn">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+              ></path>
+            </svg>
+            <span>复制图片</span>
+          </button>
+          <button
+            type="button"
+            class="btn-action btn-primary"
+            id="quote-download-btn"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>下载卡片</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ postTitle: title, postPubDate: pubDate }}>
+  (function () {
+    const QRCodeLib = (function () {
+      function createQRCode(text) {
+        // 请求 240x240 高清二维码，用于 Retina 级清晰度
+        return (
+          "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=4&data=" +
+          encodeURIComponent(text)
+        );
+      }
+      return { getQRUrl: createQRCode };
+    })();
+
+    let selectedQuote = "";
+    const lastMousePos = { x: 0, y: 0 };
+    const quoteBtn = document.getElementById("quote-share-btn");
+    const quoteModal = document.getElementById("quote-share-modal");
+    const quoteImg = document.getElementById("quote-share-img");
+    const closeBtn = document.getElementById("quote-share-close-btn");
+    const copyBtn = document.getElementById("quote-copy-btn");
+    const downloadBtn = document.getElementById("quote-download-btn");
+    const backdrop = document.querySelector(".quote-share-backdrop");
+
+    if (!quoteBtn || !quoteModal) return;
+
+    // 记录鼠标/手指划选过程中的实时最后落脚点
+    document.addEventListener(
+      "mousemove",
+      e => {
+        lastMousePos.x = e.clientX;
+        lastMousePos.y = e.clientY;
+      },
+      { passive: true }
+    );
+
+    // 1. 紧贴鼠标松开物理落点（0 距离吸附）
+    function handleSelection(pointerEvent) {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed) {
+        quoteBtn.style.display = "none";
+        return;
+      }
+
+      const text = selection.toString().trim();
+      if (text.length < 2 || text.length > 600) {
+        quoteBtn.style.display = "none";
+        return;
+      }
+
+      const articleBody = document.querySelector(".article-body");
+      if (!articleBody) return;
+
+      const range = selection.getRangeAt(0);
+      if (!articleBody.contains(range.commonAncestorContainer)) {
+        quoteBtn.style.display = "none";
+        return;
+      }
+
+      selectedQuote = text;
+
+      // 优先使用鼠标真实落脚点坐标，触摸屏使用 touch 终点，无事件时回退选区矩形
+      let clientX = lastMousePos.x;
+      let clientY = lastMousePos.y;
+
+      if (pointerEvent && pointerEvent.clientX) {
+        clientX = pointerEvent.clientX;
+        clientY = pointerEvent.clientY;
+      } else if (
+        pointerEvent &&
+        pointerEvent.changedTouches &&
+        pointerEvent.changedTouches.length > 0
+      ) {
+        clientX = pointerEvent.changedTouches[0].clientX;
+        clientY = pointerEvent.changedTouches[0].clientY;
+      }
+
+      const rect = range.getBoundingClientRect();
+
+      // 如果记录的鼠标位置偏离选区太远，回退到选区右下角/末尾
+      if (
+        clientX < rect.left - 50 ||
+        clientX > rect.right + 50 ||
+        clientY < rect.top - 50 ||
+        clientY > rect.bottom + 50
+      ) {
+        const clientRects = range.getClientRects();
+        if (clientRects.length > 0) {
+          const lastRect = clientRects[clientRects.length - 1];
+          clientX = (lastRect.left + lastRect.right) / 2;
+          clientY = lastRect.top;
+        } else {
+          clientX = rect.right;
+          clientY = rect.bottom;
+        }
+      }
+
+      // 紧贴光标上方 40px 处
+      let top = clientY - 42;
+      let left = clientX;
+
+      // 贴顶保护：若靠近屏幕顶端，翻转到光标下方
+      if (top < 50) {
+        top = clientY + 24;
+      }
+
+      // 左右边界保护，避免贴出屏幕
+      left = Math.max(56, Math.min(window.innerWidth - 56, left));
+
+      quoteBtn.style.top = `${top}px`;
+      quoteBtn.style.left = `${left}px`;
+      quoteBtn.style.display = "inline-flex";
+    }
+
+    document.addEventListener("mouseup", e => {
+      setTimeout(() => handleSelection(e), 20);
+    });
+
+    document.addEventListener("touchend", e => {
+      setTimeout(() => handleSelection(e), 100);
+    });
+
+    document.addEventListener("selectionchange", () => {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed) {
+        quoteBtn.style.display = "none";
+      }
+    });
+
+    // 2. 绘制 Kami 纯正纸质文摘卡片 (Canvas 2D)
+    async function renderQuoteCard(quoteText) {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const dpr = 2; // Retina 高清
+      const width = 640;
+      const padding = 44;
+      const contentWidth = width - padding * 2;
+
+      // 字体设置
+      const fontSerif =
+        "TsangerJinKai02, 'Songti SC', 'Noto Serif SC', SimSun, serif";
+      ctx.font = `500 21px ${fontSerif}`;
+
+      function getLines(text, maxWidth) {
+        const words = text.split("");
+        const lines = [];
+        let currentLine = "";
+
+        for (let i = 0; i < words.length; i++) {
+          const char = words[i];
+          if (char === "\n") {
+            lines.push(currentLine);
+            currentLine = "";
+            continue;
+          }
+          const testLine = currentLine + char;
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > maxWidth && currentLine !== "") {
+            lines.push(currentLine);
+            currentLine = char;
+          } else {
+            currentLine = testLine;
+          }
+        }
+        if (currentLine) lines.push(currentLine);
+        return lines;
+      }
+
+      const quoteLines = getLines(quoteText, contentWidth - 20);
+      const lineHeight = 36;
+      const quoteHeight = quoteLines.length * lineHeight;
+
+      const headerHeight = 60;
+      const footerHeight = 130; // 调大底部留白，容纳 72px 高清二维码
+      const height = Math.max(
+        520,
+        padding * 2 + headerHeight + quoteHeight + 80 + footerHeight
+      );
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+
+      // A. 填充 Kami 暖纸底色
+      ctx.fillStyle = "#f5f4ed";
+      ctx.fillRect(0, 0, width, height);
+
+      // B. 绘制发丝边框
+      ctx.strokeStyle = "#e8e6dc";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(18, 18, width - 36, height - 36);
+
+      // C. 顶部 Eyebrow (墨蓝方块 + BINS.BLOG + 日期)
+      const topY = padding + 10;
+      ctx.fillStyle = "#1B365D";
+      ctx.fillRect(padding, topY + 4, 6, 6);
+
+      ctx.fillStyle = "#1B365D";
+      ctx.font = `700 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+      ctx.letterSpacing = "0.08em";
+      ctx.fillText("BINS.BLOG", padding + 14, topY + 11);
+
+      ctx.fillStyle = "#7e796e";
+      ctx.font = `500 13px -apple-system, BlinkMacSystemFont, sans-serif`;
+      ctx.textAlign = "right";
+      ctx.fillText(postPubDate, width - padding, topY + 11);
+      ctx.textAlign = "left";
+
+      // 顶部发丝分割线
+      ctx.strokeStyle = "#e8e6dc";
+      ctx.beginPath();
+      ctx.moveTo(padding, topY + 24);
+      ctx.lineTo(width - padding, topY + 24);
+      ctx.stroke();
+
+      // D. 大号引号 ❝
+      const quoteStartY = topY + 68;
+      ctx.fillStyle = "#1B365D";
+      ctx.font = `700 42px ${fontSerif}`;
+      ctx.fillText("❝", padding, quoteStartY);
+
+      // E. 正文内容
+      ctx.fillStyle = "#141413";
+      ctx.font = `500 20px ${fontSerif}`;
+      let textY = quoteStartY + 38;
+
+      for (let i = 0; i < quoteLines.length; i++) {
+        ctx.fillText(quoteLines[i], padding + 10, textY);
+        textY += lineHeight;
+      }
+
+      // F. 出处落款
+      textY += 24;
+      ctx.fillStyle = "#6b6a64";
+      ctx.font = `500 15px ${fontSerif}`;
+      ctx.textAlign = "right";
+      ctx.fillText(`—— 摘自《${postTitle}》`, width - padding - 6, textY);
+      ctx.textAlign = "left";
+
+      // G. 底部发丝分割线
+      const footerY = height - padding - 82;
+      ctx.strokeStyle = "#e8e6dc";
+      ctx.beginPath();
+      ctx.moveTo(padding, footerY);
+      ctx.lineTo(width - padding, footerY);
+      ctx.stroke();
+
+      // H. 底部左侧：朱砂红「摸鱼时刻」方印 + 个人署名
+      const sealSize = 44;
+      const sealX = padding;
+      const sealY = footerY + 16;
+
+      ctx.fillStyle = "#faf1f0";
+      ctx.fillRect(sealX, sealY, sealSize, sealSize);
+      ctx.strokeStyle = "#9c2727";
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(sealX, sealY, sealSize, sealSize);
+      ctx.strokeRect(sealX + 2, sealY + 2, sealSize - 4, sealSize - 4);
+
+      ctx.fillStyle = "#9c2727";
+      ctx.font = `700 11px ${fontSerif}`;
+      ctx.fillText("摸鱼", sealX + 9, sealY + 17);
+      ctx.fillText("时刻", sealX + 9, sealY + 33);
+
+      ctx.fillStyle = "#6b6a64";
+      ctx.font = `500 13px ${fontSerif}`;
+      ctx.fillText("BINS.BLOG · J2", sealX + sealSize + 14, sealY + 20);
+
+      ctx.fillStyle = "#8a867c";
+      ctx.font = `400 12px -apple-system, BlinkMacSystemFont, sans-serif`;
+      ctx.fillText("扫码或长按识别阅读全文", sealX + sealSize + 14, sealY + 38);
+
+      // I. 底部右侧：72px 高清极速识别二维码（带白色保护底区）
+      const qrSize = 72;
+      const qrX = width - padding - qrSize;
+      const qrY = footerY + 12;
+
+      // 绘制白色高对比保护底块
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(qrX - 4, qrY - 4, qrSize + 8, qrSize + 8);
+      ctx.strokeStyle = "#ded9cc";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(qrX - 4, qrY - 4, qrSize + 8, qrSize + 8);
+
+      const qrImg = new Image();
+      qrImg.crossOrigin = "anonymous";
+      qrImg.src = QRCodeLib.getQRUrl(window.location.href);
+
+      await new Promise(resolve => {
+        qrImg.onload = () => {
+          ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+          resolve();
+        };
+        qrImg.onerror = () => {
+          ctx.fillStyle = "#8a867c";
+          ctx.font = `400 11px -apple-system, sans-serif`;
+          ctx.textAlign = "right";
+          ctx.fillText("bins.blog", width - padding, qrY + 36);
+          resolve();
+        };
+      });
+
+      return canvas.toDataURL("image/png");
+    }
+
+    // 3. 点击弹出卡片
+    quoteBtn.addEventListener("click", async e => {
+      e.stopPropagation();
+      quoteBtn.style.display = "none";
+
+      const dataUrl = await renderQuoteCard(selectedQuote);
+      if (!dataUrl) return;
+
+      quoteImg.src = dataUrl;
+      quoteModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    });
+
+    // 4. 关闭弹窗
+    function closeModal() {
+      quoteModal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    // 5. 下载与复制动作
+    downloadBtn.addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.href = quoteImg.src;
+      a.download = `文摘卡片-${Date.now()}.png`;
+      a.click();
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      try {
+        const res = await fetch(quoteImg.src);
+        const blob = await res.blob();
+        await navigator.clipboard.write([
+          new ClipboardItem({ [blob.type]: blob }),
+        ]);
+        const span = copyBtn.querySelector("span");
+        if (span) {
+          const original = span.textContent;
+          span.textContent = "已复制！";
+          setTimeout(() => (span.textContent = original), 2000);
+        }
+      } catch {
+        alert("浏览器不支持直接复制图片，请长按或右键图片保存！");
+      }
+    });
+  })();
+</script>
+
+<style>
+  /* 紧贴鼠标落点的极简微型按钮 */
+  .quote-share-btn {
+    position: fixed;
+    z-index: 1000;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: #1b365d;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 14px rgba(27, 54, 93, 0.35);
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      transform 0.1s ease,
+      background 0.1s;
+    user-select: none;
+    pointer-events: auto;
+  }
+
+  .quote-share-btn:hover {
+    background: #132742;
+    transform: translateX(-50%) translateY(-2px);
+  }
+
+  .quote-share-btn .btn-icon {
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .quote-share-btn .btn-text {
+    letter-spacing: 0.02em;
+  }
+
+  /* 弹窗遮罩 */
+  .quote-share-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .quote-share-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 20, 19, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .quote-share-dialog {
+    position: relative;
+    z-index: 10;
+    max-width: 460px;
+    width: 100%;
+    background: #faf9f5;
+    border: 1px solid #e8e6dc;
+    border-radius: 12px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .quote-share-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid #e8e6dc;
+  }
+
+  .quote-share-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1b365d;
+  }
+
+  .quote-share-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #7e796e;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quote-share-close:hover {
+    color: #141413;
+    background: #eae6db;
+  }
+
+  .quote-share-body {
+    padding: 18px;
+    display: flex;
+    justify-content: center;
+    background: #eeeae0;
+    max-height: 68vh;
+    overflow-y: auto;
+  }
+
+  .quote-img-container {
+    max-width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .quote-share-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .quote-share-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-top: 1px solid #e8e6dc;
+    background: #faf9f5;
+  }
+
+  .quote-share-tip {
+    font-size: 12px;
+    color: #7e796e;
+  }
+
+  .quote-share-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #504e49;
+    background: #f0ece1;
+    border: 1px solid #dcd7c8;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-action:hover {
+    background: #e5e0d4;
+    color: #141413;
+  }
+
+  .btn-primary {
+    background: #1b365d;
+    color: #ffffff;
+    border-color: #1b365d;
+  }
+
+  .btn-primary:hover {
+    background: #132742;
+    color: #ffffff;
+  }
+
+  @media (max-width: 640px) {
+    .quote-share-dialog {
+      max-width: 100%;
+    }
+    .quote-share-actions {
+      flex: 1;
+      justify-content: flex-end;
+    }
+  }
+</style>
