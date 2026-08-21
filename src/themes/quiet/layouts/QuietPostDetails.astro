@@ -201,8 +201,15 @@ const postOgImage =
     max-width: 38rem;
     color: var(--text-secondary);
     font-size: 1.02rem;
-    line-height: 1.7;
+    line-height: 1.75;
     text-wrap: pretty;
+    text-align: left;
+    font-feature-settings:
+      "chws" 1,
+      "halt" 1;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    letter-spacing: 0.015em;
   }
 
   .article-meta {
@@ -253,11 +260,15 @@ const postOgImage =
 
   .article-body :global(p),
   .article-body :global(li) {
-    line-height: 1.75;
-  }
-
-  .article-body :global(p) {
+    line-height: 1.8;
+    text-align: left;
     text-wrap: pretty;
+    font-feature-settings:
+      "chws" 1,
+      "halt" 1;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    letter-spacing: 0.015em;
   }
 
   .article-body :global(strong),
