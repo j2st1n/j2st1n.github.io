@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { SITE } from "@/config";
 
 // Increment this when the OG templates, fonts, or rendering rules change.
-const OG_TEMPLATE_VERSION = "quiet-square-v1";
+const OG_TEMPLATE_VERSION = "kami-safezone-v2";
 
 function shortHash(value: unknown): string {
   return createHash("sha256")

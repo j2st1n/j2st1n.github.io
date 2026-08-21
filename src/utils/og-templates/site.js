@@ -1,21 +1,98 @@
 import satori from "satori";
 import { SITE } from "@/config";
-import loadGoogleFonts from "../loadGoogleFont";
+import loadKamiFont from "../loadGoogleFont";
 
 const WIDTH = 1200;
-const HEIGHT = 1200;
+const HEIGHT = 630;
+
+function tagNode(tag) {
+  return {
+    type: "span",
+    props: {
+      style: {
+        fontSize: 14,
+        fontWeight: 500,
+        color: "#1B365D",
+        background: "#E4ECF5",
+        padding: "3px 10px",
+        borderRadius: 3,
+        letterSpacing: "0.04em",
+        display: "flex",
+      },
+      children: tag,
+    },
+  };
+}
+
+function sealNode() {
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 44,
+        height: 44,
+        border: "2px solid #9c2727",
+        borderRadius: 3,
+        background: "#faf1f0",
+        padding: 2,
+      },
+      children: [
+        {
+          type: "div",
+          props: {
+            style: {
+              width: "100%",
+              height: "100%",
+              border: "1px solid #c95d5d",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            children: [
+              {
+                type: "span",
+                props: {
+                  style: {
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: "#9c2727",
+                    lineHeight: 1.05,
+                    letterSpacing: "0.06em",
+                  },
+                  children: "摸鱼",
+                },
+              },
+              {
+                type: "span",
+                props: {
+                  style: {
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: "#9c2727",
+                    lineHeight: 1.05,
+                    letterSpacing: "0.06em",
+                  },
+                  children: "时刻",
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  };
+}
 
 export default async () => {
-  const hostname = new URL(SITE.website).hostname;
-  const footerText = "日常观察 / AI 工具 / 技术折腾 / 随笔";
-  const fontText = [
-    SITE.title,
-    SITE.desc,
-    hostname,
-    SITE.author,
-    footerText,
-    "by",
-  ].join("");
+  const displayTitle = SITE.title;
+  const displayDescription =
+    SITE.desc || "日常观察 / AI 工具 / 技术折腾 / 随笔";
+  const defaultTags = ["随笔", "思考", "生活"];
 
   return satori(
     {
@@ -25,40 +102,25 @@ export default async () => {
           width: WIDTH,
           height: HEIGHT,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#f5f4ed", // 纯正 Kami 暖纸底
+          fontFamily: "TsangerJinKai02",
+          color: "#141413",
           position: "relative",
-          overflow: "hidden",
-          background: "#f7f3ea",
-          color: "#17201d",
-          padding: "72px",
-          fontFamily: "Noto Sans SC",
         },
         children: [
+          // 两侧古典书志发丝导线
           {
             type: "div",
             props: {
               style: {
                 position: "absolute",
-                left: 0,
-                top: 0,
-                width: "100%",
-                height: 24,
-                background: "#0f766e",
-                display: "flex",
-              },
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "absolute",
-                right: 0,
-                top: 24,
-                width: 24,
-                height: "100%",
-                background: "#c05621",
+                top: 48,
+                bottom: 48,
+                left: 100,
+                width: 1,
+                background: "#e5e2d6",
                 display: "flex",
               },
             },
@@ -68,157 +130,161 @@ export default async () => {
             props: {
               style: {
                 position: "absolute",
-                right: 60,
-                top: 176,
-                color: "rgba(15,118,110,0.08)",
-                fontSize: 230,
-                fontWeight: 700,
-                lineHeight: 1,
+                top: 48,
+                bottom: 48,
+                right: 100,
+                width: 1,
+                background: "#e5e2d6",
                 display: "flex",
               },
-              children: SITE.title,
             },
           },
+
+          // 中央核心版心 (570px 宽 x 534px 高)
           {
             type: "div",
             props: {
               style: {
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                position: "relative",
-                color: "#51605d",
-                fontSize: 26,
-              },
-              children: [
-                {
-                  type: "span",
-                  props: {
-                    style: {
-                      width: 10,
-                      height: 10,
-                      borderRadius: 999,
-                      background: "#0f766e",
-                      display: "flex",
-                    },
-                  },
-                },
-                {
-                  type: "span",
-                  props: {
-                    style: { fontWeight: 700, color: "#25302d" },
-                    children: SITE.title,
-                  },
-                },
-                {
-                  type: "span",
-                  props: {
-                    children: "by",
-                  },
-                },
-                {
-                  type: "span",
-                  props: {
-                    style: { fontWeight: 700, color: "#25302d" },
-                    children: SITE.author,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "relative",
+                width: 570,
+                height: 534,
                 display: "flex",
                 flexDirection: "column",
-                width: "100%",
-                paddingRight: 24,
-              },
-              children: [
-                {
-                  type: "h1",
-                  props: {
-                    style: {
-                      margin: 0,
-                      fontSize: 118,
-                      fontWeight: 700,
-                      lineHeight: 1.08,
-                      letterSpacing: 0,
-                      color: "#17201d",
-                    },
-                    children: SITE.title,
-                  },
-                },
-                {
-                  type: "p",
-                  props: {
-                    style: {
-                      margin: "42px 0 0",
-                      fontSize: 38,
-                      lineHeight: 1.5,
-                      maxWidth: 900,
-                      color: "#56625f",
-                    },
-                    children: SITE.desc,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "relative",
-                display: "flex",
                 justifyContent: "space-between",
-                alignItems: "flex-end",
-                gap: 32,
-                width: "100%",
-                borderTop: "1px solid #d7d2c4",
-                paddingTop: 32,
+                padding: "16px 0",
+                position: "relative",
               },
               children: [
+                // 顶部：墨蓝方标 + BINS.BLOG + 个人博客
                 {
                   type: "div",
                   props: {
                     style: {
                       display: "flex",
-                      color: "#51605d",
-                      fontSize: 24,
-                    },
-                    children: footerText,
-                  },
-                },
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      display: "flex",
+                      justifyContent: "space-between",
                       alignItems: "center",
-                      gap: 12,
-                      color: "#25302d",
-                      fontSize: 25,
-                      fontWeight: 700,
+                      width: "100%",
+                      borderBottom: "1px solid #e8e6dc",
+                      paddingBottom: "16px",
                     },
                     children: [
                       {
-                        type: "span",
+                        type: "div",
                         props: {
                           style: {
                             display: "flex",
-                            width: 34,
-                            height: 4,
-                            background: "#c05621",
+                            alignItems: "center",
+                            gap: 8,
                           },
+                          children: [
+                            {
+                              type: "div",
+                              props: {
+                                style: {
+                                  width: 6,
+                                  height: 6,
+                                  background: "#1B365D",
+                                  display: "flex",
+                                },
+                              },
+                            },
+                            {
+                              type: "span",
+                              props: {
+                                style: {
+                                  fontSize: 17,
+                                  fontWeight: 500,
+                                  color: "#1B365D",
+                                  letterSpacing: "0.1em",
+                                },
+                                children: "BINS.BLOG",
+                              },
+                            },
+                          ],
                         },
                       },
                       {
                         type: "span",
-                        props: { children: hostname },
+                        props: {
+                          style: {
+                            fontSize: 15,
+                            color: "#7e796e",
+                            letterSpacing: "0.06em",
+                          },
+                          children: "J2 的个人博客",
+                        },
                       },
+                    ],
+                  },
+                },
+
+                // 中间主体
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      flex: 1,
+                      padding: "20px 0",
+                    },
+                    children: [
+                      {
+                        type: "h1",
+                        props: {
+                          style: {
+                            fontSize: 48,
+                            fontWeight: 500,
+                            color: "#141413",
+                            lineHeight: 1.25,
+                            margin: 0,
+                            letterSpacing: "0.02em",
+                          },
+                          children: displayTitle,
+                        },
+                      },
+                      {
+                        type: "p",
+                        props: {
+                          style: {
+                            fontSize: 22,
+                            color: "#504e49",
+                            lineHeight: 1.6,
+                            margin: "18px 0 0 0",
+                            letterSpacing: "0.015em",
+                          },
+                          children: displayDescription,
+                        },
+                      },
+                    ],
+                  },
+                },
+
+                // 底部
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      borderTop: "1px solid #e8e6dc",
+                      paddingTop: "16px",
+                    },
+                    children: [
+                      {
+                        type: "div",
+                        props: {
+                          style: {
+                            display: "flex",
+                            gap: 8,
+                            alignItems: "center",
+                          },
+                          children: defaultTags.map(tagNode),
+                        },
+                      },
+                      sealNode(),
                     ],
                   },
                 },
@@ -231,8 +297,7 @@ export default async () => {
     {
       width: WIDTH,
       height: HEIGHT,
-      embedFont: true,
-      fonts: await loadGoogleFonts(fontText),
+      fonts: await loadKamiFont(),
     }
   );
 };

@@ -1,9 +1,10 @@
 import satori from "satori";
+import sharp from "sharp";
 import { SITE } from "@/config";
-import loadGoogleFonts from "../loadGoogleFont";
+import loadKamiFont from "../loadGoogleFont";
 
 const WIDTH = 1200;
-const HEIGHT = 1200;
+const HEIGHT = 630;
 
 function truncateText(text, maxLength) {
   if (!text || text.length <= maxLength) return text;
@@ -21,50 +22,269 @@ function formatDate(date) {
     .replaceAll("/", ".");
 }
 
-function getTitleSize(title) {
-  if (title.length <= 14) return 96;
-  if (title.length <= 24) return 84;
-  if (title.length <= 38) return 72;
-  return 64;
-}
-
 function tagNode(tag) {
   return {
     type: "span",
     props: {
       style: {
+        fontSize: 14,
+        fontWeight: 500,
+        color: "#1B365D",
+        background: "#E4ECF5",
+        padding: "3px 10px",
+        borderRadius: 3,
+        letterSpacing: "0.04em",
         display: "flex",
-        alignItems: "center",
-        borderRadius: 999,
-        border: "1px solid #d7d2c4",
-        background: "rgba(255,255,255,0.74)",
-        color: "#51605d",
-        padding: "8px 16px",
-        fontSize: 22,
-        lineHeight: 1,
       },
       children: tag,
     },
   };
 }
 
+function sealNode() {
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 44,
+        height: 44,
+        border: "2px solid #9c2727",
+        borderRadius: 3,
+        background: "#faf1f0",
+        padding: 2,
+      },
+      children: [
+        {
+          type: "div",
+          props: {
+            style: {
+              width: "100%",
+              height: "100%",
+              border: "1px solid #c95d5d",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            children: [
+              {
+                type: "span",
+                props: {
+                  style: {
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: "#9c2727",
+                    lineHeight: 1.05,
+                    letterSpacing: "0.06em",
+                  },
+                  children: "摸鱼",
+                },
+              },
+              {
+                type: "span",
+                props: {
+                  style: {
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: "#9c2727",
+                    lineHeight: 1.05,
+                    letterSpacing: "0.06em",
+                  },
+                  children: "时刻",
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  };
+}
+
+async function resolveImageDataUri(rawUrl) {
+  if (!rawUrl) return null;
+  try {
+    let buffer;
+    if (rawUrl.startsWith("http://") || rawUrl.startsWith("https://")) {
+      const res = await fetch(rawUrl, { signal: AbortSignal.timeout(5000) });
+      if (!res.ok) return null;
+      buffer = Buffer.from(await res.arrayBuffer());
+    } else {
+      return null;
+    }
+
+    // 通过 sharp 统一转为 570x220 的 PNG Buffer
+    const pngBuffer = await sharp(buffer)
+      .resize(570, 220, { fit: "cover" })
+      .png()
+      .toBuffer();
+
+    return `data:image/png;base64,${pngBuffer.toString("base64")}`;
+  } catch {
+    return null; // 图片处理失败时优雅回退到纯文字排版
+  }
+}
+
 export default async post => {
-  const { title, description, pubDatetime, tags = [], author } = post.data;
-  const displayTitle = truncateText(title, 58);
-  const displayDescription = truncateText(description, 96);
-  const displayTags = tags.slice(0, 4);
+  const { title, description, pubDatetime, tags = [], ogImage } = post.data;
+  const displayTitle = truncateText(title, 42);
+  const displayDescription = truncateText(description, 76);
+  const displayTags = tags.slice(0, 3);
   const date = formatDate(pubDatetime);
-  const hostname = new URL(SITE.website).hostname;
-  const fontText = [
-    displayTitle,
-    displayDescription,
-    displayTags.join(""),
-    author,
-    SITE.title,
-    hostname,
-    date,
-    "by随笔",
-  ].join("");
+  const siteTitle = "BINS.BLOG";
+
+  // 提取文章插图（若有）
+  let rawImageUrl = null;
+  if (typeof ogImage === "string") {
+    rawImageUrl = ogImage;
+  } else if (ogImage && typeof ogImage === "object" && ogImage.src) {
+    rawImageUrl = ogImage.src;
+  } else if (post.body) {
+    const match = post.body.match(/!\[.*?\]\((https?:\/\/[^\s\)]+)\)/);
+    if (match) {
+      rawImageUrl = match[1];
+    }
+  }
+
+  const imageDataUri = await resolveImageDataUri(rawImageUrl);
+
+  // 1. 中间主体区（纯文字 vs 图文自适应）
+  let bodyContentNode;
+  if (imageDataUri) {
+    bodyContentNode = {
+      type: "div",
+      props: {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          flex: 1,
+          padding: "4px 0",
+        },
+        children: [
+          // 上半部：插图画框
+          {
+            type: "div",
+            props: {
+              style: {
+                width: "100%",
+                height: 220,
+                display: "flex",
+                borderRadius: 4,
+                overflow: "hidden",
+                border: "1px solid #ded9cc",
+                margin: "8px 0 6px 0",
+              },
+              children: [
+                {
+                  type: "img",
+                  props: {
+                    src: imageDataUri,
+                    style: {
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          // 下半部：标题与摘要
+          {
+            type: "div",
+            props: {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              },
+              children: [
+                {
+                  type: "h1",
+                  props: {
+                    style: {
+                      fontSize: 34,
+                      fontWeight: 500,
+                      color: "#141413",
+                      lineHeight: 1.25,
+                      margin: 0,
+                      letterSpacing: "0.02em",
+                    },
+                    children: displayTitle,
+                  },
+                },
+                {
+                  type: "p",
+                  props: {
+                    style: {
+                      fontSize: 18,
+                      color: "#504e49",
+                      lineHeight: 1.5,
+                      margin: "8px 0 0 0",
+                      maxHeight: 54,
+                      overflow: "hidden",
+                      letterSpacing: "0.01em",
+                    },
+                    children: displayDescription,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    };
+  } else {
+    // 纯文字藏书票
+    bodyContentNode = {
+      type: "div",
+      props: {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          flex: 1,
+          padding: "20px 0",
+        },
+        children: [
+          {
+            type: "h1",
+            props: {
+              style: {
+                fontSize: 44,
+                fontWeight: 500,
+                color: "#141413",
+                lineHeight: 1.3,
+                margin: 0,
+                letterSpacing: "0.02em",
+              },
+              children: displayTitle,
+            },
+          },
+          {
+            type: "p",
+            props: {
+              style: {
+                fontSize: 21,
+                color: "#504e49",
+                lineHeight: 1.6,
+                margin: "18px 0 0 0",
+                maxHeight: 96,
+                overflow: "hidden",
+                letterSpacing: "0.015em",
+              },
+              children: displayDescription,
+            },
+          },
+        ],
+      },
+    };
+  }
 
   return satori(
     {
@@ -74,40 +294,25 @@ export default async post => {
           width: WIDTH,
           height: HEIGHT,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#f5f4ed", // 纯正 Kami 暖纸底
+          fontFamily: "TsangerJinKai02",
+          color: "#141413",
           position: "relative",
-          overflow: "hidden",
-          background: "#f7f3ea",
-          color: "#17201d",
-          padding: "72px",
-          fontFamily: "Noto Sans SC",
         },
         children: [
+          // 两侧古典书志发丝导线
           {
             type: "div",
             props: {
               style: {
                 position: "absolute",
-                left: 0,
-                top: 0,
-                width: "100%",
-                height: 24,
-                background: "#0f766e",
-                display: "flex",
-              },
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "absolute",
-                right: 0,
-                top: 24,
-                width: 24,
-                height: "100%",
-                background: "#c05621",
+                top: 48,
+                bottom: 48,
+                left: 100,
+                width: 1,
+                background: "#e5e2d6",
                 display: "flex",
               },
             },
@@ -117,190 +322,124 @@ export default async post => {
             props: {
               style: {
                 position: "absolute",
-                right: 60,
-                top: 176,
-                color: "rgba(15,118,110,0.08)",
-                fontSize: 230,
-                fontWeight: 700,
-                lineHeight: 1,
+                top: 48,
+                bottom: 48,
+                right: 100,
+                width: 1,
+                background: "#e5e2d6",
                 display: "flex",
               },
-              children: SITE.title,
             },
           },
+
+          // 中央核心版心 (570px 宽 x 534px 高)
           {
             type: "div",
             props: {
               style: {
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "100%",
-                position: "relative",
-                color: "#51605d",
-                fontSize: 26,
-              },
-              children: {
-                type: "div",
-                props: {
-                  style: {
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                  },
-                  children: [
-                    {
-                      type: "span",
-                      props: {
-                        style: {
-                          width: 10,
-                          height: 10,
-                          borderRadius: 999,
-                          background: "#0f766e",
-                          display: "flex",
-                        },
-                      },
-                    },
-                    {
-                      type: "span",
-                      props: {
-                        style: { fontWeight: 700, color: "#25302d" },
-                        children: SITE.title,
-                      },
-                    },
-                    {
-                      type: "span",
-                      props: {
-                        children: "by",
-                      },
-                    },
-                    {
-                      type: "span",
-                      props: {
-                        style: { fontWeight: 700, color: "#25302d" },
-                        children: author,
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "absolute",
-                right: 72,
-                top: 72,
-                color: "#6b746f",
-                fontSize: 26,
-                display: "flex",
-              },
-              children: date,
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "relative",
+                width: 570,
+                height: 534,
                 display: "flex",
                 flexDirection: "column",
-                width: "100%",
-                paddingRight: 24,
-              },
-              children: [
-                {
-                  type: "h1",
-                  props: {
-                    style: {
-                      margin: 0,
-                      fontSize: getTitleSize(displayTitle),
-                      fontWeight: 700,
-                      lineHeight: 1.16,
-                      letterSpacing: 0,
-                      maxHeight: 430,
-                      overflow: "hidden",
-                      color: "#17201d",
-                    },
-                    children: displayTitle,
-                  },
-                },
-                {
-                  type: "p",
-                  props: {
-                    style: {
-                      margin: "36px 0 0",
-                      fontSize: 34,
-                      lineHeight: 1.45,
-                      maxHeight: 150,
-                      overflow: "hidden",
-                      color: "#56625f",
-                    },
-                    children: displayDescription,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                position: "relative",
-                display: "flex",
                 justifyContent: "space-between",
-                alignItems: "flex-end",
-                gap: 32,
-                width: "100%",
-                borderTop: "1px solid #d7d2c4",
-                paddingTop: 32,
+                padding: "12px 0",
+                position: "relative",
               },
               children: [
+                // 顶部：墨蓝方标 + BINS.BLOG + 日期
                 {
                   type: "div",
                   props: {
                     style: {
                       display: "flex",
-                      gap: 12,
-                      maxWidth: 760,
-                      overflow: "hidden",
-                    },
-                    children:
-                      displayTags.length > 0
-                        ? displayTags.map(tagNode)
-                        : [tagNode("随笔")],
-                  },
-                },
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      display: "flex",
+                      justifyContent: "space-between",
                       alignItems: "center",
-                      gap: 12,
-                      color: "#25302d",
-                      fontSize: 25,
-                      fontWeight: 700,
-                      whiteSpace: "nowrap",
+                      width: "100%",
+                      borderBottom: "1px solid #e8e6dc",
+                      paddingBottom: "14px",
                     },
                     children: [
+                      {
+                        type: "div",
+                        props: {
+                          style: {
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 8,
+                          },
+                          children: [
+                            {
+                              type: "div",
+                              props: {
+                                style: {
+                                  width: 6,
+                                  height: 6,
+                                  background: "#1B365D",
+                                  display: "flex",
+                                },
+                              },
+                            },
+                            {
+                              type: "span",
+                              props: {
+                                style: {
+                                  fontSize: 17,
+                                  fontWeight: 500,
+                                  color: "#1B365D",
+                                  letterSpacing: "0.1em",
+                                },
+                                children: siteTitle,
+                              },
+                            },
+                          ],
+                        },
+                      },
                       {
                         type: "span",
                         props: {
                           style: {
-                            display: "flex",
-                            width: 34,
-                            height: 4,
-                            background: "#c05621",
+                            fontSize: 16,
+                            color: "#7e796e",
+                            letterSpacing: "0.06em",
                           },
+                          children: date,
                         },
                       },
+                    ],
+                  },
+                },
+
+                // 中间主体
+                bodyContentNode,
+
+                // 底部：Kami 标签 + 朱砂红「摸鱼时刻」方印
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      borderTop: "1px solid #e8e6dc",
+                      paddingTop: "14px",
+                    },
+                    children: [
                       {
-                        type: "span",
-                        props: { children: hostname },
+                        type: "div",
+                        props: {
+                          style: {
+                            display: "flex",
+                            gap: 8,
+                            alignItems: "center",
+                          },
+                          children:
+                            displayTags.length > 0
+                              ? displayTags.map(tagNode)
+                              : [tagNode("随笔")],
+                        },
                       },
+                      sealNode(),
                     ],
                   },
                 },
@@ -313,8 +452,7 @@ export default async post => {
     {
       width: WIDTH,
       height: HEIGHT,
-      embedFont: true,
-      fonts: await loadGoogleFonts(fontText),
+      fonts: await loadKamiFont(),
     }
   );
 };
