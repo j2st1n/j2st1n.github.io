@@ -4,7 +4,44 @@
 module.exports = async params => {
   const { app, quickAddApi } = params;
 
-  // 1. 安全读取设备本地存储的 GitHub Token (防 Git 泄露)
+  // 1. 先锁定删除范围，只允许当前 Vault 中 blog/ 下的 Markdown 文章。
+  const activeFile = app.workspace.getActiveFile();
+  if (!activeFile) {
+    new Notice("❌ 请先打开一篇要下架删除的文章！");
+    return;
+  }
+
+  const normalizedPath = activeFile.path.replace(/^\/+/, "");
+  const blogPathMatch = normalizedPath.match(
+    /^(?:src\/content\/)?blog\/(.+\.md)$/i
+  );
+  if (!blogPathMatch) {
+    new Notice("❌ 为防止误删，只能下架 blog/ 目录中的 Markdown 文章！", 6000);
+    return;
+  }
+
+  const relativeBlogPath = blogPathMatch[1];
+  const pathSegments = relativeBlogPath.split("/");
+  if (
+    pathSegments.some(
+      segment => !segment || segment === "." || segment === ".."
+    )
+  ) {
+    new Notice("❌ 文章路径不合法，操作已取消。", 6000);
+    return;
+  }
+
+  const fileName = activeFile.name;
+  const repoOwner = "j2st1n";
+  const repoName = "j2st1n.github.io";
+  const filePath = `src/content/blog/${relativeBlogPath}`;
+  const encodedFilePath = filePath
+    .split("/")
+    .map(segment => encodeURIComponent(segment))
+    .join("/");
+  const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${encodedFilePath}`;
+
+  // 2. 安全读取设备本地存储的 GitHub Token (防 Git 泄露)
   let githubToken = localStorage.getItem("BINS_BLOG_GITHUB_TOKEN");
   if (!githubToken) {
     githubToken = await quickAddApi.inputPrompt(
@@ -19,30 +56,17 @@ module.exports = async params => {
     localStorage.setItem("BINS_BLOG_GITHUB_TOKEN", githubToken);
   }
 
-  // 2. 获取当前活跃笔记
-  const activeFile = app.workspace.getActiveFile();
-  if (!activeFile) {
-    new Notice("❌ 请先打开一篇要下架删除的文章！");
-    return;
-  }
-
-  const fileName = activeFile.name; // 如 my-post.md
-  const repoOwner = "j2st1n";
-  const repoName = "j2st1n.github.io";
-  const filePath = `src/content/blog/${fileName}`;
-  const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`;
-
   // 3. 安全二次确认弹窗
   const confirmed = await quickAddApi.yesNoPrompt(
     "⚠️ 危险操作确认",
-    `确定要从 GitHub 远程全网下架并删除《${fileName}》吗？\n（此操作将同时把本地笔记移入废纸篓）`
+    `确定要从 GitHub 远程全网下架并删除《${relativeBlogPath}》吗？\n（此操作将同时把本地笔记移入废纸篓）`
   );
   if (!confirmed) {
     new Notice("已取消下架操作。");
     return;
   }
 
-  new Notice(`⏳ 正在查询《${fileName}》在 GitHub 上的状态...`);
+  new Notice(`⏳ 正在查询《${relativeBlogPath}》在 GitHub 上的状态...`);
 
   try {
     // 4. 查询 GitHub 远端该文件的 SHA

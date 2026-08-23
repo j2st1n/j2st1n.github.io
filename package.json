@@ -22,6 +22,7 @@
     "build": "astro build && node scripts/pruneOgImageCache.mjs",
     "check": "astro check",
     "preview": "astro preview",
+    "test": "node --test scripts/*.test.mjs",
     "sync": "astro sync",
     "astro": "astro",
     "format:check": "prettier --check .",

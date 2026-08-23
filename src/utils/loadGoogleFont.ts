@@ -5,7 +5,7 @@ let cachedFontBuffer: ArrayBuffer | null = null;
 
 /**
  * 加载 Kami 官方核心字体：仓耳今楷 (TsangerJinKai02-W05)
- * 优先从本地 public/fonts/ 或 scripts/ 读取，未命中则自动从 Kami 官方 CDN 下载缓存
+ * 优先从构建专用的 scripts/ 目录读取，未命中则自动从 Kami 官方 CDN 下载缓存
  */
 async function loadKamiFont(): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
@@ -22,14 +22,16 @@ async function loadKamiFont(): Promise<
   }
 
   const localPaths = [
-    path.resolve(process.cwd(), "public/fonts/TsangerJinKai02-W05.ttf"),
     path.resolve(process.cwd(), "scripts/TsangerJinKai02-W05.ttf"),
   ];
 
   for (const p of localPaths) {
     try {
       const data = await fs.readFile(p);
-      cachedFontBuffer = data.buffer;
+      cachedFontBuffer = data.buffer.slice(
+        data.byteOffset,
+        data.byteOffset + data.byteLength
+      );
       return [
         {
           name: "TsangerJinKai02",
