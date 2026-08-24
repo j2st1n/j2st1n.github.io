@@ -4,8 +4,14 @@ import sitemap from "@astrojs/sitemap";
 import { rehypeLazyImages } from "./src/utils/rehype/lazyImages";
 import { SITE } from "./src/config";
 
+// The CDN keeps generated assets for 30 days, so isolate each deployment from stale files.
+const deploymentId = (process.env.GITHUB_SHA ?? "local").slice(0, 8);
+
 export default defineConfig({
   site: SITE.website,
+  build: {
+    assets: `_astro/${deploymentId}`,
+  },
   integrations: [
     sitemap({
       filter: page => {
