@@ -181,7 +181,6 @@ const postOgImage =
   }
 
   .article-hero h1 {
-    max-width: 12em;
     color: var(--foreground);
     font-family: var(--font-editorial);
     font-size: clamp(2.35rem, 5.5vw, 4.5rem);
@@ -189,21 +188,24 @@ const postOgImage =
     line-height: 1.16;
     letter-spacing: 0.012em;
     text-wrap: balance;
+    line-break: strict;
+    overflow-wrap: anywhere;
   }
 
   .article-hero p {
     margin-top: 1.5rem;
-    max-width: 38rem;
+    max-width: 42rem;
     color: var(--text-secondary);
     font-size: 1.02rem;
     line-height: 1.75;
     text-wrap: pretty;
+    line-break: strict;
     text-align: left;
     font-feature-settings:
       "chws" 1,
       "halt" 1;
-    word-break: break-word;
-    overflow-wrap: break-word;
+    word-break: normal;
+    overflow-wrap: anywhere;
     letter-spacing: 0.015em;
   }
 
@@ -258,11 +260,12 @@ const postOgImage =
     line-height: 1.8;
     text-align: left;
     text-wrap: pretty;
+    line-break: strict;
     font-feature-settings:
       "chws" 1,
       "halt" 1;
-    word-break: break-word;
-    overflow-wrap: break-word;
+    word-break: normal;
+    overflow-wrap: anywhere;
     letter-spacing: 0.015em;
   }
 
@@ -509,12 +512,10 @@ const postOgImage =
       font-size: clamp(2.15rem, 10vw, 3rem);
       line-height: 1.2;
       letter-spacing: 0.01em;
-      text-wrap: wrap;
     }
 
     .article-hero p {
       font-size: 0.98rem;
-      text-wrap: wrap;
     }
 
     .article-body {
