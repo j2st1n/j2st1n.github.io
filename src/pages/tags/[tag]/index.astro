@@ -1,24 +1,19 @@
 ---
-import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import ArticleList from "@/components/ArticleList.astro";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
 import getUniqueTags from "@/utils/getUniqueTags";
-import { getPath } from "@/utils/getPath";
+import { getPublishedPosts } from "@/utils/getPublishedPosts";
+import { formatFullDate } from "@/utils/date";
 import { SITE } from "@/config";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
 type Props = {
   tagName: string;
-  posts: Awaited<ReturnType<typeof getCollection<"blog">>>;
+  posts: CollectionEntry<"blog">[];
 };
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await getPublishedPosts();
   const tags = getUniqueTags(posts);
 
   return tags.map(({ tag, tagName }) => ({
@@ -29,13 +24,11 @@ export async function getStaticPaths() {
 
 const { tagName, posts } = Astro.props;
 const latestDate = posts.length
-  ? dayjs(posts[0].data.modDatetime ?? posts[0].data.pubDatetime)
-      .tz(SITE.timezone)
-      .format("YYYY.MM.DD")
+  ? formatFullDate(
+      posts[0].data.modDatetime ?? posts[0].data.pubDatetime,
+      SITE.timezone
+    )
   : "";
-
-const formatFullDate = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
 <QuietLayout
@@ -56,25 +49,7 @@ const formatFullDate = (date: string | Date) =>
     </header>
 
     <section class="post-index" aria-label={`${tagName} 标签文章列表`}>
-      <ul class="post-list">
-        {
-          posts.map(post => (
-            <li class="post-item">
-              <a href={getPath(post.id, post.filePath)} class="post-link">
-                <time datetime={new Date(post.data.pubDatetime).toISOString()}>
-                  {formatFullDate(post.data.pubDatetime)}
-                </time>
-                <span class="post-content">
-                  <span class="post-title">{post.data.title}</span>
-                  {post.data.description && (
-                    <span class="post-desc">{post.data.description}</span>
-                  )}
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <ArticleList posts={posts} />
     </section>
   </main>
 </QuietLayout>
@@ -147,65 +122,6 @@ const formatFullDate = (date: string | Date) =>
     padding-top: 2rem;
   }
 
-  .post-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .post-item + .post-item {
-    border-top: 1px solid var(--border-color);
-  }
-
-  .post-link {
-    display: grid;
-    grid-template-columns: 7.5rem minmax(0, 1fr);
-    gap: 1.5rem;
-    padding: 1.1rem 0;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .post-link time {
-    color: var(--text-muted);
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .post-content {
-    display: grid;
-    gap: 0.35rem;
-    min-width: 0;
-  }
-
-  .post-title {
-    color: var(--foreground);
-    font-size: 1.05rem;
-    font-family: var(--font-editorial);
-    font-weight: 500;
-    line-height: 1.65;
-    letter-spacing: 0.015em;
-    transition:
-      color 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .post-desc {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    line-height: 1.8;
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  .post-link:hover .post-title {
-    color: var(--accent);
-    transform: translateX(0.125rem);
-  }
-
   @media (max-width: 640px) {
     .content-page {
       padding-top: 3.75rem;
@@ -217,16 +133,6 @@ const formatFullDate = (date: string | Date) =>
 
     .all-tags-link {
       font-size: 0.8125rem;
-    }
-
-    .post-link {
-      grid-template-columns: 1fr;
-      gap: 0.2rem;
-      padding: 1rem 0;
-    }
-
-    .post-link time {
-      font-size: 0.75rem;
     }
 
     .page-hero h1 {

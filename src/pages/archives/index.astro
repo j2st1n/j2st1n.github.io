@@ -1,46 +1,37 @@
 ---
-import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { getPublishedPosts } from "@/utils/getPublishedPosts";
+import {
+  formatDay,
+  formatFullDate,
+  formatMonth,
+  formatYear,
+} from "@/utils/date";
 import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getPublishedPosts();
 const sortedPosts = getSortedPosts(posts);
 
 const latestDate = sortedPosts[0]
-  ? dayjs(sortedPosts[0].data.modDatetime ?? sortedPosts[0].data.pubDatetime)
-      .tz(SITE.timezone)
-      .format("YYYY.MM.DD")
+  ? formatFullDate(
+      sortedPosts[0].data.modDatetime ?? sortedPosts[0].data.pubDatetime,
+      SITE.timezone
+    )
   : "";
 
 const latestYear = sortedPosts[0]
-  ? dayjs(sortedPosts[0].data.pubDatetime).tz(SITE.timezone).format("YYYY")
+  ? formatYear(sortedPosts[0].data.pubDatetime, SITE.timezone)
   : "";
 
 const latestMonth = sortedPosts[0]
-  ? dayjs(sortedPosts[0].data.pubDatetime).tz(SITE.timezone).format("M月")
+  ? formatMonth(sortedPosts[0].data.pubDatetime, SITE.timezone)
   : "";
-
-const formatYear = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("YYYY");
-
-const formatMonth = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("M月");
-
-const formatDay = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("D日");
 
 const groupedPosts = sortedPosts.reduce(
   (years, post) => {
-    const year = formatYear(post.data.pubDatetime);
-    const month = formatMonth(post.data.pubDatetime);
+    const year = formatYear(post.data.pubDatetime, SITE.timezone);
+    const month = formatMonth(post.data.pubDatetime, SITE.timezone);
 
     years[year] ??= { count: 0, months: {} };
     years[year].count += 1;
@@ -113,7 +104,7 @@ const yearGroups = Object.entries(groupedPosts).sort(
                               ).toISOString()}
                               class="post-date"
                             >
-                              {formatDay(post.data.pubDatetime)}
+                              {formatDay(post.data.pubDatetime, SITE.timezone)}
                             </time>
                             <span class="post-content">
                               <span class="post-title">{post.data.title}</span>

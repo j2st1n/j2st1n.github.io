@@ -56,7 +56,6 @@ const blog = defineCollection({
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),
       title: z.string(),
-      slug: z.string().optional(),
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       tags: tagsSchema,

@@ -2,14 +2,14 @@
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
-import SiteLogo from "@/assets/icons/SiteLogo.svg";
+import SiteLogo from "@/components/SiteLogo.astro";
 import { SITE } from "@/config";
 ---
 
 <header class="site-header" aria-label="站点导航">
   <div class="site-header-inner">
     <a href="/" class="site-brand" aria-label={`${SITE.title} 首页`}>
-      <SiteLogo class="brand-logo" aria-hidden="true" />
+      <SiteLogo class="brand-logo" />
       <span>{SITE.title}</span>
     </a>
     <nav class="site-tools" aria-label="站点工具">

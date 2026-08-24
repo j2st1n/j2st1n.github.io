@@ -4,7 +4,10 @@
 # Except these files & folders
 !/src
 !/public
+!/scripts
+!/workers
 !/.github
+!pnpm-workspace.yaml
 !tsconfig.json
 !astro.config.ts
 !.prettierrc.mjs

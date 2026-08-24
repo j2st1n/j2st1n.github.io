@@ -8,15 +8,12 @@ import "@/styles/global.css";
 
 type Props = {
   title?: string;
-  author?: string;
-  profile?: string;
   description?: string;
   ogImage?: string;
   ogImageAlt?: string;
   canonicalURL?: string | URL;
   pubDatetime?: Date;
   modDatetime?: Date | null;
-  scrollSmooth?: boolean;
   noindex?: boolean;
   nofollow?: boolean;
   isPost?: boolean;
@@ -27,15 +24,12 @@ const generatedOgImageFileName = getGeneratedOgImageFileName();
 
 const {
   title = SITE.title,
-  author = SITE.author,
-  profile = SITE.profile,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : `/${generatedOgImageFileName}`,
   ogImageAlt = title,
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
   modDatetime,
-  scrollSmooth = false,
   noindex = false,
   nofollow,
   isPost = false,
@@ -70,8 +64,8 @@ const structuredData = {
   inLanguage: SITE.lang,
   author: {
     "@type": "Person",
-    name: `${author}`,
-    ...(profile && { url: profile }),
+    name: SITE.author,
+    url: SITE.profile,
   },
   isPartOf: {
     "@type": "Blog",
@@ -93,11 +87,7 @@ const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
-<html
-  dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
-  class={`${scrollSmooth && "scroll-smooth"}`}
->
+<html dir={SITE.dir} lang=`${SITE.lang ?? "en"}`>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -129,7 +119,7 @@ const isHomePage = Astro.url.pathname === "/";
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content={author} />
+    <meta name="author" content={SITE.author} />
     {
       noindex && (
         <meta
@@ -176,7 +166,7 @@ const isHomePage = Astro.url.pathname === "/";
       )
     }
     {isPost && tags.map(tag => <meta property="article:tag" content={tag} />)}
-    {isPost && profile && <meta property="article:author" content={profile} />}
+    {isPost && <meta property="article:author" content={SITE.profile} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -245,19 +235,11 @@ const isHomePage = Astro.url.pathname === "/";
             : "light";
         }
 
-        const themeValue = getPreferTheme();
-
         // Set theme immediately to prevent flash
-        document.firstElementChild?.setAttribute("data-theme", themeValue);
-
-        // Export minimal API for external script
-        window.theme = {
-          themeValue: themeValue,
-          getTheme: () => window.theme.themeValue,
-          setTheme: val => {
-            window.theme.themeValue = val;
-          },
-        };
+        document.firstElementChild?.setAttribute(
+          "data-theme",
+          getPreferTheme()
+        );
       })();
     </script>
   </head>
@@ -265,6 +247,6 @@ const isHomePage = Astro.url.pathname === "/";
     <slot />
 
     <!-- Load full theme logic -->
-    <script src="../scripts/theme.ts"></script>
+    <script is:inline type="module" src="/scripts/theme.js"></script>
   </body>
 </html>

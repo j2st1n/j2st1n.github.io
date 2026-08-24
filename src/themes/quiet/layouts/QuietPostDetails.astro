@@ -10,20 +10,14 @@ import {
 } from "@/utils/getOgImageVersion";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { formatFullDate } from "@/utils/date";
 
 type Props = {
   post: CollectionEntry<"blog">;
   posts: CollectionEntry<"blog">[];
-  titleSuffix?: string;
 };
 
-const { post, posts, titleSuffix } = Astro.props;
+const { post, posts } = Astro.props;
 const { Content, headings } = await render(post);
 const {
   title,
@@ -51,10 +45,9 @@ const postNavClass = [
   .filter(Boolean)
   .join(" ");
 
-const formatFullDate = (date: string | Date) =>
-  dayjs(date).tz(displayTimezone).format("YYYY.MM.DD");
-
-const updatedDate = modDatetime ? formatFullDate(modDatetime) : null;
+const updatedDate = modDatetime
+  ? formatFullDate(modDatetime, displayTimezone)
+  : null;
 const postPath = getPath(post.id, post.filePath);
 const postOgImage =
   typeof ogImage === "string"
@@ -64,7 +57,7 @@ const postOgImage =
 ---
 
 <QuietLayout
-  title={`${title}${titleSuffix ? ` | ${titleSuffix}` : ""} | ${SITE.title}`}
+  title={`${title} | ${SITE.title}`}
   description={description}
   ogImage={postOgImage}
   ogImageAlt={title}
@@ -72,7 +65,6 @@ const postOgImage =
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}
   tags={tags}
-  scrollSmooth
   isPost
 >
   <main id="main-content" class="article-layout">
@@ -81,7 +73,7 @@ const postOgImage =
       <p>{description}</p>
       <div class="article-meta">
         <time datetime={new Date(pubDatetime).toISOString()}
-          >{formatFullDate(pubDatetime)}</time
+          >{formatFullDate(pubDatetime, displayTimezone)}</time
         >
         {
           updatedDate && (
@@ -128,7 +120,10 @@ const postOgImage =
       <Content />
     </article>
 
-    <QuoteShare title={title} pubDate={formatFullDate(pubDatetime)} />
+    <QuoteShare
+      title={title}
+      pubDate={formatFullDate(pubDatetime, displayTimezone)}
+    />
 
     <Claps slug={post.id} />
 
@@ -547,144 +542,4 @@ const postOgImage =
   }
 </style>
 
-<script is:inline data-astro-rerun>
-  function createProgressBar() {
-    if (document.querySelector("[data-article-progress]")) return;
-    const progressContainer = document.createElement("div");
-    progressContainer.className = "fixed top-0 z-10 h-px w-full bg-background";
-    progressContainer.setAttribute("data-article-progress", "");
-
-    const progressBar = document.createElement("div");
-    progressBar.className = "article-progress-bar h-px w-0";
-    progressBar.id = "article-progress-bar";
-    progressContainer.appendChild(progressBar);
-    document.body.appendChild(progressContainer);
-  }
-
-  function updateScrollProgress() {
-    if (window.__articleProgressBound) return;
-    window.__articleProgressBound = true;
-    document.addEventListener(
-      "scroll",
-      () => {
-        const winScroll =
-          document.body.scrollTop || document.documentElement.scrollTop;
-        const height =
-          document.documentElement.scrollHeight -
-          document.documentElement.clientHeight;
-        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-        const progressBar = document.getElementById("article-progress-bar");
-        if (progressBar) progressBar.style.width = scrolled + "%";
-      },
-      { passive: true }
-    );
-  }
-
-  function addHeadingLinks() {
-    const headings = Array.from(
-      document.querySelectorAll(
-        "#article h2, #article h3, #article h4, #article h5, #article h6"
-      )
-    );
-    for (const heading of headings) {
-      if (heading.querySelector(".heading-link")) continue;
-      const headingText = heading.textContent?.trim() || "本节";
-      heading.classList.add("group");
-      heading.setAttribute("aria-label", headingText);
-      const link = document.createElement("a");
-      link.className =
-        "heading-link ms-2 no-underline opacity-60 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
-      link.href = "#" + heading.id;
-      link.setAttribute("aria-label", `链接到“${headingText}”`);
-      const span = document.createElement("span");
-      span.ariaHidden = "true";
-      span.innerText = "#";
-      link.appendChild(span);
-      heading.appendChild(link);
-    }
-  }
-
-  function attachCopyButtons() {
-    const codeBlocks = Array.from(document.querySelectorAll("#article pre"));
-    for (const codeBlock of codeBlocks) {
-      if (codeBlock.querySelector(".copy-code")) continue;
-      codeBlock.style.position = "relative";
-      const copyButton = document.createElement("button");
-      copyButton.type = "button";
-      copyButton.className =
-        "copy-code absolute end-3 top-3 rounded border border-muted bg-muted px-2 py-1 text-xs leading-4 text-foreground";
-      copyButton.textContent = "复制";
-      copyButton.setAttribute("aria-live", "polite");
-      copyButton.addEventListener("click", async () => {
-        const code = codeBlock.querySelector("code")?.textContent ?? "";
-        await navigator.clipboard.writeText(code);
-        copyButton.textContent = "已复制";
-        setTimeout(() => {
-          copyButton.textContent = "复制";
-        }, 700);
-      });
-      codeBlock.appendChild(copyButton);
-    }
-  }
-
-  function wrapTables() {
-    const tables = Array.from(document.querySelectorAll("#article table"));
-    for (const table of tables) {
-      if (table.parentElement?.classList.contains("table-wrapper")) continue;
-      const wrapper = document.createElement("div");
-      wrapper.className = "table-wrapper";
-      table.parentNode?.insertBefore(wrapper, table);
-      wrapper.appendChild(table);
-    }
-  }
-
-  function initTocScrollSpy() {
-    const tocLinks = Array.from(document.querySelectorAll(".article-toc a"));
-    if (tocLinks.length === 0) return;
-
-    const headings = Array.from(
-      document.querySelectorAll("#article h2, #article h3")
-    );
-    if (headings.length === 0) return;
-
-    const linkMap = new Map();
-    for (const link of tocLinks) {
-      const href = link.getAttribute("href");
-      if (href && href.startsWith("#")) {
-        linkMap.set(decodeURIComponent(href.slice(1)), link);
-      }
-    }
-
-    const observer = new IntersectionObserver(
-      entries => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            tocLinks.forEach(l => l.classList.remove("active"));
-            const targetLink = linkMap.get(id);
-            if (targetLink) {
-              targetLink.classList.add("active");
-            }
-          }
-        }
-      },
-      {
-        rootMargin: "-80px 0px -70% 0px",
-        threshold: 0,
-      }
-    );
-
-    for (const heading of headings) {
-      if (heading.id) {
-        observer.observe(heading);
-      }
-    }
-  }
-
-  createProgressBar();
-  updateScrollProgress();
-  addHeadingLinks();
-  attachCopyButtons();
-  wrapTables();
-  initTocScrollSpy();
-</script>
+<script is:inline type="module" src="/scripts/article.js"></script>

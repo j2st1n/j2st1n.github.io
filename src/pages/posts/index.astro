@@ -1,25 +1,19 @@
 ---
-import { getCollection } from "astro:content";
+import ArticleList from "@/components/ArticleList.astro";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import { getPath } from "@/utils/getPath";
+import { getPublishedPosts } from "@/utils/getPublishedPosts";
+import { formatFullDate } from "@/utils/date";
 import { SITE } from "@/config";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getPublishedPosts();
 const sortedPosts = getSortedPosts(posts);
 const latestDate = sortedPosts[0]
-  ? dayjs(sortedPosts[0].data.modDatetime ?? sortedPosts[0].data.pubDatetime)
-      .tz(SITE.timezone)
-      .format("YYYY.MM.DD")
+  ? formatFullDate(
+      sortedPosts[0].data.modDatetime ?? sortedPosts[0].data.pubDatetime,
+      SITE.timezone
+    )
   : "";
-const formatFullDate = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
 <QuietLayout title={`全部文章 | ${SITE.title}`} description="全部文章。">
@@ -34,28 +28,7 @@ const formatFullDate = (date: string | Date) =>
     </header>
 
     <section class="article-index" aria-label="全部文章索引">
-      <ul class="article-list">
-        {
-          sortedPosts.map(post => (
-            <li class="article-item">
-              <a href={getPath(post.id, post.filePath)} class="article-link">
-                <time
-                  datetime={new Date(post.data.pubDatetime).toISOString()}
-                  class="article-date"
-                >
-                  {formatFullDate(post.data.pubDatetime)}
-                </time>
-                <span class="article-content">
-                  <span class="article-title">{post.data.title}</span>
-                  {post.data.description && (
-                    <span class="article-desc">{post.data.description}</span>
-                  )}
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <ArticleList posts={sortedPosts} />
     </section>
   </main>
 </QuietLayout>
@@ -99,68 +72,9 @@ const formatFullDate = (date: string | Date) =>
   .article-index {
     padding: 2.25rem 0 0;
   }
-  .article-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .article-item + .article-item {
-    border-top: 1px solid var(--border-color);
-  }
-  .article-link {
-    display: grid;
-    grid-template-columns: 7.5rem minmax(0, 1fr);
-    gap: 1.5rem;
-    padding: 1.1rem 0;
-    color: inherit;
-    text-decoration: none;
-  }
-  .article-date {
-    color: var(--text-muted);
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    font-variant-numeric: tabular-nums;
-  }
-  .article-content {
-    display: grid;
-    gap: 0.35rem;
-    min-width: 0;
-  }
-  .article-title {
-    color: var(--foreground);
-    font-size: 1.05rem;
-    font-family: var(--font-editorial);
-    font-weight: 500;
-    line-height: 1.65;
-    letter-spacing: 0.015em;
-    transition:
-      color 0.2s ease,
-      transform 0.2s ease;
-  }
-  .article-desc {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    line-height: 1.8;
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .article-link:hover .article-title {
-    color: var(--accent);
-    transform: translateX(0.125rem);
-  }
   @media (max-width: 640px) {
     .content-page {
       padding-top: 3.75rem;
-    }
-    .article-link {
-      grid-template-columns: 1fr;
-      gap: 0.2rem;
-      padding: 1rem 0;
-    }
-    .article-date {
-      font-size: 0.75rem;
     }
   }
 </style>

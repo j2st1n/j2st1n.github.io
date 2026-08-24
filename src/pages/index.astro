@@ -1,17 +1,12 @@
 ---
-import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { getPublishedPosts } from "@/utils/getPublishedPosts";
 import { getPath } from "@/utils/getPath";
+import { formatDay, formatFullDate, formatMonth } from "@/utils/date";
 import { SITE } from "@/config";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getPublishedPosts();
 const sortedPosts = getSortedPosts(posts);
 
 // 规则：有置顶用置顶，没有置顶用最新
@@ -24,20 +19,11 @@ const recentPosts = sortedPosts
 
 // 最近更新日期
 const latestDate = sortedPosts[0]
-  ? dayjs(sortedPosts[0].data.modDatetime ?? sortedPosts[0].data.pubDatetime)
-      .tz(SITE.timezone)
-      .format("YYYY.MM.DD")
+  ? formatFullDate(
+      sortedPosts[0].data.modDatetime ?? sortedPosts[0].data.pubDatetime,
+      SITE.timezone
+    )
   : "";
-
-// 格式化日期
-const formatMonth = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("M月");
-
-const formatDay = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("D日");
-
-const formatFullDate = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
 <QuietLayout
@@ -82,9 +68,9 @@ const formatFullDate = (date: string | Date) =>
                     featuredPost.data.pubDatetime
                   ).toISOString()}
                 >
-                  {formatFullDate(featuredPost.data.pubDatetime)}
+                  {formatFullDate(featuredPost.data.pubDatetime, SITE.timezone)}
                 </time>
-                {featuredPost.data.tags?.length > 0 && (
+                {featuredPost.data.tags.length > 0 && (
                   <>
                     <span class="separator">·</span>
                     <span class="featured-tags">
@@ -115,10 +101,10 @@ const formatFullDate = (date: string | Date) =>
                 <a href={getPath(post.id, post.filePath)} class="recent-link">
                   <span class="recent-date">
                     <span class="recent-date-month">
-                      {formatMonth(post.data.pubDatetime)}
+                      {formatMonth(post.data.pubDatetime, SITE.timezone)}
                     </span>
                     <span class="recent-date-day">
-                      {formatDay(post.data.pubDatetime)}
+                      {formatDay(post.data.pubDatetime, SITE.timezone)}
                     </span>
                   </span>
                   <div class="recent-content">

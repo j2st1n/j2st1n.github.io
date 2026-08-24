@@ -40,11 +40,7 @@ function createAIResponse(result) {
 
 test("AI configuration runs only once on first use without an active file", async () => {
   const prompts = [];
-  const promptValues = [
-    "sk-test",
-    "https://api.deepseek.com",
-    "deepseek-chat",
-  ];
+  const promptValues = ["sk-test", "https://api.deepseek.com", "deepseek-chat"];
   const { execute } = await loadQuickAddScript(
     "src/content/_scripts/ai-frontmatter.js",
     { localStorage: createLocalStorage() }
@@ -139,10 +135,7 @@ test("AI formatting separates prose while preserving Markdown structures", async
   assert.match(written, /description: "摘要: #号"/);
   assert.match(written, /第一段\n\n第二段提到 @config 参数/);
   assert.match(written, /A \| B\n--- \| ---\n1 \| 2/);
-  assert.match(
-    written,
-    /~~~js\nconst value = 1;\nconsole\.log\(value\);\n~~~/
-  );
+  assert.match(written, /~~~js\nconst value = 1;\nconsole\.log\(value\);\n~~~/);
   assert.match(written, /<div>\nalpha\nbeta\n<\/div>/);
 });
 
@@ -306,7 +299,7 @@ test("delete workflow preserves and encodes a nested blog path", async () => {
 
 test("QuoteShare declares idempotent lifecycle hooks for ClientRouter", async () => {
   const source = await readFile(
-    new URL("src/components/QuoteShare.astro", projectRoot),
+    new URL("public/scripts/quote-share.js", projectRoot),
     "utf8"
   );
   assert.match(source, /__binsQuoteShareState/);

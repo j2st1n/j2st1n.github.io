@@ -12,9 +12,8 @@ type Props = {
   canonicalURL?: string | URL;
   pubDatetime?: Date;
   modDatetime?: Date | null;
-  scrollSmooth?: boolean;
   showHeader?: boolean;
-  footerMode?: "flow" | "balanced" | "none";
+  footerMode?: "flow" | "none";
   isPost?: boolean;
   noindex?: boolean;
   nofollow?: boolean;
@@ -29,7 +28,6 @@ const {
   canonicalURL,
   pubDatetime,
   modDatetime,
-  scrollSmooth = false,
   showHeader = true,
   footerMode = "flow",
   isPost = false,
@@ -47,13 +45,12 @@ const {
   canonicalURL={canonicalURL}
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}
-  scrollSmooth={scrollSmooth}
   isPost={isPost}
   noindex={noindex}
   nofollow={nofollow}
   tags={tags}
 >
-  <div class="quiet-shell" data-footer-mode={footerMode}>
+  <div class="quiet-shell">
     {
       showHeader && (
         <a id="skip-to-content" href="#main-content" class="skip-link">

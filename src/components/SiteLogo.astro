@@ -1,0 +1,18 @@
+---
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={["site-logo", className]} aria-hidden="true"></span>
+
+<style>
+  .site-logo {
+    display: inline-block;
+    background: currentColor;
+    -webkit-mask: url("/site-logo.svg") center / contain no-repeat;
+    mask: url("/site-logo.svg") center / contain no-repeat;
+  }
+</style>

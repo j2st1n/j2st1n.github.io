@@ -1,17 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
 import getUniqueTags from "@/utils/getUniqueTags";
+import { getPublishedPosts } from "@/utils/getPublishedPosts";
+import { formatFullDate } from "@/utils/date";
 import { SITE } from "@/config";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getPublishedPosts();
 const tags = getUniqueTags(posts);
 
 const tagSummaries = tags
@@ -32,17 +26,13 @@ const tagSummaries = tags
   });
 
 const latestDate = posts.length
-  ? dayjs(
+  ? formatFullDate(
       posts
         .map(post => post.data.modDatetime ?? post.data.pubDatetime)
-        .sort((dateA, dateB) => dateB.getTime() - dateA.getTime())[0]
+        .sort((dateA, dateB) => dateB.getTime() - dateA.getTime())[0],
+      SITE.timezone
     )
-      .tz(SITE.timezone)
-      .format("YYYY.MM.DD")
   : "";
-
-const formatFullDate = (date: string | Date) =>
-  dayjs(date).tz(SITE.timezone).format("YYYY.MM.DD");
 ---
 
 <QuietLayout
@@ -79,7 +69,10 @@ const formatFullDate = (date: string | Date) =>
                         latestPost.data.pubDatetime
                       ).toISOString()}
                     >
-                      {formatFullDate(latestPost.data.pubDatetime)}
+                      {formatFullDate(
+                        latestPost.data.pubDatetime,
+                        SITE.timezone
+                      )}
                     </time>
                   </span>
                 )}

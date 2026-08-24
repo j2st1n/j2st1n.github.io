@@ -1,12 +1,6 @@
 :root {
   --content-width: 62rem;
   --reading-width: 48rem;
-  --content-measure: 54rem;
-  --border-color: var(--border);
-  --text-muted: var(--text-tertiary);
-}
-
-:root[data-theme="dark"] {
   --border-color: var(--border);
   --text-muted: var(--text-tertiary);
 }

@@ -1,5 +1,5 @@
 ---
-import SiteLogo from "@/assets/icons/SiteLogo.svg";
+import SiteLogo from "@/components/SiteLogo.astro";
 
 interface Props {
   slug: string;
@@ -113,7 +113,7 @@ const { slug } = Astro.props;
       transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .stamp-icon :global(svg) {
+  .stamp-icon :global(.site-logo) {
     width: 100%;
     height: 100%;
   }
@@ -178,156 +178,4 @@ const { slug } = Astro.props;
   }
 </style>
 
-<script>
-  function initClaps() {
-    const root = document.querySelector<HTMLElement>("[data-claps-root]");
-    if (!root) return;
-
-    const slug = root.dataset.slug;
-    if (!slug) return;
-
-    const button = root.querySelector<HTMLButtonElement>("[data-clap-button]");
-    const countEl = root.querySelector<HTMLElement>("[data-clap-count]");
-    const bubbleEl = root.querySelector<HTMLElement>("[data-clap-bubble]");
-    const hintEl = root.querySelector<HTMLElement>("[data-claps-hint]");
-    if (!button || !countEl || !bubbleEl || !hintEl) return;
-
-    const currentButton: HTMLButtonElement = button;
-    const currentCountEl: HTMLElement = countEl;
-    const currentBubbleEl: HTMLElement = bubbleEl;
-    const currentHintEl: HTMLElement = hintEl;
-
-    // API 地址支持全局环境变量覆盖，默认优雅降级为本地持久化与空连接
-    const apiUrl =
-      window.__CLAPS_API_URL__ || "https://claps.bins.blog/api/claps";
-
-    const storageKey = `claps_total_${slug}`;
-    const userClappedKey = `user_claps_${slug}`;
-    const MAX_CLAPS_PER_USER = 10;
-
-    let currentTotal = 0;
-    let pendingIncrement = 0;
-    let syncTimeout: number | undefined;
-
-    function getUserClappedCount(): number {
-      return parseInt(localStorage.getItem(userClappedKey) || "0", 10);
-    }
-
-    function checkButtonState() {
-      const userClapped = getUserClappedCount();
-      if (userClapped > 0) {
-        currentButton.classList.add("stamped");
-      }
-      if (userClapped >= MAX_CLAPS_PER_USER) {
-        currentButton.classList.add("max-clapped");
-        currentButton.title = "今天已摸满 10 条鱼啦";
-        currentHintEl.textContent = "今天已摸满 10 条鱼";
-        currentHintEl.classList.add("maxed");
-      }
-    }
-
-    // 1. 读取服务器已有点赞
-    async function fetchClaps() {
-      try {
-        const res = await fetch(`${apiUrl}?slug=${encodeURIComponent(slug!)}`, {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (typeof data.claps === "number") {
-            currentTotal = data.claps;
-            currentCountEl.textContent = String(currentTotal);
-            localStorage.setItem(storageKey, String(currentTotal));
-          }
-        } else {
-          fallbackLocalRead();
-        }
-      } catch {
-        fallbackLocalRead();
-      }
-      checkButtonState();
-    }
-
-    function fallbackLocalRead() {
-      const local = parseInt(localStorage.getItem(storageKey) || "0", 10);
-      currentTotal = Math.max(currentTotal, local);
-      currentCountEl.textContent = String(currentTotal);
-    }
-
-    // 2. 提交增量点赞 (使用 GET action=clap 避开跨域 WAF POST 拦截)
-    async function syncClaps() {
-      if (pendingIncrement <= 0) return;
-      const countToSend = pendingIncrement;
-      pendingIncrement = 0;
-
-      try {
-        const res = await fetch(
-          `${apiUrl}?slug=${encodeURIComponent(slug!)}&action=clap&count=${countToSend}`,
-          {
-            method: "GET",
-            headers: { Accept: "application/json" },
-          }
-        );
-        if (res.ok) {
-          const data = await res.json();
-          if (typeof data.claps === "number") {
-            currentTotal = data.claps;
-            currentCountEl.textContent = String(currentTotal);
-            localStorage.setItem(storageKey, String(currentTotal));
-          }
-        }
-      } catch {
-        // 网络异常时静默降级
-      }
-    }
-
-    // 3. 点击盖印
-    currentButton.addEventListener("click", () => {
-      const alreadyClapped = getUserClappedCount();
-      if (alreadyClapped >= MAX_CLAPS_PER_USER) {
-        // 达到上限：不再增数，仅抖动并在底注提示
-        currentButton.classList.remove("shake");
-        void currentButton.offsetWidth;
-        currentButton.classList.add("shake");
-        currentHintEl.textContent = "今天已摸满 10 条鱼啦";
-        currentHintEl.classList.add("maxed");
-        return;
-      }
-
-      const nextClapped = alreadyClapped + 1;
-      localStorage.setItem(userClappedKey, String(nextClapped));
-
-      currentTotal += 1;
-      pendingIncrement += 1;
-      currentCountEl.textContent = String(currentTotal);
-      localStorage.setItem(storageKey, String(currentTotal));
-
-      currentButton.classList.add("stamped");
-      if (nextClapped >= MAX_CLAPS_PER_USER) {
-        currentButton.classList.add("max-clapped");
-        currentButton.title = "今天已摸满 10 条鱼啦";
-        currentHintEl.textContent = "今天已摸满 10 条鱼";
-        currentHintEl.classList.add("maxed");
-      }
-
-      // 弹出数字 +1 动画 (仅显示纯净数字，右侧升起不挡鱼)
-      currentBubbleEl.textContent = `+1`;
-      currentBubbleEl.classList.remove("pop");
-      void currentBubbleEl.offsetWidth;
-      currentBubbleEl.classList.add("pop");
-
-      window.clearTimeout(syncTimeout);
-      syncTimeout = window.setTimeout(() => {
-        currentBubbleEl.classList.remove("pop");
-        syncClaps();
-      }, 800);
-    });
-
-    fetchClaps();
-  }
-
-  // 页面加载或 Astro 页面路由切换时重新初始化
-  initClaps();
-  document.addEventListener("astro:after-swap", initClaps);
-</script>
+<script is:inline type="module" src="/scripts/claps.js"></script>

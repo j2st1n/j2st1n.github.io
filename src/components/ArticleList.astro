@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@/config";
+import { formatFullDate } from "@/utils/date";
+import { getPath } from "@/utils/getPath";
+
+type Props = {
+  posts: CollectionEntry<"blog">[];
+};
+
+const { posts } = Astro.props;
+---
+
+<ul class="article-list">
+  {
+    posts.map(post => (
+      <li class="article-item">
+        <a href={getPath(post.id, post.filePath)} class="article-link">
+          <time
+            datetime={new Date(post.data.pubDatetime).toISOString()}
+            class="article-date"
+          >
+            {formatFullDate(post.data.pubDatetime, SITE.timezone)}
+          </time>
+          <span class="article-content">
+            <span class="article-title">{post.data.title}</span>
+            {post.data.description && (
+              <span class="article-desc">{post.data.description}</span>
+            )}
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .article-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .article-item + .article-item {
+    border-top: 1px solid var(--border-color);
+  }
+  .article-link {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.1rem 0;
+    color: inherit;
+    text-decoration: none;
+  }
+  .article-date {
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    font-variant-numeric: tabular-nums;
+  }
+  .article-content {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .article-title {
+    color: var(--foreground);
+    font-size: 1.05rem;
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    line-height: 1.65;
+    letter-spacing: 0.015em;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .article-desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.8;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .article-link:hover .article-title {
+    color: var(--accent);
+    transform: translateX(0.125rem);
+  }
+  @media (max-width: 640px) {
+    .article-link {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+      padding: 1rem 0;
+    }
+    .article-date {
+      font-size: 0.75rem;
+    }
+  }
+</style>

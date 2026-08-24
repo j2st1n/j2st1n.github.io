@@ -27,8 +27,6 @@ jobs:
 
       - name: "📦 Install pnpm"
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -55,6 +53,9 @@ jobs:
 
       - name: "🔬 Check Astro types"
         run: pnpm run check
+
+      - name: "🧪 Run tests"
+        run: pnpm run test
 
       - name: "🚀 Build the project"
         run: pnpm run build

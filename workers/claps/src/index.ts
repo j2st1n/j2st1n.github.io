@@ -10,122 +10,147 @@ export interface Env {
   };
 }
 
-const ALLOWED_ORIGINS = [
+const ALLOWED_ORIGINS = new Set([
   "https://bins.blog",
   "https://j2st1n.github.io",
   "http://localhost:4321",
   "http://127.0.0.1:4321",
-];
+]);
+const DEFAULT_ORIGIN = "https://bins.blog";
+const JSON_HEADERS = {
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control": "no-cache, no-store, must-revalidate",
+};
 
-function getCorsHeaders(request: Request): HeadersInit {
+function getCorsHeaders(request: Request): Record<string, string> {
   const origin = request.headers.get("Origin") || "";
-  const allowedOrigin = ALLOWED_ORIGINS.includes(origin)
-    ? origin
-    : "https://bins.blog";
-
   return {
-    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin)
+      ? origin
+      : DEFAULT_ORIGIN,
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Accept",
     "Access-Control-Max-Age": "86400",
+    Vary: "Origin",
   };
+}
+
+function json(
+  data: Record<string, string | number>,
+  corsHeaders: HeadersInit,
+  status = 200
+) {
+  return Response.json(data, {
+    status,
+    headers: { ...JSON_HEADERS, ...corsHeaders },
+  });
+}
+
+function normalizeSlug(value: unknown) {
+  if (typeof value !== "string") return null;
+  const slug = value.trim();
+  return /^[a-z0-9][a-z0-9/-]{0,199}$/.test(slug) ? slug : null;
+}
+
+function normalizeIncrement(value: unknown) {
+  const count =
+    typeof value === "number" ? value : Number.parseInt(`${value}`, 10);
+  if (!Number.isFinite(count)) return 1;
+  return Math.min(Math.max(1, Math.trunc(count)), 10);
+}
+
+async function readClaps(env: Env, slug: string) {
+  const value = Number.parseInt(
+    (await env.CLAPS_KV.get(`claps:${slug}`)) || "0",
+    10
+  );
+  return Number.isFinite(value) ? value : 0;
+}
+
+async function incrementClaps(env: Env, slug: string, count: unknown) {
+  const total = (await readClaps(env, slug)) + normalizeIncrement(count);
+  await env.CLAPS_KV.put(`claps:${slug}`, String(total));
+  return total;
+}
+
+async function handleRequest(
+  request: Request,
+  env: Env,
+  corsHeaders: Record<string, string>
+): Promise<Response> {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders });
+  }
+
+  const url = new URL(request.url);
+  if (url.pathname !== "/api/claps" && url.pathname !== "/") {
+    return new Response("Not Found", { status: 404, headers: corsHeaders });
+  }
+
+  if (request.method === "GET") {
+    const slug = normalizeSlug(url.searchParams.get("slug"));
+    if (!slug) {
+      return json(
+        { error: "Missing or invalid slug parameter" },
+        corsHeaders,
+        400
+      );
+    }
+
+    const claps =
+      url.searchParams.get("action") === "clap"
+        ? await incrementClaps(env, slug, url.searchParams.get("count"))
+        : await readClaps(env, slug);
+    return json({ slug, claps }, corsHeaders);
+  }
+
+  if (request.method === "POST") {
+    const contentLength = Number.parseInt(
+      request.headers.get("Content-Length") || "0",
+      10
+    );
+    if (contentLength > 1024) {
+      return json({ error: "Payload too large" }, corsHeaders, 413);
+    }
+
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "Invalid JSON payload" }, corsHeaders, 400);
+    }
+    if (!body || typeof body !== "object") {
+      return json({ error: "Invalid JSON payload" }, corsHeaders, 400);
+    }
+
+    const payload = body as { slug?: unknown; count?: unknown };
+    const slug = normalizeSlug(payload.slug);
+    if (!slug) {
+      return json({ error: "Missing or invalid slug" }, corsHeaders, 400);
+    }
+    const claps = await incrementClaps(env, slug, payload.count);
+    return json({ slug, claps }, corsHeaders);
+  }
+
+  return new Response("Method Not Allowed", {
+    status: 405,
+    headers: { Allow: "GET, POST, OPTIONS", ...corsHeaders },
+  });
 }
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const corsHeaders = getCorsHeaders(request);
-
-    // 处理 OPTIONS 预检请求
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: corsHeaders });
+    try {
+      return await handleRequest(request, env, corsHeaders);
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          message: "Claps request failed",
+          error: error instanceof Error ? error.message : String(error),
+        })
+      );
+      return json({ error: "Internal server error" }, corsHeaders, 500);
     }
-
-    const url = new URL(request.url);
-
-    // 路由：/api/claps 或 /
-    if (url.pathname === "/api/claps" || url.pathname === "/") {
-      // 1. GET: 读取或通过 action=clap 增量盖印 (避免部分 CDN/WAF 拦截跨域 POST)
-      if (request.method === "GET") {
-        const slug = url.searchParams.get("slug")?.trim();
-        const action = url.searchParams.get("action");
-        const countParam = parseInt(url.searchParams.get("count") || "1", 10);
-
-        if (!slug) {
-          return new Response(JSON.stringify({ error: "Missing slug parameter" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          });
-        }
-
-        // 如果是带 action=clap 的增量写入
-        if (action === "clap") {
-          const safeIncrement = Math.min(Math.max(1, countParam), 10);
-          const rawCount = await env.CLAPS_KV.get(`claps:${slug}`);
-          const prevTotal = rawCount ? parseInt(rawCount, 10) : 0;
-          const newTotal = prevTotal + safeIncrement;
-
-          await env.CLAPS_KV.put(`claps:${slug}`, String(newTotal));
-
-          return new Response(JSON.stringify({ slug, claps: newTotal }), {
-            status: 200,
-            headers: {
-              "Content-Type": "application/json",
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              ...corsHeaders,
-            },
-          });
-        }
-
-        // 默认只读
-        const rawCount = await env.CLAPS_KV.get(`claps:${slug}`);
-        const count = rawCount ? parseInt(rawCount, 10) : 0;
-
-        return new Response(JSON.stringify({ slug, claps: count }), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            ...corsHeaders,
-          },
-        });
-      }
-
-      // 2. POST: 增量盖印
-      if (request.method === "POST") {
-        try {
-          const body = (await request.json()) as { slug?: string; count?: number };
-          const slug = body.slug?.trim();
-          const count = typeof body.count === "number" ? body.count : 1;
-
-          if (!slug) {
-            return new Response(JSON.stringify({ error: "Missing slug" }), {
-              status: 400,
-              headers: { "Content-Type": "application/json", ...corsHeaders },
-            });
-          }
-
-          // 防刷安全上限：单次提交最多加 10 印
-          const safeIncrement = Math.min(Math.max(1, count), 10);
-
-          const rawCount = await env.CLAPS_KV.get(`claps:${slug}`);
-          const prevTotal = rawCount ? parseInt(rawCount, 10) : 0;
-          const newTotal = prevTotal + safeIncrement;
-
-          await env.CLAPS_KV.put(`claps:${slug}`, String(newTotal));
-
-          return new Response(JSON.stringify({ slug, claps: newTotal }), {
-            status: 200,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          });
-        } catch {
-          return new Response(JSON.stringify({ error: "Invalid JSON payload" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          });
-        }
-      }
-    }
-
-    return new Response("Not Found", { status: 404, headers: corsHeaders });
   },
 };

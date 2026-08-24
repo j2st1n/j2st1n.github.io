@@ -1,30 +1,23 @@
 ---
-import { getCollection } from "astro:content";
 import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
 import IconSearch from "@/assets/icons/IconSearch.svg";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { getPublishedPosts } from "@/utils/getPublishedPosts";
+import { formatFullDate } from "@/utils/date";
 import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getPublishedPosts();
 const sortedPosts = getSortedPosts(posts);
 const searchItems = sortedPosts.map(post => ({
   title: post.data.title,
-  description: post.data.description ?? "",
-  date: dayjs(post.data.pubDatetime).tz(SITE.timezone).format("YYYY.MM.DD"),
+  description: post.data.description,
+  date: formatFullDate(post.data.pubDatetime, SITE.timezone),
   href: getPath(post.id, post.filePath),
-  tags: post.data.tags ?? [],
+  tags: post.data.tags,
 }));
 ---
 
 <QuietLayout
-  footerMode="balanced"
   title={`搜索 | ${SITE.title}`}
   description="按标题、摘要和标签搜索文章。"
   noindex
