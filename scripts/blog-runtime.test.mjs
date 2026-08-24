@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
@@ -57,6 +58,23 @@ test("article client features are external, cached, and lifecycle-safe", async (
   assert.match(quoteShare, /__binsQuoteShareState/);
   for (const source of files) {
     assert.match(source, /astro:page-load/);
+  }
+});
+
+test("favicon URLs carry the matching content fingerprint", async () => {
+  const layout = await readFile(
+    new URL("src/layouts/Layout.astro", projectRoot),
+    "utf8"
+  );
+  const matches = [
+    ...layout.matchAll(/href="\/(favicon(?:-dark)?-([a-f0-9]{8})\.svg)"/g),
+  ];
+
+  assert.equal(matches.length, 2);
+  for (const [, filename, fingerprint] of matches) {
+    const contents = await readFile(new URL(`public/${filename}`, projectRoot));
+    const hash = createHash("sha256").update(contents).digest("hex");
+    assert.equal(hash.slice(0, 8), fingerprint);
   }
 });
 
