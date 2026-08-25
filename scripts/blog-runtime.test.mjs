@@ -78,6 +78,22 @@ test("favicon URLs carry the matching content fingerprint", async () => {
   }
 });
 
+test("code typography resolves CJK before the generated monospace fallback", async () => {
+  const styles = await readFile(
+    new URL("src/styles/global.css", projectRoot),
+    "utf8"
+  );
+
+  assert.match(
+    styles,
+    /font-family: "TsangerJinKai02 Code CJK";[\s\S]*?unicode-range:[\s\S]*?U\+4E00-9FFF/
+  );
+  assert.match(
+    styles,
+    /--font-code:\s*"TsangerJinKai02 Code CJK", var\(--font-google-sans-code\)/
+  );
+});
+
 test("claps worker reads and clamps increments through both protocols", async () => {
   const { env, values } = createKv({ "claps:hello-world": "4" });
   const origin = { Origin: "https://bins.blog" };
