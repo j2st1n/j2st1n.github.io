@@ -97,7 +97,7 @@ function normalizeAIResult(value) {
   }
 
   const title = typeof value.title === "string" ? value.title.trim() : "";
-  const description =
+  let description =
     typeof value.description === "string" ? value.description.trim() : "";
   const slug = typeof value.slug === "string" ? value.slug.trim() : "";
   const tags = Array.isArray(value.tags)
@@ -106,6 +106,15 @@ function normalizeAIResult(value) {
 
   if (!title) throw new Error("AI 返回的 title 为空");
   if (!description) throw new Error("AI 返回的 description 为空");
+
+  // 严格执行 Astro Schema 30~90 字符约束，超出时自动安全截断，防止 CI 报错
+  if (description.length > 90) {
+    description = description.slice(0, 88).replace(/[，、；,;。.]+$/, "") + "。";
+  }
+  if (description.length < 30) {
+    throw new Error(`AI 返回的 description 过短（${description.length} 字），必须在 30~90 字符之间`);
+  }
+
   if (tags.length < 1 || tags.length > 3) {
     throw new Error("AI 返回的 tags 必须包含 1～3 个标签");
   }
@@ -366,7 +375,7 @@ module.exports = async params => {
   const prompt = `你是一个个人独立博客（bins.blog）的编辑助手。博客风格为随笔、生活思考、技术折腾，语言风格自然、克制、真实。
 请阅读下面的博客正文草稿，为其提炼并输出以下字段（必须输出严格的 JSON格式）：
 1. title: 文章标题（简练有韵味，不超过20字，不要浓重的公文腔或营销腔）
-2. description: 一句话摘要（40~80字，概括核心生活切片或思考，不要套话）
+2. description: 一句话摘要（严格控制在 35~75 字之间，绝对不能超过 90 个字符，概括核心生活切片或思考，不要套话）
 3. tags: 从以下受控标签中挑选 1~3 个最相关的标签（严禁使用名单外的词！）：
 [${BLOG_TAGS.join(", ")}]
 4. slug: 纯小写英文 kebab-case 格式的文件名标识（如 rainy-day-coffee），2~5个词。
