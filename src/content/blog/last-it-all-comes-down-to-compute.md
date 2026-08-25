@@ -1,7 +1,7 @@
 ---
 author: J2
 title: 最后都是算力之战
-description: 这两天 Linux.do 上的公益站死了大半，一片哀鸿遍野。现在的 token，某种意义上就像食物。尤其是那些“好吃的” token：便宜、稳定、聪明、顺滑，用久了，真的会形成依赖。说到底，最后还是算力之战。
+description: Linux.do 上的公益站接连失效，平时便宜又顺手的 token 突然断供，也让人再次感受到 AI 工具对算力的依赖。
 pubDatetime: 2026-03-31T12:23:00+08:00
 tags:
   - AI

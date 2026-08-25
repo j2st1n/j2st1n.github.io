@@ -1,7 +1,7 @@
 ---
 author: J2
 title: 博客加上评论区了，欢迎留言
-description: 博客现已支持评论，欢迎在文章底部留言交流。
+description: 记录博客当时接入 Giscus 评论的过程。评论基于 GitHub Discussions，登录 GitHub 后便能在文章底部留言。
 pubDatetime: 2026-05-04T18:32:52+08:00
 tags:
   - 博客

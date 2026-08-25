@@ -60,7 +60,10 @@ const blog = defineCollection({
       draft: z.boolean().optional(),
       tags: tagsSchema,
       ogImage: image().or(z.string()).optional(),
-      description: z.string(),
+      description: z
+        .string()
+        .min(30, "文章摘要至少需要 30 个字符")
+        .max(90, "文章摘要最多使用 90 个字符"),
       canonicalURL: z.string().optional(),
       timezone: z.string().optional(),
     }),

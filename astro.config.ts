@@ -2,10 +2,12 @@ import { defineConfig, envField, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import { rehypeLazyImages } from "./src/utils/rehype/lazyImages";
+import { getSitemapMetadata } from "./src/utils/getSitemapMetadata";
 import { SITE } from "./src/config";
 
 // The CDN keeps generated assets for 30 days, so isolate each deployment from stale files.
 const deploymentId = (process.env.GITHUB_SHA ?? "local").slice(0, 8);
+const sitemapMetadata = await getSitemapMetadata();
 
 export default defineConfig({
   site: SITE.website,
@@ -14,11 +16,16 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      lastmod: sitemapMetadata.latestUpdate,
       filter: page => {
         const pathname = new URL(page).pathname;
         if (pathname === "/search/") return false;
         return SITE.showArchives || !pathname.endsWith("/archives");
       },
+      serialize: item => ({
+        ...item,
+        lastmod: sitemapMetadata.lastmodByUrl.get(item.url)?.toISOString(),
+      }),
     }),
   ],
   markdown: {

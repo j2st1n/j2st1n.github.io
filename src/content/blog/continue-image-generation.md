@@ -1,7 +1,7 @@
 ---
 author: J2
 title: 继续生图
-description: 继续生图，连发 6 张 image 作品。
+description: 继续试用 image-2，一次放出六张不同画面的 AI 生图作品，把这一轮生成的成片放在一起。
 pubDatetime: 2026-05-05T09:15:00+08:00
 image: https://img.bins.blog/2026/05/image-2-gallery/dabo_codex-gpt-image-2_20260505_085023_922d5cb9---2b6fb653.webp
 ogImage: https://img.bins.blog/2026/05/image-2-gallery/dabo_codex-gpt-image-2_20260505_085023_922d5cb9---2b6fb653.webp

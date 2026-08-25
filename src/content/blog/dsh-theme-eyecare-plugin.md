@@ -16,7 +16,7 @@ draft: false
 DSH 原生的界面做得很干净，但是白天用浅色模式时，大面积的纯白底色在自然光下看久了眼睛容易发酸。如果直接切到深色模式，纯黑底色加上高对比度的亮色文字，在白天的室内又显得太沉太冷硬。
 
 我平时看书习惯用多看或者微信读书里的羊皮纸和绿豆沙底色，柔和且不刺眼。既然 DSH 底层基于 Cordis 插件体系，界面组件和 CSS 变量全都能动态扩展，我就索性让AI自己写了一个主题调色板插件，取名 `dsh-theme-eyecare`。
-![](https://img.bins.blog/2026/08/uploads/dsh-theme-eyecare-preview---a8631914.png)
+![DSH 护眼调色板插件效果预览](https://img.bins.blog/2026/08/uploads/dsh-theme-eyecare-preview---a8631914.png)
 
 ## 做了些什么
 

@@ -8,6 +8,7 @@ import "@/styles/global.css";
 
 type Props = {
   title?: string;
+  headline?: string;
   description?: string;
   ogImage?: string;
   ogImageAlt?: string;
@@ -18,12 +19,14 @@ type Props = {
   nofollow?: boolean;
   isPost?: boolean;
   tags?: string[];
+  author?: string;
 };
 
 const generatedOgImageFileName = getGeneratedOgImageFileName();
 
 const {
   title = SITE.title,
+  headline = title,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : `/${generatedOgImageFileName}`,
   ogImageAlt = title,
@@ -34,6 +37,7 @@ const {
   nofollow,
   isPost = false,
   tags = [],
+  author = SITE.author,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
@@ -43,12 +47,13 @@ const isGeneratedOgImage =
 
 const canonicalURLString = canonicalURL.toString();
 const siteURL = new URL("/", Astro.site ?? Astro.url.origin).toString();
+const siteLogoURL = new URL("/site-logo.svg", siteURL).toString();
 const ogLocale = SITE.lang.replace("-", "_");
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  headline: `${title}`,
+  headline: `${headline}`,
   description: `${description}`,
   image: `${socialImageURL}`,
   url: canonicalURLString,
@@ -64,8 +69,17 @@ const structuredData = {
   inLanguage: SITE.lang,
   author: {
     "@type": "Person",
-    name: SITE.author,
-    url: SITE.profile,
+    name: author,
+    ...(author === SITE.author && { url: SITE.profile }),
+  },
+  publisher: {
+    "@type": "Organization",
+    name: SITE.title,
+    url: siteURL,
+    logo: {
+      "@type": "ImageObject",
+      url: siteLogoURL,
+    },
   },
   isPartOf: {
     "@type": "Blog",
@@ -119,7 +133,7 @@ const isHomePage = Astro.url.pathname === "/";
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content={SITE.author} />
+    <meta name="author" content={author} />
     {
       noindex && (
         <meta
@@ -166,7 +180,11 @@ const isHomePage = Astro.url.pathname === "/";
       )
     }
     {isPost && tags.map(tag => <meta property="article:tag" content={tag} />)}
-    {isPost && <meta property="article:author" content={SITE.profile} />}
+    {
+      isPost && author === SITE.author && (
+        <meta property="article:author" content={SITE.profile} />
+      )
+    }
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

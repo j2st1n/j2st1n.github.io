@@ -5,7 +5,7 @@ tags:
   - 旅行
   - 观察
 draft: false
-description: "一河之隔，两个世界"
+description: "在图们口岸透过瞭望镜看见朝鲜南阳站，一条图们江隔开景区与岗哨，也隔开两种截然不同的秩序。"
 image: https://img.bins.blog/2026/04/tumen-border/file_26---276c45c2-f02b-47d6-b617-2894cfb6fcb1.jpg
 ---
 

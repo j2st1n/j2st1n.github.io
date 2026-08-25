@@ -8,7 +8,7 @@ tags:
   - AI
   - 生图
   - 随笔
-description: "AI 生图效果确实好，人物虚构，以后眼见未必实。"
+description: "午饭后在咖啡店坐了一会儿，分享两张 AI 生成的水彩与写实风格图片，也记下眼见未必为实的提醒。"
 ogImage: https://img.bins.blog/2026/05/blog/cafe-photo---cc8f8fa1.png
 ---
 

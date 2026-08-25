@@ -2,7 +2,7 @@
 author: J2
 title: 三张image生图
 titleEn: "Three AI Generated Images"
-description: 分享三张 AI 生成的图像作品。
+description: 集中分享三张 AI 生成图像，把这一轮生图的成片放在一起，也方便以后回来看效果有没有变化。
 pubDatetime: 2026-05-19T16:01:00+08:00
 tags:
   - AI

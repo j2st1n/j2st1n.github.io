@@ -6,6 +6,7 @@ import "../styles/quiet.css";
 
 type Props = {
   title?: string;
+  headline?: string;
   description?: string;
   ogImage?: string;
   ogImageAlt?: string;
@@ -18,10 +19,12 @@ type Props = {
   noindex?: boolean;
   nofollow?: boolean;
   tags?: string[];
+  author?: string;
 };
 
 const {
   title,
+  headline,
   description,
   ogImage,
   ogImageAlt,
@@ -34,11 +37,13 @@ const {
   noindex = false,
   nofollow,
   tags,
+  author,
 } = Astro.props;
 ---
 
 <Layout
   title={title}
+  headline={headline}
   description={description}
   ogImage={ogImage}
   ogImageAlt={ogImageAlt}
@@ -49,6 +54,7 @@ const {
   noindex={noindex}
   nofollow={nofollow}
   tags={tags}
+  author={author}
 >
   <div class="quiet-shell">
     {

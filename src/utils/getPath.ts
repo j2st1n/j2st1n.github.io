@@ -28,9 +28,12 @@ export function getPath(
   const slug = blogId.length > 0 ? blogId.slice(-1) : blogId;
 
   // If not inside the sub-dir, simply return the file path
-  if (!pathSegments || pathSegments.length < 1) {
-    return [basePath, slug].join("/");
-  }
+  const postPath =
+    !pathSegments || pathSegments.length < 1
+      ? [basePath, slug].join("/")
+      : [basePath, ...pathSegments, slug].join("/");
 
-  return [basePath, ...pathSegments, slug].join("/");
+  // Public page links should point directly at Astro's directory-style
+  // canonical URL. Route params keep the historical slash-free shape.
+  return includeBase ? `${postPath}/` : postPath;
 }

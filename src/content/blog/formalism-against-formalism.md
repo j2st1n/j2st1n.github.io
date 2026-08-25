@@ -1,7 +1,7 @@
 ---
 author: J2
 title: 用形式主义来反形式主义，矛与盾
-description: 有时候，反对形式主义本身，也会长成新的形式主义。
+description: 反对形式主义的动作一旦只剩口号和姿态，也可能成为新的形式主义，让手段慢慢压过事情本身。
 pubDatetime: 2026-05-09T14:00:05+08:00
 image: https://img.bins.blog/2026/05/formalism-against-formalism/dabo_codex-gpt-image-2_20260509_140520_d9c77648---4ef45506.png
 ogImage: https://img.bins.blog/2026/05/formalism-against-formalism/dabo_codex-gpt-image-2_20260509_140520_d9c77648---4ef45506.png

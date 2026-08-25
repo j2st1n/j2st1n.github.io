@@ -15,7 +15,7 @@ draft: false
 
 前些天订阅了[OpenCode Go](https://opencode.ai/go?ref=1Z0T5MV3AT)，DeepSeek V4 Flash用起来一点压力没有，用半天才"挠"了计划的2%。
 
-![](https://img.bins.blog/2026/08/uploads/image---4ac37387.png)
+![OpenCode Go 订阅与用量页面](https://img.bins.blog/2026/08/uploads/image---4ac37387.png)
 
 有了AI之后，Coding的门槛被拉低了，但是上限一如既往，还是需要专业人士的。我们普通人在这波潮流里，也能享受到一些原来只有程序员享受的红利了，于我这种有点背景，但是不精通的人，真真是非常好的。
 
