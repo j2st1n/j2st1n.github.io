@@ -1,6 +1,5 @@
 ---
 title: 我把 Obsidian 接上了自己的博客
-author: J2
 description: 用 Obsidian 管理 Astro 博客文章，Wiki 做知识仓库，Reasonix 协助取材——一条完整的写作流跑通了。
 pubDatetime: 2026-05-26T23:30:00+08:00
 tags:

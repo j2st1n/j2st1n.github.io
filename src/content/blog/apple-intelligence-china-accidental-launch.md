@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 一场深夜狂欢后的等待
 description: 苹果一个配置失误，让中国用户第一次看到了 Apple Intelligence 的样子——然后又把它拿走了。等待，还在继续。
 pubDatetime: 2026-03-31T09:48:00+08:00

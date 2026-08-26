@@ -2,7 +2,6 @@
 title: 用 AI 构建录音转录管理系统：Obsidian + Whisper + OpenCode
 description: 如何用 Obsidian、Whisper 和 OpenCode 构建一个完整的录音转录、摘要、检索系统，实现语音到知识的自动化处理。
 pubDatetime: 2026-06-12T14:11:47+08:00
-author: J2
 tags:
   - AI
   - Obsidian

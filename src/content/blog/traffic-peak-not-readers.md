@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 嚯，昨天的大哥又来串门啦？
 titleEn: "The Guy From Yesterday Came Back Again?"
 description: 上午看见一个小峰值，差点以为新文章有动静了。拆开才发现，里面混着监控请求、正常访问，还有昨天那位又来拧门把手的大哥。

@@ -2,7 +2,6 @@
 title: "哈萨克毡房里的马奶子与十年变迁"
 description: "去哈萨克族同胞家体验挤牛奶，80岁爷爷弹起二弦琴，听孙女讲述十年间的变化。"
 pubDatetime: 2026-07-08T12:00:00+08:00
-author: J2
 tags: [旅行, 新疆, 伊宁]
 draft: false
 ---

@@ -2,7 +2,6 @@
 title: "库尔德宁：世界自然遗产地"
 description: "从伊宁到库尔德宁，盘山路上的Z字形弯，让人想起在新西兰开车的日子。"
 pubDatetime: 2026-07-05T12:00:00+08:00
-author: J2
 tags: [旅行, 新疆]
 draft: false
 ---

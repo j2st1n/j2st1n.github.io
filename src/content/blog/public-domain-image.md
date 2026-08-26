@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 一张无版权图片（Public Domain）示例
 description: 用 NASA 阿波罗 17 号拍摄的蓝色弹珠照片，验证公共领域图片的图床上传、网页引用与版权说明流程。
 pubDatetime: 2026-03-15T13:50:00+08:00

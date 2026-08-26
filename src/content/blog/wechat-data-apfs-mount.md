@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 把微信聊天记录挪出Mac系统盘：一次 APFS 挂载实践
 description: macOS 系统盘空间告急，微信聊天文件占了几十 GB。软链接失败后，最终用 APFS 卷挂载到微信原目录，让新旧文件都继续写到外置盘。
 pubDatetime: 2026-06-21T15:30:00+08:00

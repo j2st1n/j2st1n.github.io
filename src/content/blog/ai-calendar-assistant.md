@@ -1,6 +1,5 @@
 ---
 title: 敲了个 AI 日程助手
-author: J2
 description: 之前用 TOKI 管日程，商业化后弃用了，干脆自己写了一个自部署的 AI 日程管理工具。
 pubDatetime: 2026-05-17T19:55:00+08:00
 tags:

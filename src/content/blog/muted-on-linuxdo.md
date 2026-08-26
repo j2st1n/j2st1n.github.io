@@ -2,7 +2,6 @@
 title: "在 Linux.do 被禁言"
 description: "一次抽奖留言被隐藏、账号被禁言之后，记下对社区规则的一点小感触。"
 pubDatetime: 2026-06-14T15:09:00+08:00
-author: J2
 tags: [随笔, Linux.do]
 draft: false
 ---

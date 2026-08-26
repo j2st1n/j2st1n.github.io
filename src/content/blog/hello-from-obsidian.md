@@ -1,6 +1,5 @@
 ---
 title: 测试：从 Obsidian 发布的第一篇文章
-author: J2
 description: 这是一篇测试文章，验证 Obsidian + Astro 博客发布流程是否打通。
 pubDatetime: 2026-05-26T20:30:00+08:00
 tags:

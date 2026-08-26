@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 新站被扫第二回：别把 requests 当访问量，做点“低误伤”防护就够了
 titleEn: "The Second Wave of Scans: Don’t Confuse Requests with Real Traffic"
 description: 扫描不是一次性事件：第二波又来了。这篇记录我怎么读 Cloudflare 指标、怎么判断“噪音 vs 读者”，以及怎么用低误伤策略把扫描流量压下去（不公开具体规则）。

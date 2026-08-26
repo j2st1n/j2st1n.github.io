@@ -2,7 +2,6 @@
 title: AI 拉低了门槛，但上限一如既往
 description: 周末用 Codex 优化博客、试 OpenCode Go 的 DeepSeek V4 Flash，普通人也能享受程序员红利；顺带记下健身与老友二胎。
 pubDatetime: 2026-08-09T14:27:38+08:00
-author: J2
 tags:
   - 随笔
   - AI

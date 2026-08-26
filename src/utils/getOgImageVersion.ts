@@ -17,19 +17,17 @@ export function getOgImageVersion() {
     template: OG_TEMPLATE_VERSION,
     title: SITE.title,
     description: SITE.desc,
-    author: SITE.author,
     website: SITE.website,
   });
 }
 
 export function getPostOgImageVersion(post: CollectionEntry<"blog">) {
-  const { author, description, pubDatetime, tags, title } = post.data;
+  const { description, pubDatetime, tags, title } = post.data;
 
   return shortHash({
     template: OG_TEMPLATE_VERSION,
     title,
     description,
-    author,
     pubDatetime: pubDatetime.toISOString(),
     tags,
     siteTitle: SITE.title,

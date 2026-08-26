@@ -2,7 +2,6 @@
 title: 又把博客折腾了一遍
 description: 照着喜欢的 Kami 风格，把 bins.blog 改成暖纸底、墨蓝色和更舒展的排版。细节改了不少，原来的功能一个没丢，今天终于上线。
 pubDatetime: 2026-08-17T23:26:08+08:00
-author: J2
 tags:
   - 博客
   - AI

@@ -1,6 +1,5 @@
 ---
 title: AI时代，认知比能力更重要
-author: J2
 description: AI 让技术平权，但平权的边界取决于认知。三个项目验证：不要为了用 AI 而用 AI，要用 AI 拓宽认知。
 pubDatetime: 2026-05-27T20:00:00+08:00
 tags:

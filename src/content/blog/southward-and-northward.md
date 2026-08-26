@@ -2,7 +2,6 @@
 title: 南渡北归，头一朝
 description: 读《南渡北归》，从西南联大的南迁北返，想到历史上少有的成功北归。
 pubDatetime: 2026-07-23T21:21:24+08:00
-author: J2
 tags:
   - 随笔
   - 读书

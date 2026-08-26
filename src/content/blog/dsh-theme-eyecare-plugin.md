@@ -2,7 +2,6 @@
 title: 给 DSH 搓了个护眼调色板插件
 description: 最近长时间泡在 DeepSeek Harness 里写代码，原生白底盯久了眼睛发酸，于是写了套支持豆沙绿与羊皮纸的护眼插件 dsh-theme-eyecare，顺手开源发了仓库。
 pubDatetime: 2026-08-24T22:00:00+08:00
-author: J2
 tags:
   - Agent
   - AI

@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 生图2张
 description: 分享两张 AI 生成的图像，感受 image 模型的创造力。
 pubDatetime: 2026-05-05T01:30:32+08:00

@@ -1,5 +1,4 @@
 ---
-author: J2
 title: CF 会不会自动转 WebP？一篇实验记录
 description: 上传一张 Public Domain 的 NASA 图片，只传 JPG，不传 WebP，验证 Cloudflare Worker/R2 侧是否会按 Accept 自动转码。
 pubDatetime: 2026-03-15T18:56:00+08:00

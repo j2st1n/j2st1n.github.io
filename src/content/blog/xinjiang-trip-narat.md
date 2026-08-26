@@ -2,7 +2,6 @@
 title: "那拉提：半个深圳大的草原"
 description: "那拉提草原大到进了景区还要开一小时车，遍地马粪的空气里是真实的牧场气息。"
 pubDatetime: 2026-07-06T12:00:00+08:00
-author: J2
 tags: [旅行, 新疆]
 draft: false
 ---

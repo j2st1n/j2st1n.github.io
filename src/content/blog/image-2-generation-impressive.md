@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 你不得不感叹 image-2 的生图能力
 description: 用一张人物肖像，看看 image-2 在画面质感与人物表现上带来的明显提升。
 pubDatetime: 2026-05-04T23:33:12+08:00

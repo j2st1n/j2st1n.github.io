@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 有生之年也能用上Hermes了，龙虾拜拜
 description: 这两天 Hermes 挺火。这里 Hermes 是谐音，不是那个奢侈品。今天还在大龙虾，明天就已经 Hermes 了。先让我用两天看看，它会不会真留下来。
 pubDatetime: 2026-04-10T11:00:13+08:00

@@ -1,6 +1,5 @@
 ---
 title: "午后咖啡，眼见未必实"
-author: j2
 pubDatetime: 2026-05-12T12:55:00+08:00
 featured: false
 draft: false

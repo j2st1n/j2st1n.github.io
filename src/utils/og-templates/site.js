@@ -49,7 +49,7 @@ export default async () => {
                 position: "relative",
               },
               children: [
-                // 顶部：墨蓝方标 + BINS.BLOG + 个人博客
+                // 顶部：墨蓝方标 + BINS.BLOG
                 {
                   type: "div",
                   props: {
@@ -61,54 +61,41 @@ export default async () => {
                       borderBottom: "1px solid #e8e6dc",
                       paddingBottom: "16px",
                     },
-                    children: [
-                      {
-                        type: "div",
-                        props: {
-                          style: {
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 8,
-                          },
-                          children: [
-                            {
-                              type: "div",
-                              props: {
-                                style: {
-                                  width: 6,
-                                  height: 6,
-                                  background: "#1B365D",
-                                  display: "flex",
-                                },
+                    children: {
+                      type: "div",
+                      props: {
+                        style: {
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              style: {
+                                width: 6,
+                                height: 6,
+                                background: "#1B365D",
+                                display: "flex",
                               },
                             },
-                            {
-                              type: "span",
-                              props: {
-                                style: {
-                                  fontSize: 17,
-                                  fontWeight: 500,
-                                  color: "#1B365D",
-                                  letterSpacing: "0.1em",
-                                },
-                                children: "BINS.BLOG",
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        type: "span",
-                        props: {
-                          style: {
-                            fontSize: 15,
-                            color: "#7e796e",
-                            letterSpacing: "0.06em",
                           },
-                          children: "J2 的个人博客",
-                        },
+                          {
+                            type: "span",
+                            props: {
+                              style: {
+                                fontSize: 17,
+                                fontWeight: 500,
+                                color: "#1B365D",
+                                letterSpacing: "0.1em",
+                              },
+                              children: "BINS.BLOG",
+                            },
+                          },
+                        ],
                       },
-                    ],
+                    },
                   },
                 },
 

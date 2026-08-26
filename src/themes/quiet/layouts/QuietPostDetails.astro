@@ -21,7 +21,6 @@ const { post, posts } = Astro.props;
 const { Content, headings } = await render(post);
 const {
   title,
-  author,
   description,
   pubDatetime,
   modDatetime,
@@ -60,7 +59,6 @@ const postOgImage =
 <QuietLayout
   title={`${title} | ${SITE.title}`}
   headline={title}
-  author={author}
   description={description}
   ogImage={postOgImage}
   ogImageAlt={title}

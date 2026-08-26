@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 略懂一点的人，正在用 AI 追上时代
 titleEn: "Catching Up With AI as a Non-Tech Person"
 description: 不从事技术行业，但对 AI 和 OpenClaw 充满好奇：一边怕被甩下，一边越学越觉得有意思。

@@ -439,7 +439,7 @@ ${bodyContent.slice(0, 3000)}
     const tagsYaml = result.tags
       .map(tag => `  - ${yamlString(tag)}`)
       .join("\n");
-    const newFrontmatter = `---\ntitle: ${yamlString(result.title)}\ndescription: ${yamlString(result.description)}\npubDatetime: ${pubDatetime}\nauthor: J2\ntags:\n${tagsYaml}\nfeatured: false\ndraft: false\n---\n\n`;
+    const newFrontmatter = `---\ntitle: ${yamlString(result.title)}\ndescription: ${yamlString(result.description)}\npubDatetime: ${pubDatetime}\ntags:\n${tagsYaml}\nfeatured: false\ndraft: false\n---\n\n`;
     const updatedContent =
       newFrontmatter + formatMarkdownParagraphs(bodyContent);
 

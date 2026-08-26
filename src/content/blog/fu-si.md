@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 赴死
 description: 51岁，食道癌术后，只能靠流食维持生活。他用刀片划开了大腿动脉。
 pubDatetime: 2026-05-04T16:00:00+08:00

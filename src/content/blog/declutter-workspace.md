@@ -2,7 +2,6 @@
 title: 断舍离
 description: 搬工位时发现东西越积越多，看似有用实则无用，决定定期清理，让生活更轻盈。
 pubDatetime: 2026-08-21T15:36:31+08:00
-author: J2
 tags:
   - 生活
   - 随笔

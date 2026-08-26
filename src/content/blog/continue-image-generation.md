@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 继续生图
 description: 继续试用 image-2，一次放出六张不同画面的 AI 生图作品，把这一轮生成的成片放在一起。
 pubDatetime: 2026-05-05T09:15:00+08:00

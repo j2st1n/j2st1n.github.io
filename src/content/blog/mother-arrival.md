@@ -2,7 +2,6 @@
 title: "接母亲"
 description: "台风打乱了母亲原定的火车行程，候补到车票后赶去接站。半年未见，她还是老样子，精神尚佳。"
 pubDatetime: 2026-07-13T15:24:39+08:00
-author: J2
 tags: [随笔, 生活, 家庭]
 draft: false
 ---

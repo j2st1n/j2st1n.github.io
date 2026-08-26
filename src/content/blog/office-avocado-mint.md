@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 办公室牛油果树下，薄荷发芽了
 titleEn: "Mint Sprouted Under My Office Avocado"
 description: 办公室小盆栽观察日记：牛油果树下撒了薄荷种子，没想到真发芽了（以及同盆小提醒）。

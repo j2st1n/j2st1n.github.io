@@ -2,7 +2,6 @@
 title: "出口即申论、4块9咖啡与Apple智能"
 description: "刷到出口成章的文旅厅长，北京南站4块9一杯的京东咖啡，Apple智能终于过审。"
 pubDatetime: 2026-07-15T14:21:26+08:00
-author: J2
 tags: [随笔, 观察, 科技, 生活]
 draft: false
 ---

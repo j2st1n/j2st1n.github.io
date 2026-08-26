@@ -2,7 +2,6 @@
 title: 2026 年 AI 搜索服务选型指南：8 个主流平台横评
 description: 从 Tavily 到 Perplexity，从 Firecrawl 到秘塔，帮你找到最适合的 AI 搜索 API。
 pubDatetime: 2026-05-31T10:00:00+08:00
-author: J2
 tags:
   - AI
   - Agent

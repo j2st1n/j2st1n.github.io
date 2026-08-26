@@ -2,7 +2,6 @@
 title: "独库公路与百里画廊"
 description: "九转十八弯的独库公路开到腿发酸，百里画廊的蜂蜜小镇烟火气十足。"
 pubDatetime: 2026-07-07T12:00:00+08:00
-author: J2
 tags: [旅行, 新疆]
 draft: false
 ---

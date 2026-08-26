@@ -2,7 +2,6 @@
 title: 给 DSH 做了个模型链路与上游延迟脉搏插件
 description: 在 DSH 里写代码常遇到停顿，分不清是网络抖动还是大模型长思考。于是写了个延迟脉搏感知插件 dsh-link-pulse，顺手开源发了 npm。
 pubDatetime: 2026-08-25T22:30:00+08:00
-author: J2
 tags:
   - Agent
   - AI

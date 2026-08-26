@@ -2,7 +2,6 @@
 title: "药食同源"
 description: "凌晨旅行归家后，夫人带孩子去医院看食欲问题，顺便撞见草本面包店，又找回一条差点丢失的项链。"
 pubDatetime: 2026-07-12T05:35:43+08:00
-author: J2
 tags: [随笔, 生活, 观察]
 draft: false
 ---

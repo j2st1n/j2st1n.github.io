@@ -1,6 +1,5 @@
 ---
 title: 和航旅纵横团队聊了聊
-author: J2
 description: 和航旅纵横团队聊了聊，记一笔对流量入口、年轻团队和 OTA 边界的观察。
 pubDatetime: 2026-03-19T12:40:00+08:00
 tags:

@@ -19,7 +19,6 @@ type Props = {
   noindex?: boolean;
   nofollow?: boolean;
   tags?: string[];
-  author?: string;
 };
 
 const {
@@ -37,7 +36,6 @@ const {
   noindex = false,
   nofollow,
   tags,
-  author,
 } = Astro.props;
 ---
 
@@ -54,7 +52,6 @@ const {
   noindex={noindex}
   nofollow={nofollow}
   tags={tags}
-  author={author}
 >
   <div class="quiet-shell">
     {

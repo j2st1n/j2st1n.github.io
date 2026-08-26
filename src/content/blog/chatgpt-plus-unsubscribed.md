@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 19.9刀订了ChatGPT Plus，用了三天，被奥特曼直接取消订阅了
 description: 花了19.9美元通过Google Play订阅ChatGPT Plus，用了三天被Sam Altman直接取消。更惨的是，退款系统按一条0元的Go套餐记录全额退款——退了0元。
 pubDatetime: 2026-05-01T14:30:00+08:00

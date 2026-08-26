@@ -2,7 +2,6 @@
 title: "霍尔果斯：新国门与旧使馆"
 description: "清晨再游赛里木湖，午后抵达霍尔果斯新国门，夜晚在苏俄驻华使馆旧址散步。"
 pubDatetime: 2026-07-10T12:00:00+08:00
-author: J2
 tags: [旅行, 新疆, 赛里木湖, 历史]
 draft: false
 ---

@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 刚开张的博客，就被互联网“打招呼”了
 titleEn: "A New Blog, and the Internet Immediately Said Hello"
 description: 刚把博客搭好，第二天 Cloudflare 就出现一波异常扫描：404/405 暴涨、来自 FR 的请求占比极高。记录一次“新站必经的洗礼”，以及我做了哪些低误伤防护。

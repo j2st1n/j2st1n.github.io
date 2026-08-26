@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 微信接入龙虾，Agent 入口战争开始了
 description: 微信正式推出 ClawBot 插件，支持接入 OpenClaw（龙虾）；更新微信、启用插件、扫码绑定后，即可在微信里直接和自己的助手对话。
 pubDatetime: 2026-03-22T16:45:00+08:00

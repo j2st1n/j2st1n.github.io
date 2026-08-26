@@ -1,5 +1,4 @@
 ---
-author: J2
 title: 最后都是算力之战
 description: Linux.do 上的公益站接连失效，平时便宜又顺手的 token 突然断供，也让人再次感受到 AI 工具对算力的依赖。
 pubDatetime: 2026-03-31T12:23:00+08:00
