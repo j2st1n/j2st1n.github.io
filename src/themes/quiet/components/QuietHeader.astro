@@ -3,14 +3,13 @@ import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import SiteLogo from "@/components/SiteLogo.astro";
-import { SITE } from "@/config";
 ---
 
 <header class="site-header" aria-label="站点导航">
   <div class="site-header-inner">
-    <a href="/" class="site-brand" aria-label={`${SITE.title} 首页`}>
+    <a href="/" class="site-brand" aria-label="bins.blog 首页">
       <SiteLogo class="brand-logo" />
-      <span>{SITE.title}</span>
+      <span class="brand-name">bins.blog</span>
     </a>
     <nav class="site-tools" aria-label="站点工具">
       <a href="/search/" class="tool-link" title="搜索" aria-label="搜索">

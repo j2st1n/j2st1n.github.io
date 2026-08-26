@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://bins.blog/",
   profile: "https://github.com/j2st1n",
   desc: "记录日常观察、AI 工具实践、技术折腾和认真存档的随笔。",
-  title: "摸鱼时刻",
+  title: "bins.blog",
   ogImage: "",
   showArchives: true,
   dynamicOgImage: true,
