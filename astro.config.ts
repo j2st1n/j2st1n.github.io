@@ -20,6 +20,7 @@ export default defineConfig({
       filter: page => {
         const pathname = new URL(page).pathname;
         if (pathname === "/search/") return false;
+        if (pathname.startsWith("/notes/")) return false;
         return SITE.showArchives || !pathname.endsWith("/archives");
       },
       serialize: item => ({

@@ -1,0 +1,258 @@
+---
+import { SITE } from "@/config";
+import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
+---
+
+<QuietLayout
+  title={`纸条审核 | ${SITE.title}`}
+  description="bins.blog 留言审核工具。"
+  noindex
+  nofollow
+>
+  <main id="main-content" class="review-page" data-notes-review-root>
+    <header class="review-hero">
+      <p class="review-kicker">Private tool</p>
+      <h1>纸条审核</h1>
+      <p>令牌只保存在当前页面内存中，刷新后需要重新输入。</p>
+    </header>
+
+    <section class="review-access" aria-labelledby="review-access-title">
+      <h2 id="review-access-title">连接审核接口</h2>
+      <form data-review-login>
+        <label>
+          <span>审核令牌</span>
+          <input
+            type="password"
+            name="token"
+            autocomplete="off"
+            required
+            data-review-token
+          />
+        </label>
+        <button type="submit">读取待审纸条</button>
+      </form>
+      <p data-review-status aria-live="polite"></p>
+    </section>
+
+    <section class="review-queue" aria-labelledby="review-queue-title">
+      <header>
+        <h2 id="review-queue-title">审核队列</h2>
+        <div class="review-filters" role="group" aria-label="按状态筛选">
+          <button
+            type="button"
+            data-review-filter="pending"
+            aria-pressed="true"
+          >
+            待审核
+          </button>
+          <button
+            type="button"
+            data-review-filter="approved"
+            aria-pressed="false"
+          >
+            已通过
+          </button>
+          <button
+            type="button"
+            data-review-filter="rejected"
+            aria-pressed="false"
+          >
+            已拒绝
+          </button>
+          <button
+            type="button"
+            data-review-filter="hidden"
+            aria-pressed="false"
+          >
+            已隐藏
+          </button>
+        </div>
+      </header>
+      <ol class="review-list" data-review-list></ol>
+      <p class="review-empty" data-review-empty>输入令牌后读取队列。</p>
+    </section>
+  </main>
+</QuietLayout>
+
+<style>
+  .review-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  .review-hero {
+    padding-bottom: 2.25rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .review-kicker {
+    margin: 0 0 0.7rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .review-hero h1 {
+    margin: 0 0 0.8rem;
+    font-family: var(--font-editorial);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 500;
+  }
+
+  .review-hero p,
+  .review-access > p,
+  .review-empty {
+    margin: 0;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    line-height: 1.65;
+  }
+
+  .review-access,
+  .review-queue {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-size: 1.35rem;
+    font-weight: 500;
+  }
+
+  .review-access form {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) auto;
+    gap: 0.75rem;
+    align-items: end;
+    max-width: 40rem;
+    margin: 1rem 0 0.75rem;
+  }
+
+  label span {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.7rem;
+  }
+
+  input {
+    width: 100%;
+    min-height: 2.4rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--border-color);
+    background: var(--surface);
+    color: var(--foreground);
+  }
+
+  button {
+    min-height: 2.4rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--border-color);
+    background: var(--surface-raised);
+    color: var(--foreground);
+    font-size: 0.75rem;
+  }
+
+  button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  button:disabled {
+    cursor: wait;
+    opacity: 0.5;
+  }
+
+  .review-queue > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .review-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .review-filters button[aria-pressed="true"] {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .review-list {
+    display: grid;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .review-list :global(.review-card) {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    background: color-mix(in oklch, var(--surface), transparent 20%);
+  }
+
+  .review-list :global(.review-body) {
+    margin: 0;
+    color: var(--foreground);
+    font-family: var(--font-editorial);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .review-list :global(.review-meta) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.7rem;
+    margin: 0.65rem 0 0;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+  }
+
+  .review-list :global(.review-visibility) {
+    color: var(--accent);
+  }
+
+  .review-list :global(.review-meta a) {
+    color: inherit;
+  }
+
+  .review-list :global(.review-actions) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+  }
+
+  .review-list :global(.review-approve) {
+    border-color: color-mix(in oklch, #2f7652, var(--border-color) 35%);
+  }
+
+  .review-list :global(.review-reject) {
+    border-color: color-mix(in oklch, #a33a32, var(--border-color) 35%);
+  }
+
+  @media (max-width: 640px) {
+    .review-page {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .review-access form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script is:inline type="module" src="/scripts/notes-review.js"></script>

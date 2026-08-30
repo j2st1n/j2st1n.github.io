@@ -49,6 +49,9 @@ importers:
       '@astrojs/check':
         specifier: ^0.9.9
         version: 0.9.9(prettier-plugin-astro@0.14.1)(prettier@3.7.4)(typescript@5.9.3)
+      '@cloudflare/workers-types':
+        specifier: ^5.20260830.1
+        version: 5.20260830.1
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.18)
@@ -81,7 +84,7 @@ importers:
         version: 8.60.0(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
       wrangler:
         specifier: ^4.125.0
-        version: 4.125.0
+        version: 4.125.0(@cloudflare/workers-types@5.20260830.1)
 
 packages:
 
@@ -198,6 +201,9 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@cloudflare/workers-types@5.20260830.1':
+    resolution: {integrity: sha512-LBn0wg8kmCbdriUYmz6BSm4ukjFinU4iYGYuBTPaSG6malMhbIFk7Az1gcsFuvBYva2yHxUZFirCwjQY7yBN9A==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -3620,6 +3626,8 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260820.1':
     optional: true
 
+  '@cloudflare/workers-types@5.20260830.1': {}
+
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
@@ -6739,7 +6747,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260820.1
       '@cloudflare/workerd-windows-64': 1.20260820.1
 
-  wrangler@4.125.0:
+  wrangler@4.125.0(@cloudflare/workers-types@5.20260830.1):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260820.1)
@@ -6750,6 +6758,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260820.1
     optionalDependencies:
+      '@cloudflare/workers-types': 5.20260830.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil

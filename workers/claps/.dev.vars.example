@@ -1,0 +1,4 @@
+# Copy to .dev.vars and replace both values before local development.
+# Never commit the real values.
+ADMIN_TOKEN="replace-with-a-long-random-token"
+RATE_LIMIT_SECRET="replace-with-an-independent-long-random-secret"

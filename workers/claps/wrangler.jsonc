@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "bins-claps",
   "main": "src/index.ts",
-  "compatibility_date": "2026-08-24",
+  "compatibility_date": "2026-08-27",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true,
@@ -11,7 +11,17 @@
     {
       "binding": "CLAPS_KV",
       "id": "c25c781c589149b292761afc6b157650",
-      "remote": true,
     },
   ],
+  "d1_databases": [
+    {
+      "binding": "NOTES_DB",
+      "database_name": "bins-notes",
+      "database_id": "654399b0-7a84-4571-b153-489b1974bf1b",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "triggers": {
+    "crons": ["17 18 * * *"],
+  },
 }

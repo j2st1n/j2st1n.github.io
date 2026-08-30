@@ -1,0 +1,288 @@
+<section class="notes-board" data-notes-root aria-label="留言表单与纸条">
+  <form class="notes-form" data-notes-form>
+    <label class="notes-body-field">
+      <span class="field-label">纸条内容</span>
+      <textarea
+        name="body"
+        rows="3"
+        maxlength="120"
+        required
+        placeholder="想说点什么……"
+        data-notes-body></textarea>
+      <span class="character-count" data-notes-count>0 / 120</span>
+    </label>
+    <div class="notes-form-row">
+      <label class="notes-name-field">
+        <span class="field-label">署名（可选）</span>
+        <input
+          name="nickname"
+          type="text"
+          maxlength="24"
+          autocomplete="nickname"
+          placeholder="路过的人"
+          data-notes-nickname
+        />
+      </label>
+      <label class="notes-public-field">
+        <input
+          name="isPublic"
+          type="checkbox"
+          value="true"
+          checked
+          data-notes-public
+        />
+        <span>是否公开</span>
+      </label>
+      <label class="notes-honeypot" aria-hidden="true">
+        <span>网站</span>
+        <input name="website" type="text" tabindex="-1" autocomplete="off" />
+      </label>
+      <button class="notes-submit" type="submit" data-notes-submit>
+        传个纸条
+      </button>
+    </div>
+    <p class="notes-status" data-notes-status aria-live="polite"></p>
+  </form>
+
+  <div class="notes-stream" data-notes-stream>
+    <p class="notes-loading" data-notes-loading>正在翻留言簿……</p>
+    <ol class="notes-list" data-notes-list></ol>
+    <button class="notes-more" type="button" data-notes-more hidden>
+      再翻一页
+    </button>
+  </div>
+</section>
+
+<style>
+  .notes-board {
+    max-width: var(--reading-width);
+    margin: 0 auto;
+    padding: 3.5rem 0 1rem;
+  }
+
+  .notes-form {
+    position: relative;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    background: color-mix(in oklch, var(--surface), transparent 15%);
+  }
+
+  .notes-form::before {
+    content: "";
+    position: absolute;
+    inset: 0.35rem;
+    border: 1px solid color-mix(in oklch, var(--border-color), transparent 45%);
+    pointer-events: none;
+  }
+
+  .notes-body-field,
+  .notes-name-field {
+    position: relative;
+    z-index: 1;
+    display: block;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
+  textarea,
+  input[type="text"] {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    background: transparent;
+    color: var(--foreground);
+    outline: none;
+  }
+
+  textarea {
+    min-height: 5.5rem;
+    padding: 0.2rem 0 1.4rem;
+    resize: vertical;
+    font-family: var(--font-editorial);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  input[type="text"] {
+    padding: 0.35rem 0 0.55rem;
+    font-size: 0.82rem;
+  }
+
+  textarea:focus,
+  input[type="text"]:focus {
+    border-color: var(--accent);
+  }
+
+  .character-count {
+    position: absolute;
+    right: 0;
+    bottom: 0.35rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.66rem;
+  }
+
+  .notes-form-row {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(8rem, 1fr) auto auto;
+    gap: 1rem;
+    align-items: end;
+    margin-top: 1rem;
+  }
+
+  .notes-public-field {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    min-height: 2.35rem;
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+    white-space: nowrap;
+  }
+
+  .notes-public-field input {
+    width: 0.9rem;
+    height: 0.9rem;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+
+  .notes-honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .notes-submit,
+  .notes-more {
+    border: 1px solid var(--border-color);
+    background: var(--surface-raised);
+    color: var(--foreground);
+    font-size: 0.78rem;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .notes-submit {
+    min-height: 2.35rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  .notes-submit:hover,
+  .notes-more:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .notes-submit:disabled,
+  .notes-more:disabled {
+    cursor: wait;
+    opacity: 0.56;
+    transform: none;
+  }
+
+  .notes-status {
+    position: relative;
+    z-index: 1;
+    min-height: 1.4em;
+    margin: 0.75rem 0 0;
+    color: var(--text-tertiary);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .notes-status[data-state="success"] {
+    color: var(--accent);
+  }
+
+  .notes-status[data-state="error"] {
+    color: #a33a32;
+  }
+
+  .notes-stream {
+    margin-top: 1.4rem;
+  }
+
+  .notes-loading {
+    margin: 0;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+  }
+
+  .notes-list {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .notes-list :global(.note-card) {
+    position: relative;
+    padding: 1rem 1.05rem 0.9rem;
+    border-left: 2px solid
+      color-mix(in oklch, var(--brand), var(--border-color) 62%);
+    background: color-mix(in oklch, var(--surface), transparent 36%);
+  }
+
+  .notes-list :global(.note-body) {
+    margin: 0;
+    color: var(--foreground);
+    font-family: var(--font-editorial);
+    font-size: 0.94rem;
+    line-height: 1.72;
+    overflow-wrap: anywhere;
+  }
+
+  .notes-list :global(.note-meta) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    align-items: baseline;
+    margin-top: 0.7rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+  }
+
+  .notes-more {
+    display: block;
+    margin: 1rem auto 0;
+    padding: 0.45rem 1rem;
+  }
+
+  .notes-more[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .notes-board {
+      padding-top: 2.75rem;
+    }
+
+    .notes-form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .notes-submit {
+      width: 100%;
+    }
+  }
+</style>
+
+<script is:inline type="module" src="/scripts/notes.js"></script>

@@ -1,0 +1,69 @@
+---
+import NotesBoard from "@/components/NotesBoard.astro";
+import { SITE } from "@/config";
+import QuietLayout from "@/themes/quiet/layouts/QuietLayout.astro";
+---
+
+<QuietLayout
+  title={`留言簿 | ${SITE.title}`}
+  description="路过 bins.blog 的人留下的短纸条。"
+>
+  <main id="main-content" class="notes-page">
+    <header class="notes-hero">
+      <p class="notes-kicker">Guestbook</p>
+      <h1>写个纸条</h1>
+      <p>欢迎留言</p>
+    </header>
+
+    <NotesBoard />
+  </main>
+</QuietLayout>
+
+<style>
+  .notes-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  .notes-hero {
+    padding-bottom: 2.75rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .notes-kicker {
+    margin: 0 0 0.75rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .notes-hero h1 {
+    margin: 0 0 1rem;
+    color: var(--foreground);
+    font-family: var(--font-editorial);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: 0.015em;
+  }
+
+  .notes-hero p:last-child {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .notes-page {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .notes-hero {
+      padding-bottom: 2rem;
+    }
+  }
+</style>
