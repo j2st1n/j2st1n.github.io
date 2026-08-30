@@ -73,7 +73,7 @@
         window.location.hostname
       )
         ? "http://127.0.0.1:8787/api/notes"
-        : "https://claps.bins.blog/api/notes";
+        : "https://bins-claps.justinforgg.workers.dev/api/notes";
       const apiBase = window.__NOTES_API_URL__ || localApi;
       const limit = 20;
       let nextCursor = null;
