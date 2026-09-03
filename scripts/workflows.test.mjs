@@ -4,6 +4,10 @@ import test from "node:test";
 import vm from "node:vm";
 
 const projectRoot = new URL("../", import.meta.url);
+const VALID_DESCRIPTION =
+  "这是一段符合长度要求的测试摘要，用于让流程继续执行到目标校验和后续处理阶段。";
+const YAML_DESCRIPTION =
+  "这是一段符合长度要求的测试摘要，用来验证冒号：和井号 # 能被安全写入 YAML。";
 
 function createLocalStorage(initial = {}) {
   const values = new Map(Object.entries(initial));
@@ -96,7 +100,7 @@ test("AI formatting separates prose while preserving Markdown structures", async
       fetch: async () =>
         createAIResponse({
           title: "标题: #1",
-          description: "摘要: #号",
+          description: YAML_DESCRIPTION,
           tags: ["博客"],
           slug: "safe-table-post",
         }),
@@ -132,7 +136,10 @@ test("AI formatting separates prose while preserving Markdown structures", async
   assert.equal(prompts.length, 0, "inline @config text must not open config");
   assert.deepEqual(renameCalls, ["blog/safe-table-post.md"]);
   assert.match(written, /title: "标题: #1"/);
-  assert.match(written, /description: "摘要: #号"/);
+  assert.match(
+    written,
+    new RegExp(`description: ${JSON.stringify(YAML_DESCRIPTION)}`)
+  );
   assert.match(written, /第一段\n\n第二段提到 @config 参数/);
   assert.match(written, /A \| B\n--- \| ---\n1 \| 2/);
   assert.match(written, /~~~js\nconst value = 1;\nconsole\.log\(value\);\n~~~/);
@@ -153,7 +160,7 @@ test("invalid AI metadata does not rename or overwrite the note", async () => {
       fetch: async () =>
         createAIResponse({
           title: "测试",
-          description: "测试摘要",
+          description: VALID_DESCRIPTION,
           tags: ["白名单外"],
           slug: "valid-slug",
         }),
@@ -192,7 +199,7 @@ test("a failed write rolls the AI rename back", async () => {
       fetch: async () =>
         createAIResponse({
           title: "测试",
-          description: "测试摘要",
+          description: VALID_DESCRIPTION,
           tags: ["博客"],
           slug: "rollback-post",
         }),
