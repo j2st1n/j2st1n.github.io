@@ -1,13 +1,13 @@
 ---
-title: "十一假期，逛了逛盐城"
-description: "十一在盐城逛了水杉林、竹林大饭店和荷兰花海，等车半小时，又因路标不清多绕了一圈，还特意去了趟大丰服务区。"
+title: 十一假期，逛了逛盐城
+description: 十一在盐城逛了水杉林、竹林大饭店和荷兰花海，等车半小时，又因路标不清多绕了一圈，还特意去了趟大丰服务区。
 pubDatetime: 2026-10-07T21:20:59+08:00
 author: J2
 tags:
   - 旅行
   - 随笔
 featured: false
-draft: true
+draft: false
 ---
 
 假期结束了。
