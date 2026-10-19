@@ -246,11 +246,13 @@ test("code typography resolves CJK before the generated monospace fallback", asy
     new URL("src/styles/global.css", projectRoot),
     "utf8"
   );
-
-  assert.match(
-    styles,
-    /font-family: "TsangerJinKai02 Code CJK";[\s\S]*?unicode-range:[\s\S]*?U\+4E00-9FFF/
+  const fonts = await readFile(
+    new URL("src/styles/kami-fonts.css", projectRoot),
+    "utf8"
   );
+
+  assert.match(styles, /@import "\.\/kami-fonts\.css"/);
+  assert.match(fonts, /font-family: "TsangerJinKai02 Code CJK";/);
   assert.match(
     styles,
     /--font-code:\s*"TsangerJinKai02 Code CJK", var\(--font-google-sans-code\)/

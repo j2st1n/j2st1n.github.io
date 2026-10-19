@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
 import { getGeneratedOgImageFileName } from "@/utils/getOgImageVersion";
+import kamiFonts from "@/generated/kami-fonts.json";
 import "@/styles/global.css";
 
 type Props = {
@@ -22,6 +23,7 @@ type Props = {
 };
 
 const generatedOgImageFileName = getGeneratedOgImageFileName();
+const kamiBaseFont = kamiFonts.chunks.find(chunk => chunk.id === "base")!;
 
 const {
   title = SITE.title,
@@ -117,6 +119,13 @@ const isHomePage = Astro.url.pathname === "/";
     <meta name="generator" content={Astro.generator} />
 
     <!-- Load Font -->
+    <link
+      rel="preload"
+      href={kamiBaseFont.url}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
     <Font
       cssVariable="--font-google-sans-code"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}

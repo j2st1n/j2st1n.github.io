@@ -252,17 +252,18 @@
       });
     }
 
-    async function waitForCardFont() {
+    async function waitForCardFont(quoteText) {
       if (!document.fonts?.load) return;
+      const cardText = `${quoteText}${postTitle}—— 摘自《》❝摸鱼时刻偶有所得`;
       await Promise.race([
-        document.fonts.load('500 21px "TsangerJinKai02"'),
+        document.fonts.load('500 21px "TsangerJinKai02"', cardText),
         new Promise(resolve => window.setTimeout(resolve, 2500)),
       ]).catch(() => undefined);
     }
 
     // 2. 绘制 Kami 纯正纸质文摘卡片 (Canvas 2D)
     async function renderQuoteCard(quoteText) {
-      await waitForCardFont();
+      await waitForCardFont(quoteText);
       if (signal.aborted) return;
 
       const canvas = document.createElement("canvas");

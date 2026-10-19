@@ -1,4 +1,6 @@
 ---
+import quoteShareUrl from "../../public/scripts/quote-share.js?url";
+
 type Props = {
   title: string;
   pubDate: string;
@@ -115,7 +117,7 @@ const { title, pubDate } = Astro.props;
   </div>
 </div>
 
-<script is:inline type="module" src="/scripts/quote-share.js"></script>
+<script is:inline type="module" src={quoteShareUrl}></script>
 
 <style>
   /* 紧贴鼠标落点的极简微型按钮 */

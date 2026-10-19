@@ -1,24 +1,6 @@
 @import "tailwindcss";
 @import "./typography.css";
-
-@font-face {
-  font-family: "TsangerJinKai02";
-  src: url("/fonts/kami-cn.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "TsangerJinKai02 Code CJK";
-  src: url("/fonts/kami-cn.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 500;
-  font-display: swap;
-  unicode-range:
-    U+2E80-2FFF, U+3000-303F, U+3100-312F, U+31A0-31EF, U+3400-4DBF,
-    U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+20000-2FA1F;
-}
+@import "./kami-fonts.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
