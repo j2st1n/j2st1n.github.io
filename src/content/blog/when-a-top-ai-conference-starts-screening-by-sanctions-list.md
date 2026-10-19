@@ -9,7 +9,6 @@ tags:
   - 社会
 featured: false
 draft: false
-ogImage: /src/assets/imported-covers/2026-03-27/when-a-top-ai-conference-starts-screening-by-sanctions-list-cover.jpg
 ---
 
 这几天，当很多人还在关注中东地区的战争时，另一个领域里，一场没有硝烟的战争也在悄悄升级。

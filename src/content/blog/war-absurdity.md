@@ -8,7 +8,6 @@ tags:
   - 生活
 featured: false
 draft: false
-ogImage: /src/assets/imported-covers/2026-03-27/war-absurdity-cover.jpg
 wechat:
   recipe: magazine
   components:
