@@ -11,4 +11,9 @@ export const friends: Friend[] = [
     url: "https://bo.ke/",
     description: "发现中文独立博客，阅读与订阅最新文章。",
   },
+  {
+    name: "烧饼论坛",
+    url: "https://sb.sb/",
+    description: "聊聊 AI、域名与主机的技术交流社区。",
+  },
 ];
