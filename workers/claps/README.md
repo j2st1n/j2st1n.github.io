@@ -27,6 +27,46 @@
 `claps.bins.blog` 现有 Web 防护对 POST 和管理路径触发跨域挑战；文章点赞继续使用
 自定义域名。
 
+## 邮件通知
+
+通知固定发送到站长配置的收件邮箱（如 `owner@example.com`，线上推荐通过 `wrangler secret put NOTIFICATION_TO` 配置，本地开发见 `.dev.vars.example`）。`send_email` 绑定同样限制此收件人，
+访客不能通过提交参数改变收件地址。2026-10-24 已完成收件地址验证、Email Routing 配置、
+远程迁移与 Worker 部署，当前 `NOTIFICATIONS_ENABLED=true`。实际投递验证结果另见项目运行记录。
+
+- **留言即时通知**：新纸条和待发记录通过 D1 `batch()` 同一事务入库，提交成功后用
+  `ctx.waitUntil()` 发信。包含署名、正文、公开意愿、北京时间及审核入口，不包含 IP、
+  访客摘要或审核令牌。私密纸条也只通知站长，不改变原来的公开审核条件。
+- **点赞每日汇总**：每次 KV 计数写入成功后，在 D1 按北京时间日期和文章累计实际接受的
+  增量；启用前的历史点赞不补发。每天北京时间 09:00 后生成前一天日报，列出新增点击数、
+  文章数及文章链接，最多列出前 50 篇。没有新增不发邮件，不把点击数称为人数。
+- **失败重试**：每 10 分钟检查待发记录，也会补生成错过日期的日报。单条邮件有原子租约
+  避免普通并发重复发送，每轮最多处理 10 封以控制免费方案的子请求用量；剩余记录留待下一轮。
+  失败后退避重试，最长间隔 6 小时。邮件已被服务接受、但 D1
+  确认失败时仍可能重复投递，不保证 exactly-once，也不能把服务接受等同于进收件箱。
+- **数据保留**：发送成功立即清空待发正文；已发送凭据及已汇总的点赞日计数保留 30 天，
+  未发出的邮件正文和未汇总计数最长保留 90 天。每日原有清理任务负责清理，单次最多删除 500 封待发记录。
+  点赞统计入库异常会记录结构化错误，不让已经成功的点赞请求返回失败；这类异常可能导致
+  日报少计，需要关注 Worker 日志中的 `Clap notification count failed`。
+
+启用顺序：
+
+1. `wrangler login` 恢复正确账户登录，并只读核对 Worker、D1 与发信域名。
+2. 通过 Cloudflare Email Service 验证站长收件邮箱，并确认
+   `notifications@bins.blog` 所属域名满足发信条件。不要覆盖现有邮箱的 MX/SPF/DKIM 配置。
+   对账户中已验证的收件地址发信免费；无需为了自用通知升级到任意收件人发信方案。
+3. `wrangler d1 migrations apply bins-notes --remote` 应用 `0003_email_notifications.sql`。
+4. 将 `NOTIFICATIONS_ENABLED` 改为 `true`，测试、dry-run 后部署 `bins-claps`。
+5. 在明确允许真实发信后，完成测试邮件、真实新纸条、点赞日报各一次线上验证。
+   真实邮件只发给配置的站长，不在普通本地测试中发送。
+
+紧急停用时将 `NOTIFICATIONS_ENABLED=false` 后重新部署即可。待发记录保留在 D1，
+重新启用后会继续处理；回退旧 Worker 时新增表可以保留，不需要删除业务数据。
+
+官方依据：
+
+- <https://developers.cloudflare.com/email-service/configuration/send-bindings/>
+- <https://developers.cloudflare.com/email-service/platform/pricing/>
+
 ## D1 免费额度与本设计的用量
 
 以下数字核对于 2026-08-30 的 Cloudflare 官方文档：
@@ -61,6 +101,8 @@
 
 依赖由仓库根目录管理：
 
+测试使用 Node.js 22.18+ 的 TypeScript 直接执行和内置 SQLite；CI 与静态站构建环境统一使用 Node.js 22。
+
 ```bash
 corepack pnpm install
 cd workers/claps
@@ -82,7 +124,7 @@ Wrangler 默认使用本地 KV 和本地 D1，不会改动线上点赞或留言�
 
 ```bash
 ../../node_modules/.bin/wrangler types worker-configuration.d.ts \
-  --include-runtime=false --env-file=.dev.vars.example
+  --include-runtime=false --strict-vars=false --env-file=.dev.vars.example
 ```
 
 ## 首次上线清单

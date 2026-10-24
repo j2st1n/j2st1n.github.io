@@ -5,6 +5,15 @@
  * - Short, moderated notes live in D1.
  */
 
+import {
+  cleanupNotifications,
+  deliverNotification,
+  noteNotificationStatement,
+  notificationsEnabled,
+  recordClapNotification,
+  runNotifications,
+} from "./notifications.ts";
+
 type AppEnv = Env;
 
 type NoteStatus = "pending" | "approved" | "rejected" | "hidden";
@@ -248,8 +257,10 @@ async function incrementClaps(
   slug: string,
   count: unknown
 ): Promise<number> {
-  const total = (await readClaps(env, slug)) + normalizeIncrement(count);
+  const increment = normalizeIncrement(count);
+  const total = (await readClaps(env, slug)) + increment;
   await env.CLAPS_KV.put(`claps:${slug}`, String(total));
+  await recordClapNotification(env, slug, increment);
   return total;
 }
 
@@ -350,7 +361,8 @@ async function listPublicNotes(
 async function submitNote(
   request: Request,
   env: AppEnv,
-  corsHeaders: Record<string, string>
+  corsHeaders: Record<string, string>,
+  ctx?: ExecutionContext
 ): Promise<Response> {
   if (!isAllowedBrowserOrigin(request)) {
     return json({ error: "Origin not allowed" }, corsHeaders, 403);
@@ -423,14 +435,35 @@ async function submitNote(
   }
 
   const id = crypto.randomUUID();
-  await env.NOTES_DB.prepare(
+  const insertNote = env.NOTES_DB.prepare(
     `INSERT INTO notes (
       id, body, nickname, status,
       author_hash, content_hash, created_at, is_public
     ) VALUES (?, ?, ?, 'pending', ?, ?, ?, ?)`
-  )
-    .bind(id, body, nickname, authorHash, contentHash, now, isPublic ? 1 : 0)
-    .run();
+  ).bind(id, body, nickname, authorHash, contentHash, now, isPublic ? 1 : 0);
+  if (notificationsEnabled(env)) {
+    await env.NOTES_DB.batch([
+      insertNote,
+      noteNotificationStatement(env, {
+        id,
+        body,
+        nickname,
+        isPublic,
+        createdAt: now,
+      }),
+    ]);
+    // The note and durable notification are committed together. A failed send
+    // remains in the outbox for the scheduled retry, without failing the note.
+    ctx?.waitUntil(
+      deliverNotification(env, `note:${id}`).catch(() => {
+        console.error(
+          JSON.stringify({ message: "Immediate note notification deferred" })
+        );
+      })
+    );
+  } else {
+    await insertNote.run();
+  }
 
   return json(
     { accepted: true, id, status: "pending", isPublic },
@@ -531,7 +564,8 @@ async function updateReviewNote(
 async function handleRequest(
   request: Request,
   env: AppEnv,
-  corsHeaders: Record<string, string>
+  corsHeaders: Record<string, string>,
+  ctx?: ExecutionContext
 ): Promise<Response> {
   if (request.method === "OPTIONS") {
     return isAllowedBrowserOrigin(request)
@@ -548,7 +582,7 @@ async function handleRequest(
       return listPublicNotes(env, url, corsHeaders);
     }
     if (request.method === "POST") {
-      return submitNote(request, env, corsHeaders);
+      return submitNote(request, env, corsHeaders, ctx);
     }
     return new Response("Method Not Allowed", {
       status: 405,
@@ -577,10 +611,14 @@ async function handleRequest(
 }
 
 export default {
-  async fetch(request: Request, env: AppEnv): Promise<Response> {
+  async fetch(
+    request: Request,
+    env: AppEnv,
+    ctx?: ExecutionContext
+  ): Promise<Response> {
     const corsHeaders = getCorsHeaders(request);
     try {
-      return await handleRequest(request, env, corsHeaders);
+      return await handleRequest(request, env, corsHeaders, ctx);
     } catch (error) {
       console.error(
         JSON.stringify({
@@ -593,10 +631,17 @@ export default {
     }
   },
 
-  async scheduled(
-    _controller: ScheduledController,
-    env: AppEnv
-  ): Promise<void> {
+  async scheduled(controller: ScheduledController, env: AppEnv): Promise<void> {
+    if (controller.cron !== "17 18 * * *") {
+      try {
+        await runNotifications(env, controller.scheduledTime);
+      } catch {
+        console.error(
+          JSON.stringify({ message: "Scheduled email notifications failed" })
+        );
+      }
+      return;
+    }
     try {
       const result = await env.NOTES_DB.prepare(
         `DELETE FROM notes
@@ -619,6 +664,7 @@ export default {
           })
         );
       }
+      await cleanupNotifications(env);
     } catch (error) {
       console.error(
         JSON.stringify({
