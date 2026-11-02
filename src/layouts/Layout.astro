@@ -261,5 +261,10 @@ const isHomePage = Astro.url.pathname === "/";
 
     <!-- Load full theme logic -->
     <script is:inline type="module" src="/scripts/theme.js"></script>
+    <script>
+      import { initArticleMedia } from "@/utils/initArticleMedia";
+
+      document.addEventListener("astro:page-load", () => initArticleMedia());
+    </script>
   </body>
 </html>
