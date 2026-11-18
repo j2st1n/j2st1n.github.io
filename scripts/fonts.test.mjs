@@ -3,8 +3,21 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
+import { addUnicodeRanges, uncoveredHan } from "./fonts/coverage.mjs";
 
 const root = new URL("../", import.meta.url);
+
+test("font coverage scans rendered article text and descriptions without counting scripts", () => {
+  const covered = new Set();
+  addUnicodeRanges(covered, "U+66FE, U+71CE-71D0");
+  const html = [
+    '<meta name="description" content="絪">',
+    "<h1>曾燏</h1><p>曾燏&#x20BB7;&#134071;</p>",
+    "<script>藏</script><style>體</style><!-- 隱 -->",
+    '<a href="/假">曾</a>',
+  ].join("");
+  assert.deepEqual(uncoveredHan(html, covered), new Set([0x7d6a, 0x20bb7]));
+});
 
 test("font chunks preserve the frozen partition and match their fingerprints", async () => {
   const manifest = JSON.parse(

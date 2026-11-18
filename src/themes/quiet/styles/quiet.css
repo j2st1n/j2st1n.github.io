@@ -194,6 +194,11 @@
   color: var(--accent);
 }
 
+/* Use the existing CJK fallback for the shared credit so it cannot pull the supplement on every page. */
+.kami-credit-han {
+  font-family: "Source Han Serif SC", "Songti SC", monospace;
+}
+
 .separator {
   color: color-mix(in oklch, var(--text-muted), transparent 42%);
 }
